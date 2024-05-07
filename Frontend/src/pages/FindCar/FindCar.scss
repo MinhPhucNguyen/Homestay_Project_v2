@@ -1,0 +1,223 @@
+.finding-filter-wrapper {
+   width: 100%;
+   position: fixed;
+   top: 90px;
+   background-color: white;
+   border-top: 1px solid #e9e9e9;
+   box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.04);
+   padding-bottom: 20px;
+   z-index: 999;
+   transition: all 0.3s ease-in-out 0s;
+}
+
+.scroll-finding-down {
+   transition: all 0.3s ease-in-out;
+   background-color: white;
+   top: 0;
+}
+
+.scroll-finding-down {
+   transition: all 0.3s ease-in-out;
+   background-color: white;
+   top: 0;
+}
+
+.finding-container {
+   width: 100%;
+   padding: 20px 0;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   position: relative;
+}
+
+.finding-container .back-btn {
+   position: absolute;
+   left: 0;
+   display: inline-block;
+   color: black;
+   border: 1px solid #e0e0e0;
+   width: 34px;
+   height: 34px;
+   border-radius: 50%;
+   padding: 4px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   font-size: 16px;
+   text-decoration: none;
+}
+
+.filter-container {
+   display: flex;
+   gap: 30px;
+   justify-content: space-between;
+
+   .btn {
+      border: 1px solid #aaa;
+      font-size: 16px;
+      padding: 4px 10px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+   }
+}
+
+.finding-info {
+   gap: 32px;
+   display: flex;
+   font-size: 16px;
+   font-weight: 400;
+
+   .location-form,
+   .time-form {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      grid-gap: 10px;
+      cursor: pointer;
+
+      & > i {
+         font-size: 20px;
+         color: #8f8e8e;
+      }
+   }
+
+   .location-form span {
+      font-weight: 500;
+   }
+
+   .time-form-container {
+      display: flex;
+      gap: 5px;
+      grid-gap: 5px;
+      align-items: center;
+
+      .datetime-input {
+         border: 0;
+         padding: 0;
+         color: black;
+         width: 150px;
+         font-weight: 500;
+
+         &:active {
+            border: 0;
+            outline: 0;
+         }
+      }
+
+      .from-input {
+         padding-right: 8px;
+         text-align: right;
+      }
+
+      .to-input {
+         padding-left: 8px;
+      }
+   }
+}
+
+.filter-list {
+   display: flex;
+   gap: 24px;
+   align-items: center;
+
+   .reset-item {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 1px solid #aaa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      padding: 4px;
+      position: relative;
+
+      .red-dot {
+         position: absolute;
+         top: 0;
+         right: -2px;
+         font-size: 12px;
+         color: #f04438;
+      }
+
+      &.active {
+         border-color: #1cc88a !important;
+         background-color: #1cc88a;
+         color: white;
+      }
+   }
+
+   .swiper-list-filter {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      grid-gap: 10px;
+
+      .swiper-slide {
+         position: relative;
+         border: 1px solid #aaa;
+         padding: 4px 14px;
+         border-radius: 30px;
+         font-size: 16px;
+         cursor: pointer;
+         display: flex;
+         align-items: center;
+         gap: 6px;
+
+         & > svg {
+            width: 20px;
+            height: 20px;
+         }
+      }
+   }
+}
+
+.list-car-section {
+   padding-top: 150px;
+   background: #f6f6f6;
+   padding-bottom: 50px;
+   min-height: 100vh;
+}
+
+.swiper-slide.active {
+   border-color: #1cc88a !important;
+   background-color: #dff5e7;
+}
+
+.car-list {
+   display: flex;
+   flex-wrap: wrap;
+   margin: 0 -10px;
+}
+
+.car-list .car-item {
+   width: 25%;
+   margin-bottom: 20px;
+   padding: 0 10px;
+}
+
+.non-car {
+   display: flex;
+   justify-content: center;
+   flex-direction: column;
+   align-items: center;
+   font-weight: 500;
+   color: #8f8e8e;
+}
+
+.loading {
+   color: #1cc88a;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   height: 100vh;
+}
+
+#direct-delivery {
+   visibility: hidden;
+   position: absolute;
+   top: 0;
+   left: 0;
+}

@@ -1,0 +1,37 @@
+.section-container {
+  width: 75%;
+  margin: 0 auto;
+}
+
+.section-container .section-title {
+  text-align: center;
+  font-size: 40px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 50px;
+}
+
+.section-subtitle {
+  text-align: center;
+  font-size: 20px;
+  color: #8f8e8e;
+  margin-bottom: 50px;
+}
+
+.hidden {
+  opacity: 0;
+  transition: all 1s;
+}
+
+.show {
+  opacity: 1;
+}
+
+a {
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: none;
+  color: white;
+}/*# sourceMappingURL=HomeStyles.css.map */

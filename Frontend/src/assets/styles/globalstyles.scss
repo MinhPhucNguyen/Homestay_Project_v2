@@ -1,0 +1,22 @@
+* {
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+}
+
+body {
+   color: black;
+}
+
+#app {
+   font-family: "Ubuntu", sans-serif;
+   font-family: "Roboto", sans-serif;
+   letter-spacing: 0.5px;
+   font-weight: 450;
+   color: black;
+}
+
+.m-container {
+   width: 75%;
+   margin: 0 auto;
+}

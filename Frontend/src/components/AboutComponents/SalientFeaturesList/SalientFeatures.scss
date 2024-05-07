@@ -1,0 +1,47 @@
+.about-salient-features {
+  background-color: #41c0911e;
+
+  h1 {
+    margin-right: 70px;
+    padding-right: 50px;
+    line-height: 1.5;
+    margin-bottom: 0;
+    font-weight: bold;
+    font-size: 40px;
+  }
+}
+
+.salient-features-list {
+  width: calc(100% - 50px);
+}
+
+.salient-features-item:first-child a {
+  margin-top: 0;
+}
+
+.salient-features-item a {
+  text-decoration: none;
+  font-size: 26px;
+  color: black;
+  font-weight: 490;
+  padding-top: 40px;
+  padding-bottom: 20px;
+  margin-top: 20px;
+  display: block;
+  border-top: 1px solid #ccc;
+}
+
+.salient-features-item:hover a {
+  color: #1cc88a;
+  transition: all 0.4s ease;
+}
+
+.salient-features-item .collapse .card {
+  background: transparent;
+}
+
+.card-body{
+  line-height: 2;
+  font-weight: 500;
+  text-align: justify;
+}

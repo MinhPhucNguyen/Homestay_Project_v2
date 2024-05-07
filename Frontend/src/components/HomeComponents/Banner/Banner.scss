@@ -1,0 +1,184 @@
+#banner-section {
+   width: 75%;
+   margin-bottom: 80px;
+   margin: 0 auto;
+   margin-bottom: 100px;
+
+   .banner {
+      position: relative;
+      height: 660px;
+      width: 100%;
+      background: black;
+      border-radius: 20px;
+      background-image: url("../../../assets/images/banner-image/banner_img.jpg");
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+      text-align: center;
+   }
+}
+
+.banner-title {
+   position: absolute;
+   top: 24%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+   max-width: 620px;
+   color: white;
+   font-size: 50px;
+   text-align: center;
+   font-weight: 500;
+   text-shadow: rgb(88, 88, 88) 0 2px 4px;
+}
+
+.search-option {
+   position: absolute;
+   bottom: -60px;
+   width: 100%;
+}
+
+.option {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+.option-item {
+   width: 150px;
+   background: white;
+   padding: 14px 16px;
+   border-top-left-radius: 20px;
+   cursor: pointer;
+   font-size: 15px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   color: #8f8e8e;
+   background-color: rgb(240, 240, 240);
+}
+
+.option-item:hover {
+   color: black;
+   transition: all 0.2s ease-in-out;
+}
+
+.option-item span {
+   margin-left: 10px;
+   font-weight: 500;
+}
+
+.search-option .option-item:last-child {
+   border-radius: 0 20px 0 0;
+}
+
+.option-item.active {
+   background: #1cc88a;
+   color: white;
+}
+
+.search-option .search {
+   background-color: white;
+   margin: 0 100px;
+   padding: 22px;
+   border-radius: 20px;
+
+   & > form {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+   }
+}
+
+.search-form-title {
+   font-size: 16px;
+   color: #8f8e8e;
+   text-align: left;
+}
+
+.search-form-title i {
+   margin-right: 6px;
+}
+
+.search-form-choose {
+   min-width: 250px;
+   margin-top: 8px;
+}
+
+.datetime-picker {
+   width: 100%;
+}
+
+.search-form-choose .address-input {
+   font-size: 22px;
+   border: none;
+   outline: none;
+   color: black;
+   font-weight: 500;
+   outline-color: white;
+   cursor: pointer;
+   outline-color: transparent;
+}
+
+.search-form-choose {
+   display: flex;
+   align-items: center;
+   cursor: pointer;
+}
+
+.search-form-choose .address-input::placeholder {
+   color: #8f8e8e;
+   font-weight: normal;
+}
+
+.search-form-item {
+   width: 300px;
+}
+
+.search .search-form-item_divider {
+   width: 1px;
+   max-height: 76px;
+   display: flex;
+   align-items: center;
+   background: #ccc;
+   margin: 0 30px;
+}
+
+.search-form-choose .flatpickr_end {
+   font-weight: 500;
+   font-size: 22px;
+   cursor: pointer;
+}
+
+.search-form-choose .flatpickr_start {
+   font-weight: 500;
+   font-size: 22px;
+   cursor: pointer;
+}
+
+.search-form-choose > div {
+   height: 100%;
+}
+
+.find-car-btn {
+   width: 140px;
+   background: #1cc88a;
+   border-radius: 10px;
+   display: inline-block;
+   color: white;
+   text-decoration: none;
+   text-align: center;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   font-size: 18px;
+   font-weight: bold;
+   margin: 0 20px;
+   margin-right: 0;
+   padding: 0 20px;
+
+   &:hover {
+      box-shadow: 0 8px 24px 12px rgba(0, 0, 0, 0.08);
+      color: white;
+      transition: all 0.2s ease-in-out;
+   }
+}

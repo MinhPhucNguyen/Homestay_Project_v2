@@ -1,0 +1,27 @@
+.about-advantage .about-container h2 {
+  font-size: 40px;
+  font-weight: bold;
+  padding-bottom: 50px;
+}
+
+.list-adv {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.adv-item {
+  width: calc(100% / 3);
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 50px;
+}
+
+.adv-item p {
+  margin-top: 20px;
+  font-size: 24px;
+  padding: 0 20px;
+}

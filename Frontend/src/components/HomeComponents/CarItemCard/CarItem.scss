@@ -1,0 +1,127 @@
+.car-item {
+   text-decoration: none;
+   width: calc(100% / 4);
+}
+
+.car-item .card {
+   height: 410px;
+   width: 100%;
+   position: relative;
+}
+
+.mini-fav-btn {
+   position: absolute;
+   right: 25px;
+   top: 25px;
+   background-color: rgba(12, 12, 12, 0.5);
+   border-radius: 50%;
+   padding: 8px;
+   cursor: pointer;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   z-index: 99;
+
+   & > i {
+      color: white;
+   }
+}
+
+.mini-fav-btn.active {
+   border-color: #1cc88a;
+   cursor: pointer;
+
+   & i {
+      color: #1cc88a;
+   }
+}
+
+.car-item:hover {
+   text-decoration: none;
+}
+
+.card {
+   padding: 16px;
+   border-radius: 10px;
+   cursor: pointer;
+}
+
+.card-img-top {
+   border-radius: 10px;
+   height: 206px;
+}
+
+.card-body {
+   padding: 0;
+   margin-top: 20px;
+}
+
+.card-title {
+   font-size: 1rem;
+   font-weight: 500;
+   display: flex;
+}
+
+.card-title span {
+   max-width: 250px;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+   margin-right: 8px;
+}
+
+.card-text_delivery,
+.card-text_transmission {
+   font-size: 12px;
+   padding: 5px 10px;
+   border-radius: 20px;
+   background: #eef7ff;
+   margin: 0 10px 8px 0;
+}
+
+.card-text_delivery {
+   background: #fce0d3;
+}
+
+.car-item-divider {
+   width: 100%;
+   height: 1px;
+   background: #ccc;
+}
+
+.card-body .info {
+   margin-bottom: 10px;
+}
+
+.trip-price {
+   font-size: 14px;
+}
+
+.trip i {
+   color: #1cc88a;
+   margin-right: 4px;
+}
+
+.trip span {
+   margin-right: 2px;
+}
+
+.desc-address span {
+   color: #8f8e8e;
+   font-size: 13px;
+}
+
+.desc-address .fa-location-dot {
+   font-size: 13px;
+   margin-right: 6px;
+}
+
+.desc-address i {
+   margin: 0 4px;
+}
+
+.desc-price {
+   font-size: 18px;
+   color: #1cc88a;
+   font-weight: bold;
+}

@@ -1,0 +1,51 @@
+#service-section {
+    width: 100%;
+    background: #f7f7f7;
+    padding: 60px 0;
+    padding-bottom: 120px;
+}
+
+#service-section .section-container .section-title {
+  text-align: left;
+}
+
+.service-item_img {
+  position: relative;
+}
+
+.service-item_img .content {
+  position: absolute;
+  bottom: 36px;
+  left: 36px;
+}
+
+.service-item_img .content h2 {
+  color: white;
+  font-size: 40px;
+  margin-bottom: 8px;
+}
+
+.service-item_img .content p {
+  color: white;
+}
+
+.service-item_img .content .btn {
+  padding: 20px 40px;
+  background: #1cc88a;
+  border-radius: 12px;
+  color: white;
+  font-weight: 500;
+  margin-top: 10px;
+}
+
+.right {
+  position: absolute;
+  right: 0;
+  top: 56px;
+}
+
+.right .service-item_img .content {
+  text-align: right;
+  position: absolute;
+  right: 36px;
+}
