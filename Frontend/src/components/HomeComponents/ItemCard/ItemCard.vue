@@ -121,5 +121,5 @@ store.getters["favorite/getFavoriteCars"].some((car) => {
 </script>
 
 <style scoped>
-@import "./CarItem.scss";
+@import "./ItemCard.scss";
 </style>

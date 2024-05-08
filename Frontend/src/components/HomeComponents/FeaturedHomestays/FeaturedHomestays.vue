@@ -3,7 +3,7 @@
       <div class="section-container">
          <p class="section-title">Homestay dành cho bạn</p>
          <div class="car-list" v-if="randomCars.length > 0">
-            <CarItem
+            <ItemCard
                v-for="carItem in randomCars"
                :key="carItem.carId"
                :carItemProps="carItem"
@@ -21,7 +21,7 @@
 <script setup>
 import axios from "axios";
 import { ref } from "vue";
-import CarItem from "@/components/HomeComponents/CarItemCard/CarItem.vue";
+import ItemCard from "@/components/HomeComponents/ItemCard/ItemCard.vue";
 import stateLoading from "@/components/Loading/Loading.vue";
 const randomCars = ref([]);
 const errorMessage = ref(null);
@@ -48,5 +48,5 @@ const getImagePath = (carImages) => {
 
 <style lang="scss" scoped>
 @import "../../../assets/styles/MainStyles/HomeStyles.scss";
-@import "./FeaturedCars.scss";
+@import "./FeaturedHomestays.scss";
 </style>

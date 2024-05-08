@@ -169,8 +169,8 @@
       <div class="list-car-section">
          <div class="m-container">
             <div class="car-list" v-if="searchResults.length">
-               <CarItem v-for=" carItem  in  searchResults " :key="carItem.carId" :carItemProps="carItem"
-                  :imagePath="getImagePath(carItem.carImages)" />
+               <!-- <CarItem v-for=" carItem  in  searchResults " :key="carItem.carId" :carItemProps="carItem"
+                  :imagePath="getImagePath(carItem.carImages)" /> -->
             </div>
             <div class="loading" v-else-if="isLoading">
                <stateLoading />
@@ -189,7 +189,7 @@
 import axios from "axios";
 import { onMounted, ref, watch } from "vue";
 import { useRouter } from "vue-router";
-import CarItem from "@/components/HomeComponents/CarItemCard/CarItem.vue";
+// import CarItem from "@/components/HomeComponents/CarItemCard/CarItem.vue";
 import flatpickr from "flatpickr";
 import "flatpickr/dist/themes/material_green.css";
 import stateLoading from "@/components/Loading/Loading.vue";

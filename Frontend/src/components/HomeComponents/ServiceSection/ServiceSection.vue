@@ -1,9 +1,9 @@
 <template>
    <div id="service-section" class="hidden">
       <div class="section-container">
-         <p class="section-title">Dịch Vụ Của Ca<span style="color: #1cc88a">r</span>ental</p>
+         <p class="section-title">Dịch Vụ Của <span style="color: #1cc88a">MY</span>HOMESTAY</p>
          <div class="service-container">
-            <div class="service-item">
+            <!-- <div class="service-item">
                <div class="service-item_img">
                   <img src="../../../assets/images/service-image/service_left.png" alt="" />
                   <div class="content">
@@ -30,7 +30,7 @@
                      <a class="btn" href="">Thuê xe có tài xế</a>
                   </div>
                </div>
-            </div>
+            </div> -->
          </div>
       </div>
    </div>

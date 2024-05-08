@@ -1,60 +1,43 @@
 <template>
    <div id="advantages-section" class="hidden">
       <div class="section-container">
-         <p class="section-title mb-2">Ưu điểm của Ca<span style="color: #1cc88e">r</span>ental</p>
-         <p class="section-subtitle fs-3 w-50 mx-auto">
-            Những tính năng giúp bạn dễ dàng hơn khi thuê xe trên Carental.
-         </p>
+         <p class="section-title mb-2">Ưu điểm của chúng tôi</p>
          <div class="advantages-container">
             <div class="advantages-item">
                <div class="advantages-item_img">
-                  <img src="../../../assets/images/advantages-image/advantage1.svg" alt="" />
+                  <img src="../../../assets/images/advantages-image/convenient-service.png" alt="" />
                </div>
-               <h5>An tâm đặt xe</h5>
-               <p>
-                  Không tính phí huỷ chuyến trong vòng 1h sau khi đặt cọc. Hoàn cọc và bồi thường
-                  100% nếu chủ xe huỷ chuyến trong vòng 7 ngày trước chuyến đi.
-               </p>
+               <h5>Dịch vụ tiện lợi</h5>
             </div>
             <div class="advantages-item">
                <div class="advantages-item_img">
-                  <img src="../../../assets/images/advantages-image/advantage3.svg" alt="" />
+                  <img src="../../../assets/images/advantages-image/serve-devoted.png" alt="" />
                </div>
-               <h5>Thủ tục đơn giản</h5>
-               <p>
-                  Chỉ cần có CCCD gắn chip (Hoặc Passport) & Giấy phép lái xe là bạn đã đủ điều kiện
-                  thuê xe trên Mioto.
-               </p>
+               <h5>Phục vụ tận tâm</h5>
             </div>
             <div class="advantages-item">
                <div class="advantages-item_img">
-                  <img src="../../../assets/images/advantages-image/advantage2.svg" alt="" />
+                  <img src="../../../assets/images/advantages-image/diverse-dishes.png" alt="" />
                </div>
-               <h5>Thanh toán dễ dàng</h5>
-               <p>
-                  Đa dạng hình thức thanh toán: ATM, thẻ Visa & Ví điện tử (Momo, VnPay, ZaloPay).
-               </p>
+               <h5>Món ăn đa dạng</h5>
             </div>
             <div class="advantages-item">
                <div class="advantages-item_img">
-                  <img src="../../../assets/images/advantages-image/advantage4.svg" alt="" />
+                  <img src="../../../assets/images/advantages-image/large-space.png" alt="" />
                </div>
-               <h5>Giao xe tận nơi</h5>
-               <p>Bạn có thể lựa chọn giao xe tận nhà/sân bay... Phí tiết kiệm chỉ từ 15k/km.</p>
+               <h5>Không gian rộng</h5>
             </div>
             <div class="advantages-item">
                <div class="advantages-item_img">
-                  <img src="../../../assets/images/advantages-image/advantage5.svg" alt="" />
+                  <img src="../../../assets/images/advantages-image/customer-benefits.png" alt="" />
                </div>
-               <h5>Dòng xe đa dạng</h5>
-               <p>Hơn 100 dòng xe cho bạn tuỳ ý lựa chọn: Mini, Sedan, CUV, SUV, MPV, Bán tải.</p>
+               <h5>Lợi ích khách hàng</h5>
             </div>
             <div class="advantages-item">
                <div class="advantages-item_img">
-                  <img src="../../../assets/images/advantages-image/advantage6.svg" alt="" />
+                  <img src="../../../assets/images/advantages-image/ideal-place.png" alt="" />
                </div>
-               <h5>Lái xe an toàn</h5>
-               <p>Vững tay lái với gói bảo hiểm thuê xe từ nhà bảo hiểm MIC & VNI.</p>
+               <h5>Nơi lý tưởng</h5>
             </div>
          </div>
       </div>
