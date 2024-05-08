@@ -1,8 +1,8 @@
 <template>
    <div id="promotion-section" class="hidden">
       <div class="section-container">
-         <h2 class="section-title">Chương trình khuyến mãi</h2>
-         <h5 class="text-dark text-center fs-3 mb-4">Nhận nhiều ưu đãi hấp dẫn từ Carental</h5>
+         <h3 class="section-title">Chương trình Ưu đãi</h3>
+         <h6 class="text-dark text-center fs-3 mb-4">Khuyến mãi, giảm giá và ưu đãi đặc biệt dành riêng cho bạn</h6>
 
          <div class="promotion-carousel-wrapper">
             <i class="fa-solid fa-chevron-left" @click="arrowBtn('left')"></i>

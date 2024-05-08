@@ -6,39 +6,17 @@
 
          <!-- Search Options -->
          <div class="search-option">
-            <!-- <div class="option d-flex justify-content-center shadow">
-               <div
-                  class="option-item"
-                  :class="{ active: selectedOption === 'self-drive' }"
-                  @click="changeSelectedOption('self-drive')"
-               >
-                  <i class="fa-solid fa-car-side"></i>
-                  <span>Xe tự lái</span>
-               </div>
-               <div
-                  class="option-item"
-                  :class="{ active: selectedOption === 'have-driver' }"
-                  @click="changeSelectedOption('have-driver')"
-               >
-                  <i class="fa-solid fa-user"></i>
-                  <span>Xe có tài xế</span>
-               </div>
-            </div> -->
-
             <!-- Search Form -->
             <div class="search shadow d-flex">
                <form action="">
                   <!-- Address Input -->
                   <div class="search-form-item address">
-                     <div class="search-form-title fw-bold">
-                        <i class="fa-solid fa-location-dot"></i>
-                        <span>Địa chỉ</span>
-                     </div>
-                     <div class="search-form-choose mt-3">
+                     <div class="search-form-choose">
+                        <!-- <i class="fa-solid fa-location-dot"></i> -->
                         <input
                            type="text"
                            class="address-input"
-                           placeholder="Nhập địa điểm"
+                           placeholder="Bạn muốn đến đâu?"
                            v-model="location"
                         />
                      </div>
@@ -47,16 +25,12 @@
                   <!-- Date Selection -->
                   <div class="search-form-item_divider"></div>
                   <div class="calendar-wrap d-flex">
-                     <div class="search-form-item address">
-                        <div class="search-form-title fw-bold">
-                           <i class="fa-regular fa-calendar"></i>
-                           <span>Bắt đầu</span>
-                        </div>
+                     <div class="search-form-item">
                         <div class="search-form-choose">
                            <input
                               type="datetime-local"
                               class="form-control datetime-picker flatpickr_start border-0 text-black"
-                              placeholder="Select Start Date"
+                              placeholder="Ngày nhận"
                               v-model="startDate"
                            />
                            <div @click="openFlatPickr('start-date')">
@@ -65,21 +39,30 @@
                         </div>
                      </div>
                      <div class="search-form-item_divider"></div>
-                     <div class="search-form-item address">
-                        <div class="search-form-title fw-bold">
-                           <i class="fa-regular fa-calendar"></i>
-                           <span>Kết thúc</span>
-                        </div>
+                     <div class="search-form-item">
                         <div class="search-form-choose">
                            <input
                               type="datetime-local"
                               class="form-control datetime-picker flatpickr_end border-0 text-black"
-                              placeholder="Select End Date"
+                              placeholder="Ngày trả"
                               v-model="endDate"
                            />
                            <div @click="openFlatPickr('end-date')">
                               <i class="fa-solid fa-chevron-down"></i>
                            </div>
+                        </div>
+                     </div>
+
+                     <div class="search-form-item_divider"></div>
+                     <div class="search-form-item number-of-people">
+                        <div class="search-form-choose">
+                           <!-- <i class="fa-regular fa-user"></i> -->
+                           <input
+                              type="text"
+                              class="number-of-people-input"
+                              placeholder="Số khách"
+                              v-model="numberOfPeople"
+                           />
                         </div>
                      </div>
                   </div>
@@ -93,7 +76,7 @@
                         },
                      }"
                      class="find-car-btn"
-                     >Tìm Homestay</router-link
+                     >Tìm</router-link
                   >
                </form>
             </div>
@@ -109,22 +92,20 @@ import "flatpickr/dist/themes/material_green.css";
 
 const selectedOption = ref("self-drive");
 
-const startDate = ref(flatpickr.formatDate(new Date(), "d/m/Y H:i"));
-const endDate = ref(flatpickr.formatDate(new Date(), "d/m/Y H:i"));
-const location = ref("Hà Nội");
+const startDate = ref();
+const endDate = ref();
+const location = ref("");
 
 /**
  * TODO: Add datetime picker to input
  */
 onMounted(() => {
    const config = {
-      enableTime: true,
-      dateFormat: "d/m/Y H:i",
+      dateFormat: "d/m/Y",
       altInput: true,
-      altFormat: "d/m/Y H:i",
+      altFormat: "d/m/Y",
       allowInput: true,
       defaultDate: new Date(),
-      defaultHour: new Date().getHours(),
    };
 
    flatpickr(".flatpickr_start", {

@@ -1,8 +1,8 @@
 <template>
-   <nav class="navbar navbar-expand-lg">
+      <nav class="navbar navbar-expand-lg">
       <div class="navbar-container text-black p-0 d-flex">
          <router-link to="/" class="navbar-brand fw-bold text-uppercase fs-4" href="/">
-            <span style="color: #1cc88a">MY</span>HOMESTAY
+            MY<span style="color: #5fcf86">HOMESTAY</span>
          </router-link>
          <button
             class="navbar-toggler"
@@ -54,14 +54,14 @@
                      </div>
                   </router-link>
                   <ul v-else>
-                     <li id="register-btn" class="nav-item m-0">
-                        <router-link to="/register" class="nav-link text-black btn"
-                           >Đăng ký</router-link
+                     <li id="register-btn" class="nav-item m-0" @click="isRegisterOpen = true">
+                        <span class="nav-link text-black btn"
+                           >Đăng ký</span
                         >
                      </li>
-                     <li id="login-btn" class="nav-item border border-dark rounded-3">
-                        <router-link to="/login" class="nav-link text-black btn"
-                           >Đăng nhập</router-link
+                     <li id="login-btn" class="nav-item border border-dark rounded-3" @click="isLoginOpen = true">
+                        <span class="nav-link text-black btn"
+                           >Đăng nhập</span
                         >
                      </li>
                   </ul>
@@ -70,18 +70,23 @@
          </div>
       </div>
    </nav>
+   <login-popup :open="isLoginOpen" @close="isLoginOpen = !isLoginOpen"></login-popup>
+   <register-popup :open="isRegisterOpen" @close="isRegisterOpen = !isRegisterOpen"></register-popup>
 </template>
 
 <script setup>
-import { computed, onMounted, ref } from "vue";
-import { useRouter } from "vue-router";
+import {computed, ref, onMounted} from "vue";
 import { useStore } from "vuex";
+import LoginPopup from "@/pages/Auth/LoginPopup/LoginPopup.vue";
+import RegisterPopup from "@/pages/Auth/RegisterPopup/RegisterPopup.vue";
 
+const navbar = ref(null);
 const store = useStore();
 const isAuthenticated = computed(() => store.getters["auth/isAuthenticated"]);
-const navbar = ref(null);
 const user = computed(() => store.getters["users/getUserById"]);
-const router = useRouter();
+
+const isLoginOpen = ref(false);
+const isRegisterOpen = ref(false);
 
 onMounted(() => {
    navbar.value = document.querySelector(".navbar");

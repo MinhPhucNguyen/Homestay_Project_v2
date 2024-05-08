@@ -48,22 +48,6 @@ const app = [
             },
          },
          {
-            path: "login",
-            component: () => import("../pages/Auth/LoginPage.vue"),
-            name: "login",
-            meta: {
-               hideFooter: true,
-            },
-         },
-         {
-            path: "register",
-            component: () => import("../pages/Auth/RegisterPage.vue"),
-            name: "register",
-            meta: {
-               hideFooter: true,
-            },
-         },
-         {
             path: "forgot-password",
             component: () => import("../pages/Auth/ForgotPassword.vue"),
             name: "forgotPassword",

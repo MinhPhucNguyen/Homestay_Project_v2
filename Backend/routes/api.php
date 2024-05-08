@@ -36,9 +36,9 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::controller(AuthController::class)->group(function () {
-    Route::post('/login', 'login')->name('login');
+    Route::post('/auth/login', 'login')->name('login');
     Route::middleware('auth:api')->get('/user', 'getUserInfo');
-    Route::post('/register', 'register');
+    Route::post('/auth/register', 'register');
     Route::middleware('auth:api')->post('/logout', 'logout');
 });
 Route::get('/email-verification', [EmailVerificationController::class, 'verify'])->name('verification.verify');

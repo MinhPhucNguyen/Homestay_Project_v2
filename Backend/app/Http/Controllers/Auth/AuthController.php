@@ -50,7 +50,7 @@ class AuthController extends Controller
             'email' => $validatedData['email'],
             'phone' => '+84' . substr($validatedData['phone'], 1),
             'password' => Hash::make(trim($validatedData['password'])),
-            'confirm_password' => $validatedData['confirm_password'] == $validatedData['password'] ? 'true' : 'false',
+            'confirm_password' => $validatedData['confirm_password'] == $validatedData['password'] ? '1' : '0',
         ]);
 
         return response()->json([

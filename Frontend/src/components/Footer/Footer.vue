@@ -2,7 +2,7 @@
   <section id="footer">
     <div class="footer-container">
       <div class="footer-left">
-        <a href="">CA<span style="color: #1cc88a">R</span>ENTAL</a>
+        <a href=""><span style="color: #1cc88a">MY</span>HOMESTAY</a>
         <div class="phone-mail">
           <a href="" class="item mb-4">
             <p>1900 9217</p>
