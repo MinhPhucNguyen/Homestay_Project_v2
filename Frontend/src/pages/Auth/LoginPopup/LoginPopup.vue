@@ -134,6 +134,9 @@ const formData = ref({
   password: "",
 });
 
+
+console.log(formData);
+
 const loginSubmit = () => {
   isLoading.value = true;
   store

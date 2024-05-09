@@ -34,7 +34,7 @@
             aria-controls="collapseOne"
          >
             <i class="fas fa-fw fa-user"></i>
-            <span>Users</span>
+            <span>Khách hàng</span>
          </a>
          <div
             id="collapseOne"
@@ -45,7 +45,7 @@
             <div class="bg-white py-2 collapse-inner rounded">
                <h6 class="collapse-header">Action</h6>
                <router-link class="collapse-item" :to="{ name: 'admin.users' }">
-                  <span class="ml-3">User List</span></router-link
+                  <span class="ml-3">Danh sách</span></router-link
                >
             </div>
          </div>
@@ -73,11 +73,11 @@
             <div class="bg-white py-2 collapse-inner rounded">
                <h6 class="collapse-header">Action</h6>
                <router-link :to="{ name: 'admin.cars' }" class="collapse-item">
-                  <span class="ml-3">Car List</span>
+                  <span class="ml-3">Danh sách Homestay</span>
                </router-link>
-               <router-link :to="{ name: 'admin.features' }" class="collapse-item">
+               <!-- <router-link :to="{ name: 'admin.features' }" class="collapse-item">
                   <span class="ml-3">Features</span>
-               </router-link>
+               </router-link> -->
             </div>
          </div>
       </li>
@@ -97,7 +97,7 @@
             style="cursor: pointer"
          >
             <i class="fa-solid fa-arrow-right-from-bracket text-danger"></i>
-            <span>Logout</span>
+            <span>Đăng xuất</span>
          </a>
       </li>
 

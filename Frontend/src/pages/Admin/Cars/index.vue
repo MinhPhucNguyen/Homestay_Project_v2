@@ -37,10 +37,10 @@
 
       <div class="card">
          <div class="card-header bg-transparent border-0">
-            <div class="d-inline-block fw-bold text-dark fs-4">Cars List</div>
+            <div class="d-inline-block fw-bold text-dark fs-4">Danh sách Homestay</div>
             <router-link :to="{ name: 'cars.create' }" class="btn btn-success fw-bold float-right">
                <i class="fa-solid fa-plus"></i>
-               Add New Car
+               Thêm Homestay
             </router-link>
          </div>
          <div class="card-body mt-0">

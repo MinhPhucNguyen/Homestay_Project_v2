@@ -4,7 +4,7 @@
    <div class="col-md-12">
       <div class="card">
          <div class="card-header bg-transparent border-0">
-            <div class="d-inline-block fw-bold text-dark fs-4">Create New Car</div>
+            <div class="d-inline-block fw-bold text-dark fs-4"></div>
             <router-link :to="{ name: 'admin.cars' }" class="btn btn-danger fw-bold float-right">
                <i class="fa-solid fa-arrow-left"></i>
                BACK
@@ -13,7 +13,7 @@
          <div class="card-body mt-0">
             <form @submit.prevent="createNewCar">
                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                  <li class="nav-item" role="presentation">
+                  <!-- <li class="nav-item" role="presentation">
                      <button class="nav-link text-success fw-bold active" id="home-tab" data-bs-toggle="tab"
                         data-bs-target="#car-tab-pane" type="button" role="tab" aria-controls="car-tab-pane"
                         aria-selected="true">
@@ -44,10 +44,10 @@
                         <i class="fa-solid fa-image mr-1"></i>
                         Car Images
                      </button>
-                  </li>
+                  </li> -->
                </ul>
                <div class="tab-content" id="myTabContent">
-                  <div class="tab-pane fade show mt-3 active" id="car-tab-pane" role="tabpanel" aria-labelledby="home-tab"
+                  <!-- <div class="tab-pane fade show mt-3 active" id="car-tab-pane" role="tabpanel" aria-labelledby="home-tab"
                      tabindex="0">
                      <h5 class="mb-4">Information of Car</h5>
                      <div class="row">
@@ -163,7 +163,7 @@
                            <ckeditorComponent v-model="model.description"></ckeditorComponent>
                         </div>
                      </div>
-                  </div>
+                  </div> -->
 
                   <div class="tab-pane fade mt-3" id="time-tab-pane" role="tabpanel" aria-labelledby="image-tab"
                      tabindex="0">

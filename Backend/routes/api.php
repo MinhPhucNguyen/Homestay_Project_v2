@@ -54,40 +54,26 @@ Route::prefix('v2')->group(function () {
     Route::prefix('admin')->group(function () {
         Route::post('send-email', [MailController::class, 'sendEmail']);
 
-        Route::controller(UserController::class)->group(function () {
-            Route::get('users', 'index');
-            Route::get('users/all', 'selectAllUser');
-            Route::get('users/{id}', 'getUserById');
-            Route::post('users/create', 'createUser');
-            Route::put('users/{id}/edit', 'editUser');
-            Route::delete('users/{id}/delete', 'deleteUser');
-            Route::delete('users/delete-multi-user/{users}', 'deleteMultiUser');
-        });
+        // Route::controller(UserController::class)->group(function () {
+        //     Route::get('users', 'index');
+        //     Route::get('users/all', 'selectAllUser');
+        //     Route::get('users/{id}', 'getUserById');
+        //     Route::post('users/create', 'createUser');
+        //     Route::put('users/{id}/edit', 'editUser');
+        //     Route::delete('users/{id}/delete', 'deleteUser');
+        //     Route::delete('users/delete-multi-user/{users}', 'deleteMultiUser');
+        // });
 
-        Route::delete('users/{id}/remove-avatar', [ProfileController::class, 'removeAvatar']);
+        // Route::delete('users/{id}/remove-avatar', [ProfileController::class, 'removeAvatar']);
 
-        Route::controller(FeatureController::class)->group(function () {
-            Route::get('features', 'index');
-            Route::post('features/create', 'create');
-            Route::put('features/{id}/update', 'update');
-            Route::delete('features/{id}/delete', 'delete');
-        });
-
-        Route::controller(CarController::class)->group(function () {
-            Route::get('cars', 'index');
-            Route::post('cars/create', 'store');
-            Route::get('cars/{id}/edit', 'edit');
-            Route::post('cars/{id}/update', 'update');
-            Route::delete('cars/{id}/{filename}/remove-image', 'destroyImage');
-            Route::delete('cars/{id}/delete', 'destroy');
-        });
-
-        Route::controller(BrandController::class)->group(function () {
-            Route::get('brands', 'index');
-            Route::post('brands/create', 'create');
-            Route::post('brands/{id}/update', 'update');
-            Route::delete('brands/{id}/delete', 'delete');
-        });
+        // Route::controller(CarController::class)->group(function () {
+        //     Route::get('cars', 'index');
+        //     Route::post('cars/create', 'store');
+        //     Route::get('cars/{id}/edit', 'edit');
+        //     Route::post('cars/{id}/update', 'update');
+        //     Route::delete('cars/{id}/{filename}/remove-image', 'destroyImage');
+        //     Route::delete('cars/{id}/delete', 'destroy');
+        // });
 
         Route::controller(V2_BlogController::class)->group(function () {
             Route::get('blogs', 'index');
@@ -99,52 +85,5 @@ Route::prefix('v2')->group(function () {
         Route::post('upload', [UploadImageController::class, 'uploadImage']);
     });
 
-    /**
-     * TODO: SEARCH CAR
-     */
-    Route::post('search-filter-car', [SearchCarController::class, 'searchCar']);
-
-    /**
-     *  TODO: CHANGE AVATAR
-     */
-    Route::post('users/{id}/update-avatar', [ProfileController::class, 'updateAvatar']);
-
-    /**
-     * TODO: RESET PASSWORD
-     */
-    Route::middleware('auth:api')->post('users/{id}/change-password', [ChangePasswordController::class, 'changePassword']);
-
-    /**
-     * TODO: API FOR PUBLIC PAGE
-     */
-    //User API
-    Route::controller(UserController::class)->group(function () {
-        Route::patch('users/{id}/update-infor', 'updateInfor');
-        Route::patch('users/{id}/update-phone', 'updatePhoneNumber');
-        Route::patch('users/{id}/update-email', 'updateEmail');
-        Route::post('users/{id}/send-email-verification', 'sendVerificationEmail');
-        Route::post('users/{id}/send-phone-verification', 'sendVerificationPhone');
-        Route::post('users/verification-now', 'verificationNow');
-    });
-
-    //Delete account
-    Route::middleware('auth:api')->delete('users/{id}/delete-account', [DeleteAccountController::class, 'deleteAccount']);
-
-    //Favorite car
-    Route::middleware('auth:api')->controller(FavoriteController::class)->group(function () {
-        Route::get('fav/favorite-cars', 'favoriteCars');
-        Route::post('fav/add-car/{carId}', 'addCar');
-        Route::post('fav/remove-car/{carId}', 'removeCar');
-    });
-
-    // Car API
-    Route::controller(CarController::class)->group(function () {
-        Route::get('cars', 'index');
-        Route::get('cars/randomCars', 'getRandomCars');
-        Route::get('car/detail', 'show');
-    });
-
-    // Blog API
-    Route::get('blogs', [V2_BlogController::class, 'index']);
-    Route::get('blogs/{slug}', [V2_BlogController::class, 'getBlogBySlug']);
+ 
 });
