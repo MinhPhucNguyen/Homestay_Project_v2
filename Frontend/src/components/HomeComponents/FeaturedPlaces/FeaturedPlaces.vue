@@ -2,7 +2,7 @@
    <div id="places-section" class="hidden">
       <div class="section-container">
          <h2 class="section-title">Chương trình khuyến mãi</h2>
-         <h5 class="text-dark text-center fs-3 mb-4">Nhận nhiều ưu đãi hấp dẫn từ Carental</h5>
+         <h5 class="text-dark text-center fs-3 mb-4">Nhận nhiều ưu đãi hấp dẫn từ Myhomestay</h5>
 
          <div class="places-carousel-wrapper">
             <i class="fa-solid fa-chevron-left" @click="arrowBtn('left')"></i>

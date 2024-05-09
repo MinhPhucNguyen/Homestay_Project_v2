@@ -6,7 +6,7 @@
       <FeaturedPlacesSection />
       <AdvantagesSection />
       <ServiceSection />
-      <BlogSection />
+      <PhotoLibrarySection />
    </div>
 </template>
 
@@ -17,7 +17,7 @@ import FeaturedHomestaysSection from "../../components/HomeComponents/FeaturedHo
 import FeaturedPlacesSection from "../../components/HomeComponents/FeaturedPlaces/FeaturedPlaces.vue";
 import AdvantagesSection from "../../components/HomeComponents/Advantages/Advantages.vue";
 import ServiceSection from "../../components/HomeComponents/ServiceSection/ServiceSection.vue";
-import BlogSection from "../../components/HomeComponents/BlogSection/BlogSection.vue";
+import PhotoLibrarySection from "../../components/HomeComponents/PhotoLibrary/PhotoLibrary.vue";
 import { onMounted } from "vue";
 
 /**

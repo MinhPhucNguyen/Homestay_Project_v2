@@ -1,7 +1,7 @@
 <template>
    <div id="blog-section" class="hidden">
       <div class="section-container">
-         <p class="section-title">CA<span style="color: #1cc88a">R</span>ENTAL Blog</p>
+         <p class="section-title">Thư viện ảnh</p>
          <div class="blog-section-container" v-if="blogSectionList.length > 0">
             <div class="blog-wrap_1">
                <router-link
@@ -101,5 +101,5 @@ export default {
 
 <style scoped>
 @import "../../../assets/styles/MainStyles/HomeStyles.scss";
-@import "./BlogSection.scss";
+@import "./PhotoLibrary.scss";
 </style>

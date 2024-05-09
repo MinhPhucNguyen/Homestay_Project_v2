@@ -32,7 +32,7 @@
       </div>
       <div class="filter-section">
          <div class="m-container">
-            <div class="filter-container">
+            <!-- <div class="filter-container">
                <div class="filter-list">
                   <div class="reset-item" :class="{ active: isFiltered }" @click="resetFilter">
                      <i class="fa-solid fa-repeat">
@@ -161,7 +161,7 @@
                   </svg>
                   Bộ lọc
                </a>
-            </div>
+            </div> -->
          </div>
       </div>
    </div>
