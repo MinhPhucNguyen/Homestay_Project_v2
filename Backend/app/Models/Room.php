@@ -26,4 +26,9 @@ class Room extends Model
     {
         return $this->belongsTo(RoomType::class, 'room_type_id', 'room_type_id');
     }
+
+    public function roomImages()
+    {
+        return $this->hasMany(HomestaysImage::class, 'room_id', 'room_id');
+    }
 }

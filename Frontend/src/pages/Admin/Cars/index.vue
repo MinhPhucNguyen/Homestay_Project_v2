@@ -3,31 +3,6 @@
 
    <div class="col-md-12">
       <div class="m-0 d-flex align-items-center justify-content-between">
-         <div class="w-50">
-            <div class="mb-3 align-items-center d-inline-block mr-4 w-25">
-               <div class="d-flex align-items-center">
-                  <label for="filterByBrand" class="form-label mb-0 fw-bolder">Filter by Brand:</label>
-               </div>
-               <select name="filterByBrand" class="form-select mt-2 filter-by" v-model="filterByBrand">
-                  <option value="all">All</option>
-                  <option v-for="brand in brandsList" :key="brand.brand_id" :value="brand.brand_id">
-                     {{ brand.brand_name }}
-                  </option>
-               </select>
-            </div>
-
-            <div class="mb-3 align-items-center d-inline-block ml-2 w-25">
-               <div class="d-flex align-items-center">
-                  <label for="filterByFuel" class="form-label mb-0 fw-bolder">Filter by Fuel:</label>
-               </div>
-               <select v-model="filterByFuel" name="filterByFuel" class="form-select mt-2 filter-by-fuel">
-                  <option value="all">All fuels</option>
-                  <option value="Petrol">Petrol</option>
-                  <option value="Diesel">Diesel</option>
-               </select>
-            </div>
-         </div>
-
          <div class="w-25 mt-3 d-flex align-items-center">
             <i class="fa-solid fa-magnifying-glass fs-5 mr-2"></i>
             <input type="text" name="search" class="form-control small search-input border border-dark-subtletext-dark"
@@ -44,7 +19,7 @@
             </router-link>
          </div>
          <div class="card-body mt-0">
-            <table class="table table-bordered table-striped text-dark fw-bold">
+            <!-- <table class="table table-bordered table-striped text-dark fw-bold">
                <thead>
                   <tr class="text-dark">
                      <th data-sort="car_id" @click.prevent="changeSort('car_id')">
@@ -182,7 +157,7 @@
                      <td colspan="12" class="text-center">NOT FOUND</td>
                   </tr>
                </tbody>
-            </table>
+            </table> -->
             <div class="pagination">
                <Pagination :pagination="pagination" @pagination-page="getCarsList" />
             </div>

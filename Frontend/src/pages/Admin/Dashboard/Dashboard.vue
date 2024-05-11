@@ -34,7 +34,7 @@
                   class="h-100 w-100 d-flex justify-content-center align-items-center text-white flex-column"
                   style="font-size: 60px"
                >
-                  <i class="fa-solid fa-car"></i>
+                  <!-- <i class="fa-solid fa-car"></i> -->
                   <h5 class="mt-3 fw-bold">Homestay: </h5>
                </div>
             </router-link>
@@ -49,8 +49,8 @@
                   class="h-100 w-100 d-flex justify-content-center align-items-center text-white flex-column"
                   style="font-size: 60px"
                >
-                <i class="fa-brands fa-blogger-b"></i>
-                  <h5 class="mt-3 fw-bold">Blogs: </h5>
+                <!-- <i class="fa-brands fa-blogger-b"></i> -->
+                  <h5 class="mt-3 fw-bold">Thư viện ảnh: </h5>
                </div>
             </router-link>
          </div>

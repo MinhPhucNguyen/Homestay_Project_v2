@@ -13,6 +13,7 @@ class RoomType extends Model
 
     protected $fillable = [
         'name',
+        'room_type',
         'description',
         'price_per_night',
         'capacity',

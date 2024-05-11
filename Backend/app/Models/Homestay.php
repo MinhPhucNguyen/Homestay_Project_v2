@@ -13,9 +13,11 @@ class Homestay extends Model
 
     protected $fillable = [
         'homestay_name',
+        'slug',
         'description',
         'email',
         'address',
+        'city',
         'phone_number',
         'stars',
         'status',
@@ -24,5 +26,10 @@ class Homestay extends Model
     public function rooms()
     {
         return $this->hasMany(Room::class, 'homestay_id', 'homestay_id');
+    }
+
+    public function homestayImages()
+    {
+        return $this->hasMany(HomestaysImage::class, 'homestay_id', 'homestay_id');
     }
 }

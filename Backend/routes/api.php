@@ -1,15 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\v2\UserController;
-use App\Http\Controllers\Api\v2\CarController;
-use App\Http\Controllers\Api\v2\BlogController as V2_BlogController;
-use App\Http\Controllers\Api\v2\BrandController;
-use App\Http\Controllers\Api\v2\DeleteAccountController;
-use App\Http\Controllers\Api\v2\FeatureController;
-use App\Http\Controllers\Api\v2\FavoriteController;
-use App\Http\Controllers\Api\v2\ProfileController;
-use App\Http\Controllers\Api\v2\SearchCarController;
-use App\Http\Controllers\Api\v2\UploadImageController;
+use App\Http\Controllers\Api\v2\HomestayController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\ChangePasswordController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
@@ -52,38 +44,22 @@ Route::get('/authorize/{provider}/callback', [SocialAuthController::class, 'hand
 Route::prefix('v2')->group(function () {
 
     Route::prefix('admin')->group(function () {
-        Route::post('send-email', [MailController::class, 'sendEmail']);
 
-        // Route::controller(UserController::class)->group(function () {
-        //     Route::get('users', 'index');
-        //     Route::get('users/all', 'selectAllUser');
-        //     Route::get('users/{id}', 'getUserById');
-        //     Route::post('users/create', 'createUser');
-        //     Route::put('users/{id}/edit', 'editUser');
-        //     Route::delete('users/{id}/delete', 'deleteUser');
-        //     Route::delete('users/delete-multi-user/{users}', 'deleteMultiUser');
-        // });
+        Route::controller(UserController::class)->group(function () {
+            Route::get('users', 'index');
+            Route::get('users/all', 'selectAllUser');
+            Route::get('users/{id}', 'getUserById');
+            Route::post('users/create', 'createUser');
+            Route::put('users/{id}/edit', 'editUser');
+            Route::delete('users/{id}/delete', 'deleteUser');
+            Route::delete('users/delete-multi-user/{users}', 'deleteMultiUser');
+        });
 
         // Route::delete('users/{id}/remove-avatar', [ProfileController::class, 'removeAvatar']);
 
-        // Route::controller(CarController::class)->group(function () {
-        //     Route::get('cars', 'index');
-        //     Route::post('cars/create', 'store');
-        //     Route::get('cars/{id}/edit', 'edit');
-        //     Route::post('cars/{id}/update', 'update');
-        //     Route::delete('cars/{id}/{filename}/remove-image', 'destroyImage');
-        //     Route::delete('cars/{id}/delete', 'destroy');
-        // });
-
-        Route::controller(V2_BlogController::class)->group(function () {
-            Route::get('blogs', 'index');
-            Route::get('blogs/{id}', 'getBlogById');
-            Route::post('blogs/create', 'createBlog');
-            Route::post('blogs/{id}/update', 'updateBlog');
-            Route::delete('blogs/{id}/delete', 'deleteBlog');
+        Route::controller(HomestayController::class)->group(function () {
+            Route::get('homestays', 'index');
+            Route::get('homestays/{id}', 'show');
         });
-        Route::post('upload', [UploadImageController::class, 'uploadImage']);
     });
-
- 
 });

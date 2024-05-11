@@ -16,7 +16,7 @@ window.$ = window.jQuery = jquery;
 library.add(fas);
 
 require("@/store/subscriber");
-axios.defaults.baseURL = "http://127.0.0.1:8000/api";
+axios.defaults.baseURL = "http://127.0.0.1:8001/api";
 
 /**
  * TODO: Kiểm tra xem người dùng đã đăng nhập hay chưa bằng cách kiểm tra localStorage có token hay không

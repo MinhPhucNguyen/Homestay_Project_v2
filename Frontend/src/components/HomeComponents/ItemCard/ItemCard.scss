@@ -1,9 +1,9 @@
-.car-item {
+.homestay-item {
    text-decoration: none;
    width: calc(100% / 4);
 }
 
-.car-item .card {
+.homestay-item .card {
    height: 410px;
    width: 100%;
    position: relative;
@@ -36,7 +36,7 @@
    }
 }
 
-.car-item:hover {
+.homestay-item:hover {
    text-decoration: none;
 }
 
@@ -83,7 +83,7 @@
    background: #fce0d3;
 }
 
-.car-item-divider {
+.homestay-item-divider {
    width: 100%;
    height: 1px;
    background: #ccc;

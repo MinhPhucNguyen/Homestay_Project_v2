@@ -5,7 +5,7 @@
          :to="{ name: 'admin.dashboard' }"
          class="sidebar-brand d-flex align-items-center justify-content-center border-bottom"
       >
-         <div class="sidebar-brand-text">CA<span style="color: #1cc88f">R</span>ENTAL</div>
+         <div class="sidebar-brand-text"><span style="color: #1cc88f">MY</span>HOMESTAY</div>
       </router-link>
 
       <!-- Divider -->

@@ -1,58 +1,37 @@
 <template>
    <router-link
-      :to="`/car/${(
-         props.carItemProps.brand +
-         ' ' +
-         props.carItemProps.carName +
-         props.carItemProps.yearOfCar
-      )
-         .toLowerCase()
-         .replace(/\s+/g, '-')}/${props.carItemProps.carId}`"
-      class="car-item"
-      v-if="props.carItemProps.status === 1"
+      :to="`/homestay/${(
+         props.itemProps.slug
+      )}`"
+      class="homestay-item"
    >
       <div class="card">
          <div
             class="mini-fav-btn"
-            :class="{ active: isFavorite }"
-            :id="props.carItemProps.carId"
-            @click.prevent="addCarToFavorite"
+            :id="props.itemProps.homestayId"
          >
             <i class="fa-regular fa-heart"></i>
          </div>
-         <img :src="imagePath" class="card-img-top" alt="car_image" />
+         <img :src="imagePath" class="card-img-top" alt="homestay_image" />
          <div class="card-body">
-            <div class="d-flex align-items-center">
-               <p class="card-text_transmission">
-                  {{ props.carItemProps.transmission === "0" ? "Số tự động" : "Số sàn" }}
-               </p>
-               <p class="card-text_delivery" v-if="props.carItemProps.delivery_enable === 1">
-                  Giao xe tận nơi
-               </p>
-            </div>
             <h5 class="card-title text-uppercase">
                <span>
-                  {{ props.carItemProps.carCustomName }}
+                  {{ props.itemProps.homestayName }}
                </span>
-               <font-awesome-icon :icon="['fas', 'shield-halved']" style="color: #1cc88a" />
             </h5>
             <div class="info">
                <div class="desc-address d-flex">
                   <div class="d-flex align-items-center justify-content-center">
                      <font-awesome-icon icon="fa-solid fa-location-dot" />
                   </div>
-                  <span>{{ props.carItemProps.location }}</span>
+                  <span>{{ props.itemProps.address }}</span>
                </div>
             </div>
             <div class="car-item-divider"></div>
             <div class="trip-price d-flex justify-content-between align-items-center mt-3">
-               <div class="trip">
-                  <i class="fa-solid fa-suitcase-rolling"></i>
-                  <span> {{ props.carItemProps.numberOfTrip }} </span>chuyến
-               </div>
-               <div class="desc-price">
-                  {{ formatCurrency(props.carItemProps.price) }}
-               </div>
+<!--               <div class="desc-price">-->
+<!--                  {{ formatCurrency(props.itemProps[0].pricePerNight) }}-->
+<!--               </div>-->
             </div>
          </div>
       </div>
@@ -62,16 +41,16 @@
 <script setup>
 import { formatCurrency } from "@/utils/formatCurrency.js";
 import { useStore } from "vuex";
-import { ref, watch } from "vue";
+import { ref } from "vue";
 
 const props = defineProps({
-   carItemProps: {
+   itemProps: {
       type: Object,
       required: true,
    },
    imagePath: {
       type: String,
-      required: true,
+      required: false,
    },
 });
 
@@ -82,31 +61,31 @@ const store = useStore();
  */
 const addCarToFavorite = (event) => {
    const target = event.currentTarget;
-   const carId = target.getAttribute("id");
+   const homestayId = target.getAttribute("id");
 
-   if (carId != props.carItemProps.carId) return;
+   // if (carId != props.itemProps.homestayId) return;
 
-   isFavorite.value = !isFavorite.value;
-   target.classList.toggle("active");
-   if (target.classList.contains("active")) {
-      store
-         .dispatch("favorite/addCar", { id: props.carItemProps.carId })
-         .then((response) => {
-            console.log(response);
-         })
-         .catch((error) => {
-            console.log(error);
-         });
-   } else {
-      store
-         .dispatch("favorite/removeCar", { id: props.carItemProps.carId })
-         .then((response) => {
-            console.log(response);
-         })
-         .catch((error) => {
-            console.log(error);
-         });
-   }
+   // isFavorite.value = !isFavorite.value;
+   // target.classList.toggle("active");
+   // if (target.classList.contains("active")) {
+   //    store
+   //       .dispatch("favorite/addCar", { id: props.itemProps.homestayId })
+   //       .then((response) => {
+   //          console.log(response);
+   //       })
+   //       .catch((error) => {
+   //          console.log(error);
+   //       });
+   // } else {
+   //    store
+   //       .dispatch("favorite/removeCar", { id: props.carItemProps.carId })
+   //       .then((response) => {
+   //          console.log(response);
+   //       })
+   //       .catch((error) => {
+   //          console.log(error);
+   //       });
+   // }
 };
 
 store.getters["favorite/getFavoriteCars"].some((car) => {

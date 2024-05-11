@@ -1,13 +1,12 @@
 <template>
-   <div id="featured-cars-section" class="hidden">
+   <div id="featured-homestays-section" class="hidden">
       <div class="section-container">
-         <p class="section-title">Homestay dành cho bạn</p>
-         <div class="car-list" v-if="randomCars.length > 0">
+         <p class="section-title">Homestays dành cho bạn</p>
+         <div class="homestay-list" v-if="homestays.length > 0">
             <ItemCard
-               v-for="carItem in randomCars"
-               :key="carItem.carId"
-               :carItemProps="carItem"
-               :imagePath="getImagePath(carItem.carImages)"
+               v-for="homestay in homestays"
+               :key="homestays.homestayId"
+               :itemProps="homestay"
             />
          </div>
          <div v-else-if="errorMessage">{{ errorMessage }}</div>
@@ -23,27 +22,27 @@ import axios from "axios";
 import { ref } from "vue";
 import ItemCard from "@/components/HomeComponents/ItemCard/ItemCard.vue";
 import stateLoading from "@/components/Loading/Loading.vue";
-const randomCars = ref([]);
+const homestays = ref([]);
 const errorMessage = ref(null);
 
-const getRandomCars = async () => {
+const getHomestayList = async () => {
    try {
-      const response = await axios.get("v2/cars/randomCars");
+      const response = await axios.get("v2/admin/homestays");
       if (response.status === 200) {
-         randomCars.value = response.data.data.cars;
+        homestays.value = response.data.data.homestays;
       }
    } catch (error) {
       errorMessage.value = error;
    }
 };
-getRandomCars();
+getHomestayList();
 
-const getImagePath = (carImages) => {
-   if (carImages.length > 0) {
-      return carImages[0].imagePath;
-   }
-   return null;
-};
+// const getImagePath = (carImages) => {
+//    if (carImages.length > 0) {
+//       return carImages[0].imagePath;
+//    }
+//    return null;
+// };
 </script>
 
 <style lang="scss" scoped>
