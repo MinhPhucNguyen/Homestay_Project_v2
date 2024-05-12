@@ -1,8 +1,8 @@
 <template>
    <div id="places-section" class="hidden">
       <div class="section-container">
-         <h2 class="section-title">Chương trình khuyến mãi</h2>
-         <h5 class="text-dark text-center fs-3 mb-4">Nhận nhiều ưu đãi hấp dẫn từ Myhomestay</h5>
+         <h2 class="section-title">Điểm đến thịnh hành</h2>
+         <h5 class="text-dark text-center fs-3 mb-4">Du khách tìm kiếm về Việt Nam cũng đặt chỗ ở những nơi này</h5>
 
          <div class="places-carousel-wrapper">
             <i class="fa-solid fa-chevron-left" @click="arrowBtn('left')"></i>
