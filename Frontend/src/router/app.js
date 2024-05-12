@@ -18,17 +18,8 @@ const app = [
             component: () => import("../pages/AboutPage/AboutPage.vue"),
          },
          {
-            path: "car/:carname/:id",
-            component: () => import("../pages/CarDetail/CarDetail.vue"),
-         },
-         {
-            path: "blog",
-            component: () => import("../pages/BlogPage/BlogPage.vue"),
-         },
-         {
-            path: "blog/:slug",
-            component: () => import("../pages/BlogDetail/BlogDetail.vue"),
-            name: "blogDetail",
+            path: "homestay/:slug",
+            component: () => import("../pages/HomestayDetail/HomestayDetail.vue"),
          },
          {
             path: "find/filter",

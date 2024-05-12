@@ -63,8 +63,6 @@ const props = defineProps({
   },
 });
 
-console.log(props.itemProps);
-
 const isFavorite = ref(false);
 const store = useStore();
 /**

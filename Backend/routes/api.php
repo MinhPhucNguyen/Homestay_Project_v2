@@ -57,9 +57,14 @@ Route::prefix('v2')->group(function () {
 
         // Route::delete('users/{id}/remove-avatar', [ProfileController::class, 'removeAvatar']);
 
-        Route::controller(HomestayController::class)->group(function () {
-            Route::get('homestays', 'index');
-            Route::get('homestays/{id}', 'show');
-        });
+//        Route::controller(HomestayController::class)->group(function () {
+//            Route::get('homestays', 'index');
+//            Route::get('homestays/{id}', 'show');
+//        });
+    });
+
+    Route::controller(HomestayController::class)->group(function () {
+        Route::get('homestays', 'index');
+        Route::get('homestay/{slug}', 'getHomestayBySlug');
     });
 });

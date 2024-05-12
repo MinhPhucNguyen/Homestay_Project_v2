@@ -17,11 +17,12 @@ class HomestayController extends Controller
         return new HomestayCollection($homestays);
     }
 
-    public function show(Request $request)
+    public function getHomestayBySlug($slug)
     {
-        $homestayId = $request->input('homestay_id'); //thêm input car_id vào đương dẫn url để lấy id
-        $homestay = Homestay::findOrFail($homestayId);
-        return new HomestayResource($homestay);
+        $homestay = Homestay::where('slug', 'like', $slug)->first();
+        return response()->json([
+            'homestay' => new HomestayResource($homestay),
+        ], 200);
     }
 
     public function store(Request $request)
@@ -38,7 +39,7 @@ class HomestayController extends Controller
             'stars' => $request->stars,
             'status' => $request->status,
         ]);
-        
+
         return response()->json([
             'message' => 'Create homestay successfully!'
         ], 200);

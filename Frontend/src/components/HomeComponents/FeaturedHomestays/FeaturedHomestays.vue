@@ -27,7 +27,7 @@ const errorMessage = ref(null);
 
 const getHomestayList = async () => {
    try {
-      const response = await axios.get("v2/admin/homestays");
+      const response = await axios.get("v2/homestays");
       if (response.status === 200) {
         homestays.value = response.data.data.homestays;
       }
