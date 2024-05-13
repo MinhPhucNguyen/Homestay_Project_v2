@@ -32,4 +32,9 @@ class Homestay extends Model
     {
         return $this->hasMany(HomestaysImage::class, 'homestay_id', 'homestay_id');
     }
+
+    public function facilities()
+    {
+        return $this->belongsToMany(Facility::class);
+    }
 }
