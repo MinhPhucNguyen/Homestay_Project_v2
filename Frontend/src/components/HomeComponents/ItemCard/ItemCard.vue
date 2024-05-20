@@ -1,6 +1,6 @@
 <template>
   <router-link
-      :to="`/homestay/${(
+      :to="`/homestays/${(
          props.itemProps.slug
       )}`"
       class="homestay-item"
@@ -49,8 +49,6 @@
 <script setup>
 import {formatCurrency} from "@/utils/formatCurrency.js";
 import {getLowestPrice} from "@/utils/getLowestPrice.js";
-import {useStore} from "vuex";
-import {ref} from "vue";
 
 const props = defineProps({
   itemProps: {
@@ -63,11 +61,6 @@ const props = defineProps({
   },
 });
 
-const isFavorite = ref(false);
-const store = useStore();
-/**
- * TODO: Add car to favorite
- */
 </script>
 
 <style scoped>

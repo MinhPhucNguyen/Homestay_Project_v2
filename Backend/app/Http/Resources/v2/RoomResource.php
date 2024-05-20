@@ -20,6 +20,12 @@ class RoomResource extends JsonResource
             'roomName' => $this->roomType->name,
             'roomType' => $this->roomType->room_type,
             'pricePerNight' => $this->roomType->price_per_night,
+            'capacity' => $this->roomType->capacity,
+            'facilities' => $this->facilities->map(fn ($facility) => [
+                'facilityId' => $facility->facility_id,
+                'facilityName' => $facility->facility_name,
+                'facilityIcon' => $facility->facility_icon,
+            ]),
             'roomImages' => $this->roomImages->map(fn ($images) =>  [
                 'id' => $images->id,
                 'homestayId' => $images->homestay_id,

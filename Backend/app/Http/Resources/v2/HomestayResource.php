@@ -15,7 +15,7 @@ class HomestayResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'homestayId' => $this->homestay_id,
+            'homestayId' => $this->homestay_id ?? null,
             'rooms' =>  RoomResource::collection($this->rooms),
             'slug' => $this->slug,
             'homestayName' => $this->homestay_name,
@@ -24,6 +24,11 @@ class HomestayResource extends JsonResource
             'phone' => $this->phone,
             'address' => $this->address,
             'city' => $this->city,
+            'facilities' => $this->facilities->map(fn ($facility) => [
+                'facilityId' => $facility->facility_id,
+                'facilityName' => $facility->facility_name,
+                'facilityIcon' => $facility->facility_icon,
+            ]),
             'homestayImages' => $this->homestayImages->map(fn ($images) =>  [
                 'id' => $images->id,
                 'homestayId' => $images->homestay_id,

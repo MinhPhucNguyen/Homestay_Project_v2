@@ -1,7 +1,7 @@
 <template>
   <div class="homestay_detail_container"
        v-if="Object.values(homestayDetail).length !== 0 && homestayDetail.constructor === Object">
-          <div class="homestay_image">
+          <div class="homestay_image" v-if="homestayDetail.homestayImages[0]">
              <div class="homestay_image_container">
                 <div class="main_image">
                    <div class="cover_homestay_image">
@@ -136,8 +136,8 @@
                      </div>
                   </div>
                   <div class="line-page mt-4"></div>
-<!--                  <div class="infor-homestay-desc">-->
-<!--                     <h6>Chính sách hủy chuyến</h6>-->
+                  <div class="infor-homestay-desc">
+                     <h6>Phòng trống</h6>
 <!--                     <div class="cancel-policy w-100">-->
 <!--                        <div class="column title">-->
 <!--                           <div class="column-item">Thời điểm hủy chuyển</div>-->
@@ -183,7 +183,7 @@
 <!--                           <p>* Tiền cọc sẽ được hoàn trả trong vòng 1-3 ngày làm việc</p>-->
 <!--                        </div>-->
 <!--                     </div>-->
-<!--                  </div>-->
+                  </div>
                </div>
     </div>
   </div>
@@ -215,7 +215,7 @@ const isFavorite = ref(false);
 
 const getHomestayDetail = async () => {
   try {
-    const response = await axios.get(`v2/homestay/${useRoute().params.slug}`);
+    const response = await axios.get(`v2/homestays/${useRoute().params.slug}`);
     if (response.status === 200) {
       homestayDetail.value = response.data.homestay;
     } else {

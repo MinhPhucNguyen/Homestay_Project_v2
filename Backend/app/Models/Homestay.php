@@ -9,6 +9,7 @@ class Homestay extends Model
 {
     use HasFactory;
 
+    protected $table = 'homestays';
     protected $primaryKey = 'homestay_id';
 
     protected $fillable = [
@@ -35,6 +36,6 @@ class Homestay extends Model
 
     public function facilities()
     {
-        return $this->belongsToMany(Facility::class);
+        return $this->belongsToMany(Facility::class, 'highlight_facilities', 'homestay_id', 'facility_id');
     }
 }

@@ -18,7 +18,7 @@ const app = [
             component: () => import("../pages/AboutPage/AboutPage.vue"),
          },
          {
-            path: "homestay/:slug",
+            path: "homestays/:slug",
             component: () => import("../pages/HomestayDetail/HomestayDetail.vue"),
          },
          {
