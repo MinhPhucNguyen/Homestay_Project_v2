@@ -22,6 +22,11 @@ class Room extends Model
         return $this->belongsTo(Homestay::class, 'homestay_id', 'homestay_id');
     }
 
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class, 'room_id', 'room_id');
+    }
+
     public function roomType()
     {
         return $this->belongsTo(RoomType::class, 'room_type_id', 'room_type_id');
