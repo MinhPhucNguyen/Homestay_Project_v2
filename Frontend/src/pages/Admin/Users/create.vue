@@ -2,7 +2,7 @@
    <div class="col-md-12">
       <div class="card p-0">
          <div class="card-header bg-transparent">
-            <div class="d-inline-block fw-bold text-dark fs-4">Create New User</div>
+            <div class="d-inline-block fw-bold text-dark fs-4">Thêm khách hàng mới</div>
             <router-link to="/admin/users" class="btn btn-danger fw-bold float-right">
                <i class="fa-solid fa-arrow-left"></i>
                Quay về
@@ -12,7 +12,7 @@
             <form @submit.prevent="createUser" method="POST" v-if="user">
                <div class="row">
                   <div class="col-md-6 mb-3">
-                     <label for="firstname">Firstname</label>
+                     <label for="firstname">Tên</label>
                      <input
                         type="text"
                         name="firstname"
@@ -24,7 +24,7 @@
                      }}</small>
                   </div>
                   <div class="col-md-6 mb-3">
-                     <label for="lastname">Lastname</label>
+                     <label for="lastname">Họ</label>
                      <input
                         type="text"
                         name="lastname"
@@ -35,36 +35,8 @@
                         errors.lastname[0]
                      }}</small>
                   </div>
-                  <div class="col-md-12 mb-3">
-                     <label for="">Gender</label>
-                     <div>
-                        <div class="form-check d-inline-block">
-                           <input
-                              class="form-check-input"
-                              type="radio"
-                              name="gender"
-                              id="male"
-                              value="1"
-                              v-model="user.gender"
-                           />
-                           <label class="form-check-label" for="male"> Male </label>
-                        </div>
-                        <div style="width: 10px; display: inline-block"></div>
-                        <div class="form-check d-inline-block">
-                           <input
-                              class="form-check-input"
-                              name="gender"
-                              type="radio"
-                              id="female"
-                              value="0"
-                              v-model="user.gender"
-                           />
-                           <label class="form-check-label" for="female"> Female </label>
-                        </div>
-                     </div>
-                  </div>
                   <div class="col-md-6 mb-3">
-                     <label for="username">Username</label>
+                     <label for="username">Tên hiển thị</label>
                      <input
                         type="text"
                         name="username"
@@ -76,17 +48,17 @@
                      }}</small>
                   </div>
                   <div class="col-md-6 mb-3">
-                     <label for="email">Email</label>
+                     <label for="email">Địa chỉ Email</label>
                      <input type="email" name="email" class="form-control" v-model="user.email" />
                      <small class="text-danger" v-if="errors.email">{{ errors.email[0] }}</small>
                   </div>
                   <div class="col-md-6 mb-3">
-                     <label for="phone">Phone</label>
+                     <label for="phone">Số điện thoại</label>
                      <input type="text" name="phone" class="form-control" v-model="user.phone" />
                      <small class="text-danger" v-if="errors.phone">{{ errors.phone[0] }}</small>
                   </div>
                   <div class="col-md-6 mb-3">
-                     <label for="address">Address</label>
+                     <label for="address">Địa chỉ</label>
                      <input
                         type="text"
                         name="address"
@@ -98,7 +70,7 @@
                      }}</small>
                   </div>
                   <div class="col-md-6 mb-3">
-                     <label for="password">Password</label>
+                     <label for="password">Mật khẩu</label>
                      <input
                         type="password"
                         name="password"
@@ -110,7 +82,7 @@
                      }}</small>
                   </div>
                   <div class="col-md-6 mb-3">
-                     <label for="confirm_password">Confirm Password</label>
+                     <label for="confirm_password">Xác nhận mật khẩu</label>
                      <input
                         type="password"
                         name="confirm_password"
@@ -122,11 +94,11 @@
                      }}</small>
                   </div>
                   <div class="col-md-6 mb-3">
-                     <label for="role_as">Role as</label>
+                     <label for="role_as">Vai trò</label>
                      <select name="role_as" class="form-control" v-model="user.role_as">
-                        <option value="">--Select Role--</option>
-                        <option value="1">Admin</option>
-                        <option value="0">User</option>
+                        <option value="">--Vui lòng chọn--</option>
+                        <option value="1">Quản trị viên</option>
+                        <option value="0">Khách hàng</option>
                      </select>
                      <small class="text-danger" v-if="errors.role_as">{{
                         errors.role_as[0]
@@ -139,7 +111,7 @@
                         class="btn btn-success p-3 fw-bold float-end"
                         :disabled="isInvalidForm"
                      >
-                        Create
+                        Lưu
                      </button>
                   </div>
                </div>

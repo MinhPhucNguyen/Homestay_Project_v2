@@ -97,7 +97,6 @@
                               "></i>
                         </span>
                      </th>
-                     <th class="text-center">Giới tính</th>
                      <th class="text-center" @click.prevent="changeSort('email')">
                         Địa chỉ email
                         <span class="sort-id-icon float-end">
@@ -164,7 +163,6 @@
                         <router-link :to="{ name: 'admin.users.profile', params: { id: user.id } }" class="text-success">{{
                            user.username }}</router-link>
                      </td>
-                     <td class="text-center">{{ user.gender === 1 ? "Nam" : "Nữ" }}</td>
                      <td class="text-center">{{ user.email }}</td>
                      <td class="text-center">{{ user.phone }}</td>
                      <td class="text-center">{{ user.address }}</td>
