@@ -2,7 +2,7 @@
    <ul class="pagination d-flex align-items-center">
       <li>
          <a class="d-flex align-items-center" href="#" @click.prevent="previousPage"
-            ><i class="fa-solid fa-angle-left mr-1"></i><span>Previous</span></a
+            ><i class="fa-solid fa-angle-left mr-1"></i></a
          >
       </li>
       <li class="center d-flex align-items-center">
@@ -26,8 +26,7 @@
       </li>
       <li>
          <a class="d-flex align-items-center" href="#" @click.prevent="nextPage"
-            ><span>Next</span> <i class="fa-solid fa-angle-right ml-1"></i
-         ></a>
+            ><i class="fa-solid fa-angle-right ml-1"></i></a>
       </li>
    </ul>
 </template>

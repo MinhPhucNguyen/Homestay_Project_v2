@@ -83,7 +83,7 @@
                         </div>
                         <div v-else>
                            <i class="fa-regular fa-paper-plane"></i>
-                           <span class="ml-1">Send</span>
+                           <span class="ml-1">Gửi</span>
                         </div>
                      </button>
                   </div>

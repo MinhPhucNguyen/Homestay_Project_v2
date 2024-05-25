@@ -5,7 +5,7 @@
             <div class="d-inline-block fw-bold text-dark fs-4">Create New User</div>
             <router-link to="/admin/users" class="btn btn-danger fw-bold float-right">
                <i class="fa-solid fa-arrow-left"></i>
-               BACK
+               Quay về
             </router-link>
          </div>
          <div class="card-body p-3 mt-0">

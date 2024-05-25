@@ -7,7 +7,7 @@
             <div class="d-inline-block fw-bold text-dark fs-4">Edit User</div>
             <router-link :to="{ name: 'admin.users' }" class="btn btn-danger fw-bold float-right">
                <i class="fa-solid fa-arrow-left"></i>
-               BACK
+               Quay về
             </router-link>
          </div>
          <div v-if="model" class="card-body p-4">

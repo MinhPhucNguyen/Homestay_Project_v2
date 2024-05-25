@@ -62,7 +62,7 @@
                   class="fw-bolder mb-1"
                   :class="user.role_as === 1 ? 'text-danger' : 'text-success'"
                >
-                  {{ user.role_as === 1 ? "Admin" : "User" }}
+                  {{ user.role_as === 1 ? "Quản trị viên" : "Khách hàng" }}
                </p>
                <p class="fs-6 fw-bolder text-secondary">{{ user.address }}</p>
                <router-link
@@ -70,7 +70,7 @@
                   class="btn btn-success fw-bold mt-3 send-email-btn"
                >
                   <i class="fa-solid fa-envelope"></i>
-                  <span class="ml-2 fw-bold" style="font-size: 14px">SEND EMAIL</span>
+                  <span class="ml-2 fw-bold" style="font-size: 14px">GỬI EMAIL</span>
                </router-link>
             </div>
          </div>
@@ -79,48 +79,48 @@
                :to="{ name: 'admin.users.edit', params: { id: user.id } }"
                class="edit-btn-in-view bg-transparent fw-bold mr-4"
             >
-               <span class="mr-2">Edit</span>
+               <span class="mr-2">Sửa</span>
                <i class="fa-solid fa-user-pen"></i>
             </router-link>
          </div>
       </div>
       <div class="view-right-item rounded-3 border d-flex justify-content-between mt-4 mb-4">
          <div class="w-75">
-            <p class="fw-bolder text-dark mb-4">User information</p>
+            <p class="fw-bolder text-dark mb-4">Thông tin khách hàng</p>
             <div class="user-info-container">
                <div class="row d-flex w-100 mb-2">
-                  <div class="user-info-item-left pr-4 w-50">
-                     <p class="mb-1 user-info-title">Firstname</p>
+                  <div class="user-info-item-left pr-4 w-50" v-if="user.firstname">
+                     <p class="mb-1 user-info-title">Tên</p>
                      <p class="user-info">{{ user.firstname }}</p>
                   </div>
-                  <div class="user-info-item-right w-50">
-                     <p class="mb-1 user-info-title">Lastname</p>
+                  <div class="user-info-item-right w-50" v-if="user.lastname">
+                     <p class="mb-1 user-info-title">Họ</p>
                      <p class="user-info">{{ user.lastname }}</p>
                   </div>
                </div>
-               <div class="row d-flex w-100 mb-2">
+               <div class="row d-flex w-100 mb-2" v-if="user.username">
                   <div class="user-info-item-left pr-4 w-50">
-                     <p class="mb-1 user-info-title">Username</p>
+                     <p class="mb-1 user-info-title">Tên hiển thị</p>
                      <p class="user-info">{{ user.username }}</p>
                   </div>
                   <div class="user-info-item-right w-50">
-                     <p class="mb-1 user-info-title">Gender</p>
-                     <p class="user-info">{{ user.gender === 1 ? "Male" : "Female" }}</p>
+                     <p class="mb-1 user-info-title">Giới tính</p>
+                     <p class="user-info">{{ user.gender === 1 ? "Nam" : "Nữ" }}</p>
                   </div>
                </div>
                <div class="row d-flex w-100 mb-2">
-                  <div class="user-info-item-left pr-4 w-50">
-                     <p class="mb-1 user-info-title">Email Address</p>
+                  <div class="user-info-item-left pr-4 w-50" v-if="user.email">
+                     <p class="mb-1 user-info-title">Địa chỉ Email</p>
                      <p class="user-info">{{ user.email }}</p>
                   </div>
-                  <div class="user-info-item-right w-50">
-                     <p class="mb-1 user-info-title">Phone Number</p>
+                  <div class="user-info-item-right w-50" v-if="user.phone">
+                     <p class="mb-1 user-info-title">Số điện thoại</p>
                      <p class="user-info">{{ user.phone }}</p>
                   </div>
                </div>
-               <div class="row d-flex w-100 mb-2">
+               <div class="row d-flex w-100 mb-2" v-if="user.address">
                   <div class="user-info-item-left pr-4 w-50">
-                     <p class="mb-1 user-info-title">Address</p>
+                     <p class="mb-1 user-info-title">Địa chỉ</p>
                      <p class="user-info">{{ user.address }}</p>
                   </div>
                </div>
@@ -131,16 +131,16 @@
                :to="{ name: 'admin.users.edit', params: { id: user.id } }"
                class="edit-btn-in-view bg-transparent fw-bold mr-4"
             >
-               <span class="mr-2">Edit</span>
+               <span class="mr-2">Sửa</span>
                <i class="fa-solid fa-user-pen"></i>
             </router-link>
          </div>
       </div>
       <div class="view-right-item rounded-3 border d-flex justify-content-between">
          <div class="w-75">
-            <p class="fw-bolder text-dark mb-4">Car Rental Information</p>
+            <p class="fw-bolder text-dark mb-4">Thông tin phòng đã đặt</p>
             <div class="car-rental-info-container">
-               <p class="text-warning fw-bold">There are no rental cars</p>
+               <p class="text-warning fw-bold">Khách hàng chưa đặt phòng nào.</p>
             </div>
          </div>
       </div>

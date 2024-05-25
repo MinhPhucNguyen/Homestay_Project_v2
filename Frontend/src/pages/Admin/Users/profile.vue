@@ -1,14 +1,14 @@
 <template>
    <my-modal @clickTo="deleteUser()" idModal="deleteUserModal" bgColor="danger">
-      <template v-slot:title>Delete user</template>
-      <h6 class="text-dark text-center fs-5 mt-4">Are you sure, you want to delete this user?</h6>
-      <template v-slot:buttonName>Delete</template>
+      <template v-slot:title>Xóa khách hàng</template>
+      <h6 class="text-dark text-center fs-5 mt-4">Bạn có chắc chắn muốn xóa người dùng này?</h6>
+      <template v-slot:buttonName>Xóa</template>
    </my-modal>
 
    <div v-if="user">
       <router-link :to="{ name: 'admin.users' }" class="btn btn-danger fw-bold">
          <i class="fa-solid fa-arrow-left"></i>
-         BACK
+         Quay về
       </router-link>
       <div class="view-container w-100 shadow d-flex justify-content-between rounded">
          <div class="view-left-container">
@@ -22,7 +22,7 @@
                      }"
                   >
                      <i class="fa-solid fa-user"></i>
-                     <span class="ml-1">Profile</span>
+                     <span class="ml-1">Thông tin chi tiết</span>
                   </router-link>
                </li>
                <li>
@@ -34,7 +34,7 @@
                      }"
                   >
                      <i class="fa-solid fa-pen"></i>
-                     <span class="ml-1">Compose</span>
+                     <span class="ml-1">Soạn thư</span>
                   </router-link>
                </li>
 
@@ -45,7 +45,7 @@
                      data-bs-toggle="modal"
                      data-bs-target="#deleteUserModal"
                   >
-                     <span>Delete User</span>
+                     <span>Xóa khách hàng</span>
                   </button>
                </li>
             </ul>
