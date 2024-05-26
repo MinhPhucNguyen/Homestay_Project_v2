@@ -58,18 +58,6 @@
                      <small class="text-danger" v-if="errors.phone">{{ errors.phone[0] }}</small>
                   </div>
                   <div class="col-md-6 mb-3">
-                     <label for="address">Địa chỉ</label>
-                     <input
-                        type="text"
-                        name="address"
-                        class="form-control"
-                        v-model="user.address"
-                     />
-                     <small class="text-danger" v-if="errors.address">{{
-                        errors.address[0]
-                     }}</small>
-                  </div>
-                  <div class="col-md-6 mb-3">
                      <label for="password">Mật khẩu</label>
                      <input
                         type="password"
@@ -129,11 +117,9 @@ import { useRouter } from "vue-router";
 const user = ref({
    firstname: "",
    lastname: "",
-   gender: 1,
    username: "",
    email: "",
    phone: "",
-   address: "",
    password: "",
    confirm_password: "",
    role_as: "",

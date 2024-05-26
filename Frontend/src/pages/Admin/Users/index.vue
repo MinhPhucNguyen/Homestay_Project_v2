@@ -123,19 +123,6 @@
                               "></i>
                         </span>
                      </th>
-                     <th class="text-center" @click.prevent="changeSort('address')">
-                        Địa chỉ
-                        <span class="sort-id-icon float-end">
-                           <i class="fa-solid fa-arrow-down" :class="sort_field == 'address' && sort_direction == 'desc'
-                              ? 'text-success'
-                              : 'text-muted'
-                              "></i>
-                           <i class="fa-solid fa-arrow-up" :class="sort_field == 'address' && sort_direction == 'asc'
-                              ? 'text-success'
-                              : 'text-muted'
-                              "></i>
-                        </span>
-                     </th>
                      <th class="text-center">Vai trò</th>
                      <th class="text-center" @click.prevent="changeSort('created_at')">
                         Tạo tài khoản ngày
@@ -165,7 +152,6 @@
                      </td>
                      <td class="text-center">{{ user.email }}</td>
                      <td class="text-center">{{ user.phone }}</td>
-                     <td class="text-center">{{ user.address }}</td>
                      <td class="text-center" :class="{
                         'text-danger': user.role_as === 1,
                         'text-success': user.role_as !== 1,

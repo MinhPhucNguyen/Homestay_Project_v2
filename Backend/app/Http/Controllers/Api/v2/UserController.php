@@ -90,16 +90,10 @@ class UserController extends Controller
         if ($user) {
             $user->firstname = $validatedData['firstname'];
             $user->lastname = $validatedData['lastname'];
-            $user->gender = $request->gender;
             $user->username = $validatedData['username'];
             $user->email = $validatedData['email'];
             $user->phone = '+84' . substr($validatedData['phone'], 1);
-            $user->address = $validatedData['address'];
             $user->role_as = $validatedData['role_as'];
-
-            if ($request->birth) {
-                $user->birth = date('Y-m-d', strtotime($request->birth));
-            }
 
             if (empty($validatedData['password']) && empty($validatedData['confirm_password'])) {
                 unset($validatedData['password']);
@@ -141,7 +135,6 @@ class UserController extends Controller
             $user->lastname = $lastname;
             $user->firstname = $firstname;
         }
-        $user->gender = $request->gender;
         $user->birth = date('Y-m-d', strtotime($request->birth));
 
         $user->update();
@@ -236,12 +229,12 @@ class UserController extends Controller
         // create() tạo một verification với 2 tham số là số điện thoại và channel là sms
         $twilio->verify->v2->services($twilio_verify_sid)
             ->verifications
-            ->create($user->phone, 'sms'); //->services($twilio_verify_sid) lấy ra service 
+            ->create($user->phone, 'sms'); //->services($twilio_verify_sid) lấy ra service
 
 
         return response()->json([
             'message' => "Nhập 6 chữ số OTP được gửi đến số điện thoại: ",
-            'phone' => preg_replace('/^\+84/', '0', $user->phone) //thay thế +84 thành số 0 
+            'phone' => preg_replace('/^\+84/', '0', $user->phone) //thay thế +84 thành số 0
         ], 200);
     }
 
