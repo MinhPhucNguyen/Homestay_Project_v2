@@ -1,13 +1,13 @@
 import { createStore } from "vuex";
 import auth from "./auth";
 import users from "./users";
-import cars from "./cars";
+import homestays from "./homestays";
 
 const store = createStore({
    modules: {
       auth,
       users,
-      cars,
+      homestays,
    },
 });
 

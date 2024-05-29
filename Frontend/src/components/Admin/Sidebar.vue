@@ -65,7 +65,7 @@
           data-parent="#accordionSidebar"
       >
         <div class="bg-white py-2 collapse-inner rounded">
-          <router-link :to="{ name: 'admin.cars' }" class="collapse-item">
+          <router-link :to="{ name: 'admin.homestays' }" class="collapse-item">
             <span class="ml-3">Danh sách</span>
           </router-link>
           <!-- <router-link :to="{ name: 'admin.features' }" class="collapse-item">

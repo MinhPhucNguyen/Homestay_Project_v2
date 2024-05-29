@@ -38,4 +38,15 @@ class Homestay extends Model
     {
         return $this->belongsToMany(Facility::class, 'highlight_facilities', 'homestay_id', 'facility_id');
     }
+
+    public function scopeSearch($query, $search) //scopeName là local scope trong laravel giúp định nghĩa các truy vấn
+    {
+        $search = "%$search%";
+
+        $query->where(function ($query) use ($search) {
+            $query->where('homestay_name', 'like', $search)
+                ->orWhere('address', 'like', $search)
+                ->orWhere('city', 'like', $search);
+        });
+    }
 }

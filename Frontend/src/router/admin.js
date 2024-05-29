@@ -19,10 +19,10 @@ import BlogsList from "../pages/Admin/Blogs/index.vue";
 import CreateBlog from "../pages/Admin/Blogs/create.vue";
 import EditBlog from "../pages/Admin/Blogs/edit.vue";
 
-// Cars
-import CarsList from "../pages/Admin/Cars/index.vue";
-import CreateCar from "../pages/Admin/Cars/create.vue";
-import EditCar from "../pages/Admin/Cars/edit.vue";
+// Homestays
+import HomestaysList from "../pages/Admin/Homestays/index.vue";
+import CreateHomestay from "../pages/Admin/Homestays/create.vue";
+import EditHomestay from "../pages/Admin/Homestays/edit.vue";
 
 // Features
 import FeaturesList from "../pages/Admin/Features/index.vue";
@@ -83,15 +83,6 @@ const admin = [
          },
 
          /**
-          * Router for Brands Management
-          */
-         {
-            path: "brands",
-            component: BrandsList,
-            name: "admin.brands",
-         },
-
-         /**
           * Router for Blog Management
           */
          {
@@ -111,22 +102,22 @@ const admin = [
          },
 
          /**
-          * Router for Car Management
+          * Router for Homestay Management
           */
          {
-            path: "cars",
-            component: CarsList,
-            name: "admin.cars",
+            path: "homestays",
+            component: HomestaysList,
+            name: "admin.homestays",
          },
          {
-            path: "cars/create",
-            component: CreateCar,
-            name: "cars.create",
+            path: "homestays/create",
+            component: CreateHomestay,
+            name: "homestays.create",
          },
          {
-            path: "cars/:id/edit",
-            component: EditCar,
-            name: "cars.edit",
+            path: "homestays/:id/edit",
+            component: EditHomestay,
+            name: "homestays.edit",
          },
 
          /**

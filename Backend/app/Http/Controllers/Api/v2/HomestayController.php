@@ -13,7 +13,22 @@ class HomestayController extends Controller
     public function index()
     {
         $paginate = 10;
-        $homestays = Homestay::paginate($paginate);
+
+        $sort_direction = request('sort_direction', 'desc');
+        if (!in_array($sort_direction, ['asc', 'desc'])) {
+            $sort_direction = 'desc';
+        }
+
+        $sort_field = request('sort_field', 'homestay_id');
+        if (!in_array($sort_field, ['homestay_id', 'homestay_name'])) {
+            $sort_field = 'homestay_id';
+        }
+
+        $search = request('search', '');
+
+        $homestays = Homestay::search(trim($search))
+            ->orderBy($sort_field, $sort_direction)
+            ->paginate($paginate);
         return new HomestayCollection($homestays);
     }
 

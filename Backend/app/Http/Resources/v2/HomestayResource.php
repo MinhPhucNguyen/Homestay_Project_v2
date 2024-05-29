@@ -21,7 +21,7 @@ class HomestayResource extends JsonResource
             'homestayName' => $this->homestay_name,
             'description' => $this->description,
             'email' => $this->email,
-            'phone' => $this->phone,
+            'phone' => $this->phone_number,
             'address' => $this->address,
             'city' => $this->city,
             'facilities' => $this->facilities->map(fn ($facility) => [

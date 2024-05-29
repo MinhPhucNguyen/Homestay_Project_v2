@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\v2\UserController;
 use App\Http\Controllers\Api\v2\HomestayController;
+use App\Http\Controllers\Api\v2\ProfileController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\ChangePasswordController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
@@ -55,7 +56,8 @@ Route::prefix('v2')->group(function () {
             Route::delete('users/delete-multi-user/{users}', 'deleteMultiUser');
         });
 
-        // Route::delete('users/{id}/remove-avatar', [ProfileController::class, 'removeAvatar']);
+         Route::delete('users/{id}/remove-avatar', [ProfileController::class, 'removeAvatar']);
+
     });
 
     Route::controller(HomestayController::class)->group(function () {
