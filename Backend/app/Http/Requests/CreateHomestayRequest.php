@@ -23,13 +23,28 @@ class CreateHomestayRequest extends FormRequest
     {
         return [
             'homestay_name' => 'required|string|max:255',
-            'description' => 'required|string',
+            'description' => 'required',
             'email' => 'required|email|max:255',
-            'phone' => 'required|string|max:20',
+            'phone' => 'required|max:10',
             'address' => 'required|string|max:255',
             'city' => 'required|string|max:255',
-            'status' => 'required|boolean',
             'stars' => 'nullable|integer|min:1|max:5',
+        ];
+    }
+
+    public function messages():array
+    {
+        return [
+            'homestay_name.required' => 'Vui lòng nhập tên homestay.',
+            'homestay_name.string' => 'Tên homestay phải là kí tự.',
+            'description.required' => 'Vui lòng nhập mô tả.',
+            'email.required' => 'Vui lòng nhập email.',
+            'email.email' => 'Email không đúng định dạng.',
+            'phone.required' => 'Vui lòng nhập số điện thoại.',
+            'phone.max' => 'Số điện thoại phải đủ 10 số.',
+            'address.required' => 'Vui lòng nhập địa chỉ.',
+            'city.required' => 'Vui lòng nhập tên thành phố.',
+            'city.string' => 'Thành phố phải là kí tự.',
         ];
     }
 }

@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('rooms', function (Blueprint $table) {
             $table->increments('room_id');
+            $table->string('room_number');
             $table->unsignedInteger('homestay_id');
             $table->foreign('homestay_id')->references('homestay_id')->on('homestays')->onDelete('cascade');
             $table->unsignedInteger('room_type_id');

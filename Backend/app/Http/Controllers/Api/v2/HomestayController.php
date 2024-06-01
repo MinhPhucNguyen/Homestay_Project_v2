@@ -64,4 +64,13 @@ class HomestayController extends Controller
             'homestay' => $homestay,
         ], 200);
     }
+
+    public function destroy(int $homestay_id)
+    {
+        $homestay = Homestay::find($homestay_id);
+        $homestay->delete();
+        return response()->json([
+            'message' => 'Homestay Deleted Successfully',
+        ], 200);
+    }
 }

@@ -54,25 +54,37 @@
                 <div class="col-md-4 mb-3">
                   <label for="homestay_name">Tên Homestay</label>
                   <input type="text" name="homestay_name" class="form-control" v-model="model.homestay_name"/>
-                  <!--                           <small class="text-danger" v-if="errors.car_name">{{-->
-                  <!--                              errors.car_name[0]-->
-                  <!--                           }}</small>-->
+                  <small class="text-danger" v-if="errors.homestay_name">{{
+                      errors.homestay_name[0]
+                    }}</small>
                 </div>
                 <div class="col-md-4 mb-3">
                   <label for="email">Email</label>
                   <input type="text" name="email" class="form-control" v-model="model.email"/>
+                  <small class="text-danger" v-if="errors.email">{{
+                      errors.email[0]
+                    }}</small>
                 </div>
                 <div class="col-md-4 mb-3">
                   <label for="phone">Số điện thoại</label>
                   <input type="text" name="phone" class="form-control" v-model="model.phone"/>
+                  <small class="text-danger" v-if="errors.phone">{{
+                      errors.phone[0]
+                    }}</small>
                 </div>
                 <div class="col-md-4 mb-3">
                   <label for="address">Địa chỉ</label>
                   <input type="text" name="address" class="form-control" v-model="model.address"/>
+                  <small class="text-danger" v-if="errors.address">{{
+                      errors.address[0]
+                    }}</small>
                 </div>
                 <div class="col-md-4 mb-3">
                   <label for="city">Thành phố</label>
                   <input type="text" name="city" class="form-control" v-model="model.city"/>
+                  <small class="text-danger" v-if="errors.city">{{
+                      errors.city[0]
+                    }}</small>
                 </div>
                 <div class="col-md-4 mb-3">
                   <label for="status">Trạng thái</label>
@@ -84,6 +96,9 @@
                 <div class="col-md-12 mb-3">
                   <label for="description">Description</label>
                   <ckeditorComponent v-model="model.description"></ckeditorComponent>
+                  <small class="text-danger" v-if="errors.description">{{
+                      errors.description[0]
+                    }}</small>
                 </div>
               </div>
             </div>

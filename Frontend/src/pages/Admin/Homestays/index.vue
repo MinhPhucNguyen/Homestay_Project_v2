@@ -10,7 +10,7 @@
           Thêm Homestay
         </router-link>
       </div>
-      <div class="card-body mt-0">
+      <div class="card-body mt-0 w-100">
         <div class="mb-3 d-flex align-items-center justify-content-between">
           <div class="w-25 mt-3 d-flex align-items-center">
             <i class="fa-solid fa-magnifying-glass fs-5 mr-2"></i>
@@ -87,9 +87,10 @@
               </div>
             </td>
 
-            <my-modal @clickTo="handleDeleteCar(homestay.homestayId)" :idModal="`deleteConfirmModal${homestay.homestayId}`"
+            <my-modal @clickTo="handleDeleteHomestay(homestay.homestayId)"
+                      :idModal="`deleteConfirmModal${homestay.homestayId}`"
                       bgColor="danger">
-              <template v-slot:title>Delete car</template>
+              <template v-slot:title>Xác nhận xóa homestay</template>
               <h6 class="text-dark text-center fs-5 mt-4">
                 Bạn có chắc chắn muốn xóa homestay này không?
               </h6>
@@ -98,7 +99,7 @@
                      v-if="isLoading">
                   <span class="visually-hidden">Loading...</span>
                 </div>
-                Delete
+                Xóa
               </template>
             </my-modal>
           </tr>
@@ -108,7 +109,7 @@
             </td>
           </tr>
           <tr v-if="isNotFound && !isLoading">
-            <td colspan="12" class="text-center">NOT FOUND</td>
+            <td colspan="12" class="text-center">Không có homestay</td>
           </tr>
           </tbody>
         </table>
@@ -127,7 +128,7 @@ import stateLoading from "@/components/Loading/Loading.vue";
 import MyModal from "@/components/Modal/Modal.vue";
 import ToastMessage from "@/components/Toast/index.vue";
 import Pagination from "@/components/Pagination/index.vue";
-import { debounce } from "@/utils/debounce.js";
+import {debounce} from "@/utils/debounce.js";
 
 const store = useStore();
 const homestaysList = ref([]);
@@ -160,29 +161,29 @@ onBeforeMount(() => {
   getHomestaysList();
 });
 
-// const deleteHomestay = (id) => {
-//    $(`#deleteConfirmModal${id}`).modal("show");
-// };
+const deleteHomestay = (id) => {
+  $(`#deleteConfirmModal${id}`).modal("show");
+};
 
-// const handleDeleteCar = (id) => {
-//    isLoading.value = true;
-//    store
-//       .dispatch("cars/deleteCar", id)
-//       .then((response) => {
-//          isLoading.value = false;
-//          $(`#deleteConfirmModal${id}`).modal("hide");
-//          successMessage.value = response.data.message;
-//          getCarsList().then(() => {
-//             $(".toast").toast("show");
-//          });
-//       })
-//       .catch((e) => {
-//          if (e.response) {
-//             isLoading.value = false;
-//             alert(e.response.data.errors);
-//          }
-//       });
-// };
+const handleDeleteHomestay = (id) => {
+  isLoading.value = true;
+  store
+      .dispatch("homestays/deleteHomestay", id)
+      .then((response) => {
+        isLoading.value = false;
+        $(`#deleteConfirmModal${id}`).modal("hide");
+        successMessage.value = response.data.message;
+        getHomestaysList().then(() => {
+          $(".toast").toast("show");
+        });
+      })
+      .catch((e) => {
+        if (e.response) {
+          isLoading.value = false;
+          alert(e.response.data.errors);
+        }
+      });
+};
 
 const debouncedGetHomestaysList = debounce(getHomestaysList, 300);
 

@@ -75,8 +75,8 @@ const homestays = {
          return response;
       },
 
-      async deleteCar({ dispatch }, id) {
-         const response = await axios.delete(`v2/admin/cars/${id}/delete`);
+      async deleteHomestay({ dispatch }, id) {
+         const response = await axios.delete(`v2/homestays/${id}/delete`);
          dispatch("fetchHomestays");
          return response;
       },
