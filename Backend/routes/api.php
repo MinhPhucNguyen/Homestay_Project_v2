@@ -63,5 +63,6 @@ Route::prefix('v2')->group(function () {
     Route::controller(HomestayController::class)->group(function () {
         Route::get('homestays', 'index');
         Route::get('homestays/{slug}', 'getHomestayBySlug');
+        Route::post('homestays/create', 'store');
     });
 });

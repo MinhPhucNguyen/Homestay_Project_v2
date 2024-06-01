@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Api\v2;
 
+use App\Http\Requests\CreateHomestayRequest;
 use App\Http\Resources\v2\HomestayCollection;
 use App\Models\Homestay;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\v2\HomestayResource;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
 
 class HomestayController extends Controller
 {
@@ -40,23 +43,25 @@ class HomestayController extends Controller
         ], 200);
     }
 
-    public function store(Request $request)
+    public function store(CreateHomestayRequest $request)
     {
         $validatedData = $request->validated();
 
         $homestay = Homestay::create([
-            'homestay_name' => $request->homestay_name,
-            'description' => $request->description,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'address' => $request->address,
-            'city' => $request->city,
-            'stars' => $request->stars,
-            'status' => $request->status,
+            'homestay_name' => $validatedData['homestay_name'],
+            'slug' => Str::slug($validatedData['homestay_name']),
+            'description' => $validatedData['description'],
+            'email' => $validatedData['email'],
+            'phone_number' => $validatedData['phone'],
+            'address' => $validatedData['address'],
+            'city' => $validatedData['city'],
+            'status' => $validatedData['status'] ? 1 : 0,
+            'stars' => $validatedData['stars'] ?? 5,
         ]);
 
         return response()->json([
-            'message' => 'Create homestay successfully!'
+            'message' => 'Create homestay successfully!',
+            'homestay' => $homestay,
         ], 200);
     }
 }

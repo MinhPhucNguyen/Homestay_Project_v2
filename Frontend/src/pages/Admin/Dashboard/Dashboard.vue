@@ -27,7 +27,7 @@
 
       <div class="mr-3 bg-success bg-gradient rounded-4" style="height: 180px; width: 378px">
         <router-link
-            :to="{ name: 'admin.cars' }"
+            :to="{ name: 'admin.homestays' }"
             class="dashboard-card h-100 d-block text-decoration-none"
         >
           <div

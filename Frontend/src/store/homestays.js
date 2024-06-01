@@ -67,17 +67,17 @@ const homestays = {
          }
       },
 
-      async createNewCar({ dispatch }, formData) {
-         const response = await axios.post("v2/admin/cars/create", formData, {
+      async createNewHomestay({ dispatch }, formData) {
+         const response = await axios.post("v2/homestays/create", formData, {
             "Content-Type": "multipart/form-data",
          });
-         dispatch("fetchCars");
+         dispatch("fetchHomestays");
          return response;
       },
 
       async deleteCar({ dispatch }, id) {
          const response = await axios.delete(`v2/admin/cars/${id}/delete`);
-         dispatch("fetchCars");
+         dispatch("fetchHomestays");
          return response;
       },
    },

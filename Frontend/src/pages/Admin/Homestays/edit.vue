@@ -5,7 +5,7 @@
       <div class="card">
          <div class="card-header bg-transparent border-0">
             <div class="d-inline-block fw-bold text-dark fs-4">Edit Car</div>
-            <router-link :to="{ name: 'admin.cars' }" class="btn btn-danger fw-bold float-right">
+            <router-link :to="{ name: 'admin.homestays' }" class="btn btn-danger fw-bold float-right">
                <i class="fa-solid fa-arrow-left"></i>
                BACK
             </router-link>
