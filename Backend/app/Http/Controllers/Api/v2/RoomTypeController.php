@@ -7,5 +7,10 @@ use Illuminate\Http\Request;
 
 class RoomTypeController extends Controller
 {
-    //
+    public function index()
+    {
+        $paginate = 10;
+
+
+    }
 }

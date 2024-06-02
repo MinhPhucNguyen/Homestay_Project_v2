@@ -16,6 +16,7 @@ class RoomType extends Model
         'room_type',
         'description',
         'price_per_night',
+        'area',
         'capacity',
     ];
 
