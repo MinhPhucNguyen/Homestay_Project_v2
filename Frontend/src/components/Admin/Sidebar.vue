@@ -76,6 +76,32 @@
     </li>
 
     <li class="nav-item border-bottom">
+      <a
+          class="nav-link collapsed fw-bold text-dark"
+          href="#"
+          data-toggle="collapse"
+          data-target="#collapseFour"
+          aria-expanded="true"
+          aria-controls="collapseFour"
+      >
+        <i class="fa-solid fa-house"></i>
+        <span>Loại phòng</span>
+      </a>
+      <div
+          id="collapseFour"
+          class="collapse"
+          aria-labelledby="collapseFour"
+          data-parent="#accordionSidebar"
+      >
+        <div class="bg-white py-2 collapse-inner rounded">
+          <router-link :to="{ name: 'admin.room-types' }" class="collapse-item">
+            <span class="ml-3">Danh sách</span>
+          </router-link>
+        </div>
+      </div>
+    </li>
+
+    <li class="nav-item border-bottom">
       <router-link :to="{ name: 'admin.blogs' }" class="nav-link fw-bold text-dark">
         <i class="fa-solid fa-square-rss"></i>
         <span>Blog</span>
@@ -102,4 +128,14 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+@media (min-width: 768px) {
+  .sidebar {
+    width: 24rem !important;
+  }
+}
+
+.sidebar-light .nav-item .nav-link {
+  width: 100%;
+}
+</style>

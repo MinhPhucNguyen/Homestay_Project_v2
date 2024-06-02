@@ -9,7 +9,7 @@ import UserProfile from "../pages/Admin/Users/profile.vue";
 import MainProfile from "../components/Admin/Profile/MainProfile.vue";
 
 // Brands
-import BrandsList from "../pages/Admin/Brands/index.vue";
+import RoomTypesList from "../pages/Admin/RoomTypes/index.vue";
 
 // Send Email
 import SendEmail from "../components/Admin/Profile/SendEmail.vue";
@@ -118,6 +118,15 @@ const admin = [
             path: "homestays/:id/edit",
             component: EditHomestay,
             name: "homestays.edit",
+         },
+
+         /**
+          * Router for  HomeTypes Management
+          */
+         {
+            path: "room-types",
+            component: RoomTypesList,
+            name: "admin.room-types",
          },
 
          /**

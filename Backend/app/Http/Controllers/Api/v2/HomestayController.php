@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\v2;
 use App\Http\Requests\CreateHomestayRequest;
 use App\Http\Resources\v2\HomestayCollection;
 use App\Models\Homestay;
+use App\Models\Room;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\v2\HomestayResource;
 use Illuminate\Http\Request;
@@ -58,6 +59,11 @@ class HomestayController extends Controller
             'status' => $validatedData['status'] ? 1 : 0,
             'stars' => $validatedData['stars'] ?? 5,
         ]);
+
+        foreach ($validatedData['rooms'] as $roomData) {
+            $roomData['homestay_id'] = $homestay->id;
+            Room::create($roomData);
+        }
 
         return response()->json([
             'message' => 'Create homestay successfully!',

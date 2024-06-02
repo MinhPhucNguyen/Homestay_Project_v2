@@ -22,7 +22,7 @@
               </button>
             </li>
             <li class="nav-item" role="presentation">
-              <button class="nav-link text-success fw-bold" id="time-tab" data-bs-toggle="tab"
+              <button class="nav-link text-success fw-bold" id="room-tab" data-bs-toggle="tab"
                       data-bs-target="#rooms-tab-pane" type="button" role="tab" aria-controls="rooms-tab-pane"
                       aria-selected="true">
                 <i class="fa-solid fa-door-open"></i>
@@ -48,7 +48,7 @@
           </ul>
           <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show mt-3 active" id="homestay-tab-pane" role="tabpanel"
-                 aria-labelledby="home-tab"
+                 aria-labelledby="homestay-tab"
                  tabindex="0">
               <div class="row">
                 <div class="col-md-4 mb-3">
@@ -102,36 +102,56 @@
                 </div>
               </div>
             </div>
+            <div class="tab-pane fade mt-3" id="rooms-tab-pane" role="tabpanel" aria-labelledby="room-tab"
+                 tabindex="0">
+              <div class="row">
+                <div class="room-input">
+                  <div class="room-item p-4" v-for="room in model.rooms" :key="room.id">
+                    <div class="room-number">
+                      <label for="room_number">Số phòng</label>
+                      <input type="text" name="room_number" class="form-control" v-model="room.room_number"/>
+                    </div>
+                    <div class="room-detail">
+                      <!--                    <div class="room-type">-->
+                      <!--                      <label for="room_type_id">Room Type</label>-->
+                      <!--                      <select name="room_type_id" class="form-control" v-model="room.room_type_id">-->
+                      <!--                        <option value="0">Select Room Type</option>-->
+                      <!--                        <option v-for="roomType in roomTypesList" :key="roomType.id" :value="roomType.id">-->
+                      <!--                          {{ roomType.name }}-->
+                      <!--                        </option>-->
+                      <!--                      </select>-->
+                      <!--                    </div>-->
+                      <div class="room-status">
+                        <label for="status">Status</label>
+                        <select name="status" class="form-control" v-model="room.status">
+                          <option value="0">-- Vui lòng chọn --</option>
+                          <option value="1">Con trống</option>
+                          <option value="2">Đã có khách thuê</option>
+                        </select>
+                      </div>
+                      <!--                    <div class="from">-->
+                      <!--                      <label for="from">From</label>-->
+                      <!--                      <input :id="`from-input-${period.id}`" name="from" type="datetime-local"-->
+                      <!--                             class="datetime-input fw-bold p-4 text-black" v-model="period.from"/>-->
+                      <!--                    </div>-->
+                      <!--                    <div class="to">-->
+                      <!--                      <label for="to">To</label>-->
+                      <!--                      <input :id="`to-input-${period.id}`" name="to" type="datetime-local"-->
+                      <!--                             class="datetime-input fw-bold p-4 text-black" v-model="period.to"/>-->
+                      <!--                    </div>-->
+                    </div>
 
-            <!--            <div class="tab-pane fade mt-3" id="time-tab-pane" role="tabpanel" aria-labelledby="image-tab"-->
-            <!--                 tabindex="0">-->
-            <!--              <div class="row">-->
-            <!--                <div class="col-md-6 mb-3">-->
-            <!--                  <h5 class="mb-4">Set rental period</h5>-->
-            <!--                </div>-->
-            <!--                        <div class="priod-input">-->
-            <!--                           <div class="priod-item" v-for="period in model.rental_periods" :key="period.id">-->
-            <!--                              <div class="from">-->
-            <!--                                 <label for="from">From</label>-->
-            <!--                                 <input :id="`from-input-${period.id}`" name="from" type="datetime-local"-->
-            <!--                                    class="datetime-input fw-bold p-4 text-black" v-model="period.from" />-->
-            <!--                              </div>-->
-            <!--                              <div class="to">-->
-            <!--                                 <label for="to">To</label>-->
-            <!--                                 <input :id="`to-input-${period.id}`" name="to" type="datetime-local"-->
-            <!--                                    class="datetime-input fw-bold p-4 text-black" v-model="period.to" />-->
-            <!--                              </div>-->
-            <!--                              <a class="remove-period" @click.prevent="removePeriod(period.id)"><i-->
-            <!--                                    class="fa-regular fa-circle-xmark"></i></a>-->
-            <!--                           </div>-->
-            <!--                           <div class="add-period">-->
-            <!--                              <div class="add-period-wrapper">-->
-            <!--                                 <a @click.prevent="addPeriod"><i class="fa-solid fa-plus"></i></a>-->
-            <!--                              </div>-->
-            <!--                           </div>-->
-            <!--                        </div>-->
-            <!--              </div>-->
-            <!--            </div>-->
+                    <a class="remove-room" @click.prevent="removeRoomInput(room.id)"><i
+                        class="fa-regular fa-circle-xmark"></i></a>
+                  </div>
+                  <div class="add-room">
+                    <div class="add-room-wrapper">
+                      <a @click.prevent="addNewRoom"><i class="fa-solid fa-plus"></i></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
 
             <!--                  <div class="tab-pane fade mt-3" id="feature-tab-pane" role="tabpanel" aria-labelledby="image-tab"-->
             <!--                     tabindex="0">-->
@@ -214,20 +234,47 @@ const model = ref({
   address: "",
   city: "",
   status: 0,
-  stars: 5
+  stars: 5,
+  rooms: [
+    {
+      room_number: "",
+      homestay_id: 0,
+      room_type_id: 0,
+      status: "0",
+    },
+  ]
 });
 
+/**
+ * TODO: Add rental period
+ */
+const addNewRoom = () => {
+  model.value.rooms.push({
+    room_number: "",
+    homestay_id: 0,
+    room_type_id: 0,
+    status: "0",
+  });
+};
+
 // /**
-//  * TODO: Add datetime picker to input
+//  * TODO: Add room to input
 //  */
-// const fromInput = ref(null);
-// const toInput = ref(null);
 // onMounted(() => {
-//    fromInput.value = document.querySelector(`#from-input-0`);
-//    toInput.value = document.querySelector(`#to-input-0`);
-//    flatpickr(fromInput.value, config);
-//    flatpickr(toInput.value, config);
+//   fromInput.value = document.querySelector(`#from-input-0`);
+//   toInput.value = document.querySelector(`#to-input-0`);
+//   flatpickr(fromInput.value, config);
+//   flatpickr(toInput.value, config);
 // });
+
+/**
+ * TODO: Remove room input
+ */
+const removeRoomInput = (id) => {
+  const idRemove = model.value.rooms.findIndex((room) => room.id === id);
+  model.value.rooms.splice(idRemove, 1);
+};
+
 
 // /**
 //  * TODO: Select feature
@@ -333,16 +380,17 @@ const createNewHomestay = async () => {
 </script>
 
 <style lang="scss" scoped>
-.priod-input {
+.room-input {
   margin-bottom: 30px;
 }
 
-.priod-item {
-  width: 50%;
+.room-item {
+  width: 100%;
   display: flex;
-  align-items: center;
-  gap: 50px;
-  border-bottom: 1px solid #ddd;
+  flex-direction: column;
+  gap: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
   margin-bottom: 40px;
   padding-bottom: 40px;
 
@@ -353,21 +401,19 @@ const createNewHomestay = async () => {
     width: 50%;
   }
 
-  .remove-period {
+  .remove-room {
     font-size: 25px;
     color: #e74a3b;
     cursor: pointer;
   }
 }
 
-.add-period {
+.add-room {
   margin-top: 20px;
   display: flex;
   justify-content: center;
 
-  .add-period-wrapper {
-    width: 50%;
-
+  .add-room-wrapper {
     a {
       border: 2px solid #1cc88a;
       color: #1cc88a;

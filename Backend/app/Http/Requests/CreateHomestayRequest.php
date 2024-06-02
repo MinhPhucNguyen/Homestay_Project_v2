@@ -29,10 +29,12 @@ class CreateHomestayRequest extends FormRequest
             'address' => 'required|string|max:255',
             'city' => 'required|string|max:255',
             'stars' => 'nullable|integer|min:1|max:5',
+            'rooms' => 'required|array',
+            'rooms.*.room_number' => 'required|string|max:255',
         ];
     }
 
-    public function messages():array
+    public function messages(): array
     {
         return [
             'homestay_name.required' => 'Vui lòng nhập tên homestay.',
