@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\v2;
 
-use App\Http\Requests\CreateHomestayRequest;
+use App\Http\Requests\HomestayRequest;
 use App\Http\Resources\v2\HomestayCollection;
 use App\Models\Homestay;
 use App\Models\Room;
@@ -44,7 +44,22 @@ class HomestayController extends Controller
         ], 200);
     }
 
-    public function store(CreateHomestayRequest $request)
+    public function getHomestayById($id)
+    {
+        $homestay = Homestay::find($id);
+
+        if (!$homestay) {
+            return response()->json([
+                'message' => 'Homestay not found',
+            ], 404);
+        }
+
+        return response()->json([
+            'homestay' => new HomestayResource($homestay),
+        ], 200);
+    }
+
+    public function store(HomestayRequest $request)
     {
         $validatedData = $request->validated();
 
@@ -71,9 +86,46 @@ class HomestayController extends Controller
         ], 200);
     }
 
+    public function update(HomestayRequest $request, int $homestay_id)
+    {
+        $homestay = Homestay::find($homestay_id);
+
+        if (!$homestay) {
+            return response()->json([
+                'message' => 'Homestay not found',
+            ], 404);
+        }
+
+        $validatedData = $request->validated();
+
+        $homestay->update([
+            'homestay_name' => $validatedData['homestay_name'],
+            'slug' => Str::slug($validatedData['homestay_name']),
+            'description' => $validatedData['description'],
+            'email' => $validatedData['email'],
+            'phone_number' => $validatedData['phone'],
+            'address' => $validatedData['address'],
+            'city' => $validatedData['city'],
+            'status' => $validatedData['status'] ? 1 : 0,
+            'stars' => $validatedData['stars'] ?? 5,
+        ]);
+
+        return response()->json([
+            'message' => 'Homestay Updated Successfully',
+            'homestay' => $homestay,
+        ], 200);
+    }
+
     public function destroy(int $homestay_id)
     {
         $homestay = Homestay::find($homestay_id);
+
+        if (!$homestay) {
+            return response()->json([
+                'message' => 'Homestay not found',
+            ], 404);
+        }
+
         $homestay->delete();
         return response()->json([
             'message' => 'Homestay Deleted Successfully',

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api\v2;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\v2\RoomTypeCollection;
+use App\Models\RoomType;
 use Illuminate\Http\Request;
 
 class RoomTypeController extends Controller
@@ -11,6 +13,8 @@ class RoomTypeController extends Controller
     {
         $paginate = 10;
 
+        $roomTypes = RoomType::paginate($paginate);
 
+        return new RoomTypeCollection($roomTypes);
     }
 }

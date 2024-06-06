@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateHomestayRequest extends FormRequest
+class HomestayRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -29,8 +29,9 @@ class CreateHomestayRequest extends FormRequest
             'address' => 'required|string|max:255',
             'city' => 'required|string|max:255',
             'stars' => 'nullable|integer|min:1|max:5',
-            'rooms' => 'required|array',
-            'rooms.*.room_number' => 'required|string|max:255',
+            'status' => 'nullable|boolean',
+//            'rooms' => 'required|array',
+//            'rooms.*.room_number' => 'required|string|max:255',
         ];
     }
 

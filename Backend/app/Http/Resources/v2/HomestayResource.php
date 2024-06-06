@@ -15,25 +15,25 @@ class HomestayResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'homestayId' => $this->homestay_id ?? null,
+            'homestay_id' => $this->homestay_id ?? null,
             'rooms' =>  RoomResource::collection($this->rooms),
             'slug' => $this->slug,
-            'homestayName' => $this->homestay_name,
+            'homestay_name' => $this->homestay_name,
             'description' => $this->description,
             'email' => $this->email,
             'phone' => $this->phone_number,
             'address' => $this->address,
             'city' => $this->city,
             'facilities' => $this->facilities->map(fn ($facility) => [
-                'facilityId' => $facility->facility_id,
-                'facilityName' => $facility->facility_name,
-                'facilityIcon' => $facility->facility_icon,
+                'facility_id' => $facility->facility_id,
+                'facility_name' => $facility->facility_name,
+                'facility_icon' => $facility->facility_icon,
             ]),
-            'homestayImages' => $this->homestayImages->map(fn ($images) =>  [
+            'homestay_images' => $this->homestayImages->map(fn ($images) =>  [
                 'id' => $images->id,
-                'homestayId' => $images->homestay_id,
-                'roomId' => $images->room_id,
-                'imagePath' => $images->path,
+                'homestay_id' => $images->homestay_id,
+                'room_id' => $images->room_id,
+                'image_path' => $images->path,
             ]),
             'stars' => $this->stars,
             'status' => $this->status,

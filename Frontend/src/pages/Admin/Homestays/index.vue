@@ -33,7 +33,7 @@
                         </span>
             </th>
             <th class="text-center" @click.prevent="changeSort('homestay_name')">
-              Homestay Name
+              Tên Homestay
               <span class="sort-id-icon float-end">
                            <i class="fa-solid fa-arrow-down" :class="{
                               'text-success':
@@ -45,19 +45,19 @@
                            }"></i>
                         </span>
             </th>
-            <th class="text-center">Phone Number</th>
+            <th class="text-center">Số điện thoại</th>
             <th class="text-center">Email</th>
-            <th class="text-center">Address</th>
-            <th class="text-center">City</th>
-            <th class="text-center">Status</th>
+            <th class="text-center">Địa chỉ</th>
+            <th class="text-center">Thành phố</th>
+            <th class="text-center">Trạng thái</th>
             <th class="text-center">Action</th>
           </tr>
           </thead>
           <tbody id="body-table">
-          <tr v-for="homestay in homestaysList" :key="homestay.homestayId">
-            <td class="text-center">{{ homestay.homestayId }}</td>
+          <tr v-for="homestay in homestaysList" :key="homestay.homestay_id">
+            <td class="text-center">{{ homestay.homestay_id }}</td>
             <td class="text-center">
-              <a href="" class="text-success text-decoration-none">{{ homestay.homestayName }}</a>
+              <a href="" class="text-success text-decoration-none">{{ homestay.homestay_name }}</a>
             </td>
             <td class="text-center">{{ homestay.phone }}</td>
             <td class="text-center">{{ homestay.email }}</td>
@@ -72,23 +72,23 @@
                 </button>
                 <ul class="dropdown-menu">
                   <li>
-                    <router-link :to="{ name: 'homestays.edit', params: { id: homestay.homestayId } }"
+                    <router-link :to="{ name: 'homestays.edit', params: { id: homestay.homestay_id } }"
                                  class="dropdown-item mb-3 fs-6 text-primary bg-white">
                       <i class="fa-solid fa-pen-to-square"></i>
-                      <span class="ml-2">Edit</span>
+                      <span class="ml-2">Sửa</span>
                     </router-link>
                   </li>
                   <button type="button" class="dropdown-item fs-6 text-danger bg-white"
-                          @click="deleteHomestay(homestay.homestayId)">
+                          @click="deleteHomestay(homestay.homestay_id)">
                     <i class="fa-solid fa-trash"></i>
-                    <span class="ml-2">Delete</span>
+                    <span class="ml-2">Xóa</span>
                   </button>
                 </ul>
               </div>
             </td>
 
-            <my-modal @clickTo="handleDeleteHomestay(homestay.homestayId)"
-                      :idModal="`deleteConfirmModal${homestay.homestayId}`"
+            <my-modal @clickTo="handleDeleteHomestay(homestay.homestay_id)"
+                      :idModal="`deleteConfirmModal${homestay.homestay_id}`"
                       bgColor="danger">
               <template v-slot:title>Xác nhận xóa homestay</template>
               <h6 class="text-dark text-center fs-5 mt-4">

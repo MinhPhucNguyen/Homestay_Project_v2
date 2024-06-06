@@ -4,7 +4,6 @@ const homestays = {
     namespaced: true,
     state: {
         homestaysList: [],
-        roomTypesList: [],
         featuresList: [],
     },
     getters: {
@@ -17,9 +16,6 @@ const homestays = {
         getCountHomestays(state) {
             return state.homestaysList.length;
         },
-        getRoomTypesList(state) {
-            return state.roomTypesList;
-        }
     },
     mutations: {
         SET_HOMESTAYS_LIST(state, homestays) {
@@ -29,10 +25,6 @@ const homestays = {
         SET_FEATURES_LIST(state, features) {
             state.featuresList = features;
         },
-
-        SET_ROOM_TYPES_LIST(state, roomTypes) {
-            state.roomTypesList = roomTypes;
-        }
     },
     actions: {
         async fetchFeatures({commit}) {
@@ -40,19 +32,6 @@ const homestays = {
                 .get("v2/admin/features")
                 .then((response) => {
                     commit("SET_FEATURES_LIST", response.data.features);
-                })
-                .catch((e) => {
-                    if (e.response) {
-                        alert("Something went wrong. Please try again later.");
-                    }
-                });
-        },
-
-        async fetchRoomTypes({commit}) {
-            return await axios
-                .get("v2/admin/room-types")
-                .then((response) => {
-                    commit("SET_ROOM_TYPES_LIST", response.data.room_types);
                 })
                 .catch((e) => {
                     if (e.response) {
