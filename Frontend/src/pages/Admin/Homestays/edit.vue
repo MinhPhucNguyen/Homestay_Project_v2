@@ -106,23 +106,6 @@
                   </div>
                 </div>
               </div>
-
-              <!--              <div class="tab-pane fade mt-3" id="feature-tab-pane" role="tabpanel" aria-labelledby="image-tab"-->
-              <!--                   tabindex="0">-->
-              <!--                <div class="row">-->
-              <!--                  <div class="col-md-6 mb-3">-->
-              <!--                    <h5 class="mb-4">Select Features</h5>-->
-              <!--                    <div class="features-list">-->
-              <!--                      <div name="features" v-for="feature in featuresList" class="feature-item" :class="{-->
-              <!--                                    'feature-chose': model.featuresId.includes(feature.id),-->
-              <!--                                 }" :key="feature.id" @click="selectFeature($event, feature.id)">-->
-              <!--                        {{ feature.name }}-->
-              <!--                      </div>-->
-              <!--                      <input type="hidden" class="featuresChose"/>-->
-              <!--                    </div>-->
-              <!--                  </div>-->
-              <!--                </div>-->
-              <!--              </div>-->
             </div>
 
             <button class="btn btn-success p-3 fw-bold float-end" type="submit" :disabled="isFilledForm">
