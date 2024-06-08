@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\v2\UserController;
 use App\Http\Controllers\Api\v2\HomestayController;
 use App\Http\Controllers\Api\v2\RoomTypeController;
+use App\Http\Controllers\Api\v2\FacilityController;
 use App\Http\Controllers\Api\v2\ProfileController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\ChangePasswordController;
@@ -76,6 +77,14 @@ Route::prefix('v2')->group(function () {
         Route::post('room-types/create', 'store');
         Route::put('room-types/{id}/edit', 'update');
         Route::delete('room-types/{id}/delete', 'destroy');
+    });
+
+    Route::controller(FacilityController::class)->group(function () {
+        Route::get('facilities', 'index');
+        Route::get('facilities/{id}', 'show');
+        Route::post('facilities/create', 'store');
+        Route::put('facilities/{id}/edit', 'update');
+        Route::delete('facilities/{id}/delete', 'destroy');
     });
 
 });
