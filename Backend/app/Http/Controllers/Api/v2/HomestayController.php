@@ -8,6 +8,7 @@ use App\Models\Homestay;
 use App\Models\Room;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\v2\HomestayResource;
+use App\Models\RoomFacility;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
@@ -44,18 +45,21 @@ class HomestayController extends Controller
         ], 200);
     }
 
-    public function getHomestayById($id)
+    public function edit($id)
     {
         $homestay = Homestay::find($id);
 
         if (!$homestay) {
             return response()->json([
-                'message' => 'Homestay not found',
+                'message' => 'Không tìm thấy homestay!',
             ], 404);
         }
 
+        $facilitiesId = $homestay->facilities->pluck('facility_id')->toArray();
+
         return response()->json([
             'homestay' => new HomestayResource($homestay),
+            'facilitiesId' => $facilitiesId,
         ], 200);
     }
 
@@ -75,14 +79,18 @@ class HomestayController extends Controller
             'stars' => $validatedData['stars'] ?? 5,
         ]);
 
-        foreach ($validatedData['rooms'] as $roomData) {
-            $roomData['homestay_id'] = $homestay->id;
-            Room::create($roomData);
+        /**
+         * TODO: Save facilities
+         */
+        if ($request->facilitiesId) {
+            foreach ($request->facilitiesId as $facilityId) {
+                $facility = RoomFacility::find($facilityId);
+                $homestay->facilities()->attach($facility);
+            }
         }
 
         return response()->json([
-            'message' => 'Create homestay successfully!',
-            'homestay' => $homestay,
+            'message' => 'Thêm mới thành công!',
         ], 200);
     }
 
@@ -92,7 +100,7 @@ class HomestayController extends Controller
 
         if (!$homestay) {
             return response()->json([
-                'message' => 'Homestay not found',
+                'message' => 'Không tìm thấy homestay!',
             ], 404);
         }
 
@@ -110,8 +118,19 @@ class HomestayController extends Controller
             'stars' => $validatedData['stars'] ?? 5,
         ]);
 
+        /**
+         * TODO: Save facilities
+         */
+        if ($request->facilitiesId) {
+            $homestay->facilities()->detach();
+            foreach ($request->facilitiesId as $facilityId) {
+                $facility = RoomFacility::find($facilityId);
+                $homestay->facilities()->attach($facility);
+            }
+        }
+
         return response()->json([
-            'message' => 'Homestay Updated Successfully',
+            'message' => 'Cập nhật thành công!',
             'homestay' => $homestay,
         ], 200);
     }
@@ -122,13 +141,13 @@ class HomestayController extends Controller
 
         if (!$homestay) {
             return response()->json([
-                'message' => 'Homestay not found',
+                'message' => 'Không tìm thấy homestay!'
             ], 404);
         }
 
         $homestay->delete();
         return response()->json([
-            'message' => 'Homestay Deleted Successfully',
+            'message' => 'Xóa thành công!',
         ], 200);
     }
 }

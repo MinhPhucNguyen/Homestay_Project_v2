@@ -30,8 +30,6 @@ class HomestayRequest extends FormRequest
             'city' => 'required|string|max:255',
             'stars' => 'nullable|integer|min:1|max:5',
             'status' => 'nullable|boolean',
-//            'rooms' => 'required|array',
-//            'rooms.*.room_number' => 'required|string|max:255',
         ];
     }
 

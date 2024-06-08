@@ -22,27 +22,11 @@
               </button>
             </li>
             <li class="nav-item" role="presentation">
-              <button class="nav-link text-success fw-bold" id="room-tab" data-bs-toggle="tab"
-                      data-bs-target="#rooms-tab-pane" type="button" role="tab" aria-controls="rooms-tab-pane"
-                      aria-selected="true">
-                <i class="fa-solid fa-door-open"></i>
-                Phòng
-              </button>
-            </li>
-            <li class="nav-item" role="presentation">
               <button class="nav-link text-success fw-bold" id="profile-tab" data-bs-toggle="tab"
                       data-bs-target="#facilities-tab-pane" type="button" role="tab" aria-controls="facilities-tab-pane"
                       aria-selected="false">
                 <i class="fa-solid fa-list"></i>
                 Tiện nghi
-              </button>
-            </li>
-            <li class="nav-item" role="presentation">
-              <button class="nav-link text-success fw-bold" id="profile-tab" data-bs-toggle="tab"
-                      data-bs-target="#image-tab-pane" type="button" role="tab" aria-controls="image-tab-pane"
-                      aria-selected="false">
-                <i class="fa-solid fa-image mr-1"></i>
-                Thêm ảnh
               </button>
             </li>
           </ul>
@@ -102,92 +86,21 @@
                 </div>
               </div>
             </div>
-            <div class="tab-pane fade mt-3" id="rooms-tab-pane" role="tabpanel" aria-labelledby="room-tab"
+            <div class="tab-pane fade mt-3" id="facilities-tab-pane" role="tabpanel" aria-labelledby="image-tab"
                  tabindex="0">
               <div class="row">
-                <div class="room-input">
-                  <div class="room-item p-4" v-for="room in model.rooms" :key="room.id">
-                    <a class="remove-room" @click.prevent="removeRoomInput(room.id)"><i
-                        class="fa-regular fa-circle-xmark"></i></a>
-                    <div class="room-number">
-                      <label for="room_number">Số phòng</label>
-                      <input type="text" name="room_number" class="form-control" v-model="room.room_number"/>
-                    </div>
-                    <div class="room-detail">
-                      <!--                    <div class="room-type">-->
-                      <!--                      <label for="room_type_id">Room Type</label>-->
-                      <!--                      <select name="room_type_id" class="form-control" v-model="room.room_type_id">-->
-                      <!--                        <option value="0">Select Room Type</option>-->
-                      <!--                        <option v-for="roomType in roomTypesList" :key="roomType.id" :value="roomType.id">-->
-                      <!--                          {{ roomType.name }}-->
-                      <!--                        </option>-->
-                      <!--                      </select>-->
-                      <!--                    </div>-->
-                      <div class="room-status">
-                        <label for="status">Status</label>
-                        <select name="status" class="form-control" v-model="room.status">
-                          <option value="0">-- Vui lòng chọn --</option>
-                          <option value="1">Con trống</option>
-                          <option value="2">Đã có khách thuê</option>
-                        </select>
-                      </div>
-                      <!--                    <div class="from">-->
-                      <!--                      <label for="from">From</label>-->
-                      <!--                      <input :id="`from-input-${period.id}`" name="from" type="datetime-local"-->
-                      <!--                             class="datetime-input fw-bold p-4 text-black" v-model="period.from"/>-->
-                      <!--                    </div>-->
-                      <!--                    <div class="to">-->
-                      <!--                      <label for="to">To</label>-->
-                      <!--                      <input :id="`to-input-${period.id}`" name="to" type="datetime-local"-->
-                      <!--                             class="datetime-input fw-bold p-4 text-black" v-model="period.to"/>-->
-                      <!--                    </div>-->
-                    </div>
-
-
-                  </div>
-                  <div class="add-room">
-                    <div class="add-room-wrapper">
-                      <a @click.prevent="addNewRoom"><i class="fa-solid fa-plus"></i></a>
+                <div class="col-md-6 mb-3">
+                  <h5 class="mb-4">Chọn tiện nghi</h5>
+                  <div class="facilities-list">
+                    <div name="facilities" class="facility-item" v-for="facility in facilitiesList"
+                         :key="facility.facility_id"
+                         @click="selectFacility($event, facility.facility_id)">
+                      {{ facility.facility_name }}
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-
-            <!--                  <div class="tab-pane fade mt-3" id="feature-tab-pane" role="tabpanel" aria-labelledby="image-tab"-->
-            <!--                     tabindex="0">-->
-            <!--                     <div class="row">-->
-            <!--                        <div class="col-md-6 mb-3">-->
-            <!--                           <h5 class="mb-4">Select Features</h5>-->
-            <!--                           <div class="features-list">-->
-            <!--                              <div name="features" class="feature-item" v-for="feature in featuresList" :key="feature.id"-->
-            <!--                                 @click="selectFeature($event, feature.id)">-->
-            <!--                                 {{ feature.name }}-->
-            <!--                              </div>-->
-            <!--                              &lt;!&ndash; <input type="hidden" class="featuresChose" /> &ndash;&gt;-->
-            <!--                           </div>-->
-            <!--                        </div>-->
-            <!--                     </div>-->
-            <!--                  </div>-->
-
-            <!--            <div class="tab-pane fade mt-3" id="image-tab-pane" role="tabpanel" aria-labelledby="image-tab"-->
-            <!--                 tabindex="0">-->
-            <!--              <div class="row">-->
-            <!--                <div class="col-md-6 mb-3">-->
-            <!--                  <h5 class="mb-4">Upload Car Images</h5>-->
-            <!--                           <input ref="filesInput" type="file" multiple name="image[]" class="form-control file-input"-->
-            <!--                              @change="uploadCarImage" />-->
-            <!--                           <div class="display_image mb-4" v-if="imagesUrl.length > 0">-->
-            <!--                              <div class="car_image_input" v-for="(src, index) in imagesUrl" :key="index">-->
-            <!--                                 <img :src="src" alt="" class="image_input" />-->
-            <!--                                 <button class="btn btn-danger remove_btn" @click.prevent="removeImage(index)">-->
-            <!--                                    Remove-->
-            <!--                                 </button>-->
-            <!--                              </div>-->
-            <!--                           </div>-->
-            <!--                </div>-->
-            <!--              </div>-->
-            <!--            </div>-->
           </div>
           <button class="btn btn-success p-3 fw-bold float-end" type="submit" :disabled="isFilledForm">
             <div class="spinner-border" role="status" style="width: 20px; height: 20px; margin-right: 10px"
@@ -204,7 +117,7 @@
 
 <script setup>
 import ckeditorComponent from "@/components/Editor/index.vue";
-import {ref, computed, watch, onMounted, nextTick} from "vue";
+import {ref, computed, watch, nextTick} from "vue";
 import {useStore} from "vuex";
 import ToastMessage from "@/components/Toast/index.vue";
 import {useRouter} from "vue-router";
@@ -216,6 +129,7 @@ const successMessage = ref(null);
 const errors = ref({});
 const isLoading = ref(false);
 const router = useRouter();
+const facilitiesList = ref([]);
 
 const config = {
   enableTime: true,
@@ -236,94 +150,30 @@ const model = ref({
   city: "",
   status: 0,
   stars: 5,
-  rooms: [
-    {
-      room_number: "",
-      homestay_id: 0,
-      room_type_id: 0,
-      status: "0",
-    },
-  ]
+  facilitiesId: [],
+});
+
+store.dispatch("homestays/fetchFacilities").then(() => {
+  facilitiesList.value = store.getters["homestays/getFacilitiesList"];
 });
 
 /**
- * TODO: Add rental period
+ * TODO: Select facility
  */
-const addNewRoom = () => {
-  model.value.rooms.push({
-    room_number: "",
-    homestay_id: 0,
-    room_type_id: 0,
-    status: "0",
-  });
-};
-
-// /**
-//  * TODO: Add room to input
-//  */
-// onMounted(() => {
-//   fromInput.value = document.querySelector(`#from-input-0`);
-//   toInput.value = document.querySelector(`#to-input-0`);
-//   flatpickr(fromInput.value, config);
-//   flatpickr(toInput.value, config);
-// });
-
-/**
- * TODO: Remove room input
- */
-const removeRoomInput = (id) => {
-  const idRemove = model.value.rooms.findIndex((room) => room.id === id);
-  model.value.rooms.splice(idRemove, 1);
+const selectFacility = (event, id) => {
+  const item = event.target;
+  if (item) {
+    item.classList.toggle("facility-chose");
+    if (item.classList.contains("facility-chose")) {
+      model.value.facilitiesId.push(id);
+    } else {
+      const indexItemExist = model.value.facilitiesId.indexOf(id);
+      model.value.facilitiesId.splice(indexItemExist, 1);
+    }
+  }
 };
 
 
-// /**
-//  * TODO: Select feature
-//  */
-// const selectFeature = (event, id) => {
-//    const item = event.target;
-//    if (item) {
-//       item.classList.toggle("feature-chose");
-//       if (item.classList.contains("feature-chose")) {
-//          model.value.featuresId.push(id);
-//       } else {
-//          const indexItemExist = model.value.featuresId.indexOf(id);
-//          model.value.featuresId.splice(indexItemExist, 1);
-//       }
-//    }
-// };
-//
-// /**
-//  * TODO: display image
-//  */
-// const filesInput = ref(null);
-// const imagesUrl = ref([]);
-//
-// const uploadCarImage = (event) => {
-//    for (const file of event.target.files) {
-//       const imageURL = URL.createObjectURL(file);
-//       imagesUrl.value.push(imageURL);
-//       model.value.car_images.push(file);
-//    }
-// };
-//
-// /**
-//  * TODO: Remove car image before create new car
-//  * @param {*} index
-//  */
-// const removeImage = (index) => {
-//    imagesUrl.value.splice(index, 1);
-//
-//    const newFileList = new DataTransfer();
-//
-//    for (let i = 0; i < filesInput.value.files.length; i++) {
-//       if (i !== index) {
-//          newFileList.items.add(filesInput.value.files[i]);
-//       }
-//    }
-//    filesInput.value.files = newFileList.files;
-// };
-//
 const isStatusChecked = computed({
   get() {
     return model.value.status === 1;
@@ -381,57 +231,31 @@ const createNewHomestay = async () => {
 </script>
 
 <style lang="scss" scoped>
-.room-input {
-  margin-bottom: 30px;
-}
-
-.room-item {
+/* FACILITIES TAB */
+.facilities-list {
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  margin-bottom: 40px;
-  padding-bottom: 40px;
-
-  .from,
-  .to {
-    display: flex;
-    flex-direction: column;
-    width: 50%;
-  }
-
-  .remove-room {
-    font-size: 25px;
-    color: #e74a3b;
-    cursor: pointer;
-  }
 }
 
-.add-room {
-  margin-top: 20px;
-  display: flex;
-  justify-content: center;
-
-  .add-room-wrapper {
-    a {
-      border: 2px solid #1cc88a;
-      color: #1cc88a;
-      cursor: pointer;
-      font-size: 25px;
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-decoration: none;
-
-      &:hover {
-        color: #1cc88a;
-      }
-    }
-  }
+.facilities-list .facility-item {
+  padding: 10px 20px;
+  border-radius: 30px;
+  background-color: #f1f1f1;
+  display: inline-block;
+  cursor: pointer;
+  margin-right: 8px;
+  margin-bottom: 10px;
 }
+
+.facilities-list .facility-item:hover{
+  background-color: #37ecaa49;
+  transition: 0.3s all ease-in-out;
+  box-shadow: #1cc8898e 0px 0px 15px 0px;
+}
+
+.facility-chose{
+  background-color: #1cc889d2 !important;
+  font-weight: bold;
+  color: white !important;
+}
+
 </style>

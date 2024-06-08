@@ -66,7 +66,7 @@ Route::prefix('v2')->group(function () {
         Route::get('homestays', 'index');
         Route::get('homestays/{slug}', 'getHomestayBySlug');
         Route::post('homestays/create', 'store');
-        Route::get('homestays/{id}/edit', 'getHomestayById');
+        Route::get('homestays/{id}/edit', 'edit');
         Route::post('homestays/{id}/update', 'update');
         Route::delete('homestays/{id}/delete', 'destroy');
     });

@@ -4,8 +4,12 @@ const homestays = {
     namespaced: true,
     state: {
         homestaysList: [],
+        facilitiesList: [],
     },
     getters: {
+        getFacilitiesList(state) {
+            return state.featuresList;
+        },
         getHomestaysList(state) {
             return state.homestaysList;
         },
@@ -17,8 +21,24 @@ const homestays = {
         SET_HOMESTAYS_LIST(state, homestays) {
             state.homestaysList = homestays;
         },
+
+        SET_FACILITIES_LIST(state, features) {
+            state.featuresList = features;
+        },
     },
     actions: {
+        async fetchFacilities({commit}) {
+            return await axios
+                .get("v2/facilities")
+                .then((response) => {
+                    commit("SET_FACILITIES_LIST", response.data.data);
+                })
+                .catch((e) => {
+                    if (e.response) {
+                        alert("Something went wrong. Please try again later.");
+                    }
+                });
+        },
 
         async fetchHomestays({commit}, payload) {
             try {

@@ -25,28 +25,12 @@
                 </button>
               </li>
               <li class="nav-item" role="presentation">
-                <button class="nav-link text-success fw-bold" id="room-tab" data-bs-toggle="tab"
-                        data-bs-target="#rooms-tab-pane" type="button" role="tab" aria-controls="rooms-tab-pane"
-                        aria-selected="true">
-                  <i class="fa-solid fa-door-open"></i>
-                  Phòng
-                </button>
-              </li>
-              <li class="nav-item" role="presentation">
                 <button class="nav-link text-success fw-bold" id="profile-tab" data-bs-toggle="tab"
                         data-bs-target="#facilities-tab-pane" type="button" role="tab"
                         aria-controls="facilities-tab-pane"
                         aria-selected="false">
                   <i class="fa-solid fa-list"></i>
                   Tiện nghi
-                </button>
-              </li>
-              <li class="nav-item" role="presentation">
-                <button class="nav-link text-success fw-bold" id="profile-tab" data-bs-toggle="tab"
-                        data-bs-target="#image-tab-pane" type="button" role="tab" aria-controls="image-tab-pane"
-                        aria-selected="false">
-                  <i class="fa-solid fa-image mr-1"></i>
-                  Thêm ảnh
                 </button>
               </li>
             </ul>
@@ -106,7 +90,22 @@
                   </div>
                 </div>
               </div>
-
+              <div class="tab-pane fade mt-3" id="facilities-tab-pane" role="tabpanel" aria-labelledby="image-tab"
+                   tabindex="0">
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <h5 class="mb-4">Chọn tiện nghi</h5>
+                    <div class="facilities-list">
+                      <div v-for="facility in facilitiesList" name="facilities" class="facility-item"
+                           :class="{'facility-chose': model.facilitiesId.includes(facility.facility_id)}"
+                           :key="facility.facility_id"
+                           @click="selectFacility($event, facility.facility_id)">
+                        {{ facility.facility_name }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
               <!--              <div class="tab-pane fade mt-3" id="feature-tab-pane" role="tabpanel" aria-labelledby="image-tab"-->
               <!--                   tabindex="0">-->
@@ -154,7 +153,7 @@ import MyModal from "@/components/Modal/Modal.vue";
 import stateLoading from "@/components/Loading/Loading.vue";
 
 const store = useStore();
-const featuresList = ref([]);
+const facilitiesList = ref([]);
 const successMessage = ref(null);
 const errors = ref({});
 const isLoading = ref(false);
@@ -172,15 +171,32 @@ const model = ref({
   city: "",
   status: 0,
   stars: 5,
-  rooms: [
-    {
-      room_number: "",
-      homestay_id: 0,
-      room_type_id: 0,
-      status: "0",
-    },
-  ]
+  facilitiesId: [],
 });
+
+store.dispatch("homestays/fetchFacilities").then(() => {
+  facilitiesList.value = store.getters["homestays/getFacilitiesList"];
+});
+
+const isFacilitySelected = (facilityId) =>{
+  return model.facilitiesId.includes(facilityId);
+}
+
+/**
+ * TODO: Select facility
+ */
+const selectFacility = (event, id) => {
+  const item = event.target;
+  if (item) {
+    item.classList.toggle("facility-chose");
+    if (item.classList.contains("facility-chose")) {
+      model.value.facilitiesId.push(id);
+    } else {
+      const indexItemExist = model.value.facilitiesId.indexOf(id);
+      model.value.facilitiesId.splice(indexItemExist, 1);
+    }
+  }
+};
 
 const isStatusChecked = computed({
   get() {
@@ -197,7 +213,18 @@ const getHomestayById = async () => {
       .then(({data}) => {
         for (const key in model.value) {
           if (model.value.hasOwnProperty(key)) {
-            model.value[key] = data.homestay[key];
+            if (Array.isArray(model.value[key])) {
+              if (key === "facilitiesId") {
+                const facilities = data.homestay.facilities;
+                const getFacilitiesIdList = facilities.map((facility) => facility.facility_id);
+                for (const id of getFacilitiesIdList) {
+                  model.value[key].push(id);
+                }
+              }
+            }
+            else{
+              model.value[key] = data.homestay[key];
+            }
           }
         }
       })
@@ -259,58 +286,30 @@ const updateHomestay = async () => {
 </script>
 
 <style lang="scss" scope>
-.priod-input {
-  margin-bottom: 30px;
+/* FACILITIES TAB */
+.facilities-list {
+  width: 100%;
 }
 
-.priod-item {
-  width: 50%;
-  display: flex;
-  align-items: center;
-  gap: 50px;
-  border-bottom: 1px solid #ddd;
-  margin-bottom: 40px;
-  padding-bottom: 40px;
-
-  .from,
-  .to {
-    display: flex;
-    flex-direction: column;
-    width: 50%;
-  }
-
-  .remove-period {
-    font-size: 25px;
-    color: #e74a3b;
-    cursor: pointer;
-  }
+.facilities-list .facility-item {
+  padding: 10px 20px;
+  border-radius: 30px;
+  background-color: #f1f1f1;
+  display: inline-block;
+  cursor: pointer;
+  margin-right: 8px;
+  margin-bottom: 10px;
 }
 
-.add-period {
-  margin-top: 20px;
-  display: flex;
-  justify-content: center;
+.facilities-list .facility-item:hover{
+  background-color: #37ecaa49;
+  transition: 0.3s all ease-in-out;
+  box-shadow: #1cc8898e 0px 0px 15px 0px;
+}
 
-  .add-period-wrapper {
-    width: 50%;
-
-    a {
-      border: 2px solid #1cc88a;
-      color: #1cc88a;
-      cursor: pointer;
-      font-size: 25px;
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-decoration: none;
-
-      &:hover {
-        color: #1cc88a;
-      }
-    }
-  }
+.facility-chose{
+  background-color: #1cc889d2 !important;
+  font-weight: bold;
+  color: white !important;
 }
 </style>
