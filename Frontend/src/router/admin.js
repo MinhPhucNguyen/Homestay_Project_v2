@@ -25,7 +25,7 @@ import CreateHomestay from "../pages/Admin/Homestays/create.vue";
 import EditHomestay from "../pages/Admin/Homestays/edit.vue";
 
 // Features
-import FeaturesList from "../pages/Admin/Features/index.vue";
+import FacilitiesList from "../pages/Admin/Facilities/index.vue";
 
 const admin = [
    {
@@ -130,12 +130,12 @@ const admin = [
          },
 
          /**
-          * Router for  Feature Management
+          * Router for  HomeTypes Management
           */
          {
-            path: "features",
-            component: FeaturesList,
-            name: "admin.features",
+            path: "facilities",
+            component: FacilitiesList,
+            name: "admin.facilities",
          },
       ],
    },

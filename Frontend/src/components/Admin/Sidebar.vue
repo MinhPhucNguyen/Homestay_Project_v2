@@ -84,7 +84,7 @@
           aria-expanded="true"
           aria-controls="collapseFour"
       >
-        <i class="fa-solid fa-house"></i>
+        <i class="fa-solid fa-door-closed"></i>
         <span>Loại phòng</span>
       </a>
       <div
@@ -95,6 +95,32 @@
       >
         <div class="bg-white py-2 collapse-inner rounded">
           <router-link :to="{ name: 'admin.room-types' }" class="collapse-item">
+            <span class="ml-3">Danh sách</span>
+          </router-link>
+        </div>
+      </div>
+    </li>
+
+    <li class="nav-item border-bottom">
+      <a
+          class="nav-link collapsed fw-bold text-dark"
+          href="#"
+          data-toggle="collapse"
+          data-target="#collapseFive"
+          aria-expanded="true"
+          aria-controls="collapseFive"
+      >
+        <i class="fa-solid fa-plus"></i>
+        <span>Tiện nghi</span>
+      </a>
+      <div
+          id="collapseFive"
+          class="collapse"
+          aria-labelledby="collapseFive"
+          data-parent="#accordionSidebar"
+      >
+        <div class="bg-white py-2 collapse-inner rounded">
+          <router-link :to="{ name: 'admin.facilities' }" class="collapse-item">
             <span class="ml-3">Danh sách</span>
           </router-link>
         </div>

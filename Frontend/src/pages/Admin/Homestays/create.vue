@@ -107,6 +107,8 @@
               <div class="row">
                 <div class="room-input">
                   <div class="room-item p-4" v-for="room in model.rooms" :key="room.id">
+                    <a class="remove-room" @click.prevent="removeRoomInput(room.id)"><i
+                        class="fa-regular fa-circle-xmark"></i></a>
                     <div class="room-number">
                       <label for="room_number">Số phòng</label>
                       <input type="text" name="room_number" class="form-control" v-model="room.room_number"/>
@@ -141,8 +143,7 @@
                       <!--                    </div>-->
                     </div>
 
-                    <a class="remove-room" @click.prevent="removeRoomInput(room.id)"><i
-                        class="fa-regular fa-circle-xmark"></i></a>
+
                   </div>
                   <div class="add-room">
                     <div class="add-room-wrapper">
