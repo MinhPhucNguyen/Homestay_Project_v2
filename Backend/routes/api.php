@@ -73,7 +73,6 @@ Route::prefix('v2')->group(function () {
 
     Route::controller(RoomTypeController::class)->group(function(){
         Route::get('room-types', 'index');
-        Route::get('room-types/{id}', 'show');
         Route::post('room-types/create', 'store');
         Route::put('room-types/{id}/edit', 'update');
         Route::delete('room-types/{id}/delete', 'destroy');
@@ -81,7 +80,6 @@ Route::prefix('v2')->group(function () {
 
     Route::controller(FacilityController::class)->group(function () {
         Route::get('facilities', 'index');
-        Route::get('facilities/{id}', 'show');
         Route::post('facilities/create', 'store');
         Route::put('facilities/{id}/edit', 'update');
         Route::delete('facilities/{id}/delete', 'destroy');
