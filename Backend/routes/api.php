@@ -80,6 +80,7 @@ Route::prefix('v2')->group(function () {
 
     Route::controller(FacilityController::class)->group(function () {
         Route::get('facilities', 'index');
+        Route::get('facilities/all', 'getAllFacilities');
         Route::post('facilities/create', 'store');
         Route::put('facilities/{id}/edit', 'update');
         Route::delete('facilities/{id}/delete', 'destroy');

@@ -1,11 +1,14 @@
 <template>
-  <ToastMessage :message="successMessage"/>
+  <ToastMessage :message="successMessage" />
 
   <div class="col-md-12">
     <div class="card">
       <div class="card-header bg-transparent border-0">
         <div class="d-inline-block fw-bold text-dark fs-4"></div>
-        <router-link :to="{ name: 'admin.homestays' }" class="btn btn-danger fw-bold float-right">
+        <router-link
+          :to="{ name: 'admin.homestays' }"
+          class="btn btn-danger fw-bold float-right"
+        >
           <i class="fa-solid fa-arrow-left"></i>
           Quay về
         </router-link>
@@ -14,97 +17,172 @@
         <form @submit.prevent="createNewHomestay">
           <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
-              <button class="nav-link text-success fw-bold active" id="home-tab" data-bs-toggle="tab"
-                      data-bs-target="#homestay-tab-pane" type="button" role="tab" aria-controls="homestay-tab-pane"
-                      aria-selected="true">
+              <button
+                class="nav-link text-success fw-bold active"
+                id="home-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#homestay-tab-pane"
+                type="button"
+                role="tab"
+                aria-controls="homestay-tab-pane"
+                aria-selected="true"
+              >
                 <i class="fa-solid fa-circle-info mr-1"></i>
                 Thông tin Homestay
               </button>
             </li>
             <li class="nav-item" role="presentation">
-              <button class="nav-link text-success fw-bold" id="profile-tab" data-bs-toggle="tab"
-                      data-bs-target="#facilities-tab-pane" type="button" role="tab" aria-controls="facilities-tab-pane"
-                      aria-selected="false">
+              <button
+                class="nav-link text-success fw-bold"
+                id="profile-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#facilities-tab-pane"
+                type="button"
+                role="tab"
+                aria-controls="facilities-tab-pane"
+                aria-selected="false"
+              >
                 <i class="fa-solid fa-list"></i>
                 Tiện nghi
               </button>
             </li>
           </ul>
           <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show mt-3 active" id="homestay-tab-pane" role="tabpanel"
-                 aria-labelledby="homestay-tab"
-                 tabindex="0">
+            <div
+              class="tab-pane fade show mt-3 active"
+              id="homestay-tab-pane"
+              role="tabpanel"
+              aria-labelledby="homestay-tab"
+              tabindex="0"
+            >
               <div class="row">
                 <div class="col-md-4 mb-3">
                   <label for="homestay_name">Tên Homestay</label>
-                  <input type="text" name="homestay_name" class="form-control" v-model="model.homestay_name"/>
+                  <input
+                    type="text"
+                    name="homestay_name"
+                    class="form-control"
+                    v-model="model.homestay_name"
+                  />
                   <small class="text-danger" v-if="errors.homestay_name">{{
-                      errors.homestay_name[0]
-                    }}</small>
+                    errors.homestay_name[0]
+                  }}</small>
                 </div>
                 <div class="col-md-4 mb-3">
                   <label for="email">Email</label>
-                  <input type="text" name="email" class="form-control" v-model="model.email"/>
+                  <input
+                    type="text"
+                    name="email"
+                    class="form-control"
+                    v-model="model.email"
+                  />
                   <small class="text-danger" v-if="errors.email">{{
-                      errors.email[0]
-                    }}</small>
+                    errors.email[0]
+                  }}</small>
                 </div>
                 <div class="col-md-4 mb-3">
                   <label for="phone">Số điện thoại</label>
-                  <input type="text" name="phone" class="form-control" v-model="model.phone"/>
+                  <input
+                    type="text"
+                    name="phone"
+                    class="form-control"
+                    v-model="model.phone"
+                  />
                   <small class="text-danger" v-if="errors.phone">{{
-                      errors.phone[0]
-                    }}</small>
+                    errors.phone[0]
+                  }}</small>
                 </div>
                 <div class="col-md-4 mb-3">
                   <label for="address">Địa chỉ</label>
-                  <input type="text" name="address" class="form-control" v-model="model.address"/>
+                  <input
+                    type="text"
+                    name="address"
+                    class="form-control"
+                    v-model="model.address"
+                  />
                   <small class="text-danger" v-if="errors.address">{{
-                      errors.address[0]
-                    }}</small>
+                    errors.address[0]
+                  }}</small>
                 </div>
                 <div class="col-md-4 mb-3">
                   <label for="city">Thành phố</label>
-                  <input type="text" name="city" class="form-control" v-model="model.city"/>
+                  <input
+                    type="text"
+                    name="city"
+                    class="form-control"
+                    v-model="model.city"
+                  />
                   <small class="text-danger" v-if="errors.city">{{
-                      errors.city[0]
-                    }}</small>
+                    errors.city[0]
+                  }}</small>
                 </div>
                 <div class="col-md-4 mb-3">
                   <label for="status">Trạng thái</label>
                   <div class="d-flex align-items-center">
-                    <input type="checkbox" name="status" value="1" v-model="isStatusChecked"/>
+                    <input
+                      type="checkbox"
+                      name="status"
+                      value="1"
+                      v-model="isStatusChecked"
+                    />
                     <label for="status" class="ml-2 mb-0">Hiển thị</label>
                   </div>
                 </div>
                 <div class="col-md-12 mb-3">
                   <label for="description">Description</label>
-                  <ckeditorComponent v-model="model.description"></ckeditorComponent>
+                  <ckeditorComponent
+                    v-model="model.description"
+                  ></ckeditorComponent>
                   <small class="text-danger" v-if="errors.description">{{
-                      errors.description[0]
-                    }}</small>
+                    errors.description[0]
+                  }}</small>
                 </div>
               </div>
             </div>
-            <div class="tab-pane fade mt-3" id="facilities-tab-pane" role="tabpanel" aria-labelledby="image-tab"
-                 tabindex="0">
+            <div
+              class="tab-pane fade mt-3"
+              id="facilities-tab-pane"
+              role="tabpanel"
+              aria-labelledby="image-tab"
+              tabindex="0"
+            >
               <div class="row">
-                <div class="col-md-6 mb-3">
+                <div class="mb-3">
                   <h5 class="mb-4">Chọn tiện nghi</h5>
                   <div class="facilities-list">
-                    <div name="facilities" class="facility-item" v-for="facility in facilitiesList"
-                         :key="facility.facility_id"
-                         @click="selectFacility($event, facility.facility_id)">
-                      {{ facility.facility_name }}
+                    <div
+                      name="facilities"
+                      class="facility-item"
+                      v-for="facility in facilitiesList"
+                      :key="facility.facility_id"
+                      @click="selectFacility($event, facility.facility_id)"
+                    >
+                      <img
+                        v-if="facility.facility_icon"
+                        :src="
+                          'data:image/svg+xml;utf8,' + facility.facility_icon
+                        "
+                        width="20"
+                        height="20"
+                      />
+                      <span>{{ facility.facility_name }}</span>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <button class="btn btn-success p-3 fw-bold float-end" type="submit" :disabled="isFilledForm">
-            <div class="spinner-border" role="status" style="width: 20px; height: 20px; margin-right: 10px"
-                 v-if="isLoading">
+          <button
+            class="btn btn-success p-3 fw-bold float-end"
+            type="submit"
+            :disabled="isFilledForm"
+          >
+            <div
+              class="spinner-border"
+              role="status"
+              style="width: 20px; height: 20px; margin-right: 10px"
+              v-if="isLoading"
+            >
               <span class="visually-hidden">Loading...</span>
             </div>
             Create
@@ -116,11 +194,12 @@
 </template>
 
 <script setup>
+import axios from "axios";
 import ckeditorComponent from "@/components/Editor/index.vue";
-import {ref, computed, watch, nextTick} from "vue";
-import {useStore} from "vuex";
+import { ref, computed, watch, nextTick, onMounted } from "vue";
+import { useStore } from "vuex";
 import ToastMessage from "@/components/Toast/index.vue";
-import {useRouter} from "vue-router";
+import { useRouter } from "vue-router";
 import flatpickr from "flatpickr";
 import "flatpickr/dist/themes/material_green.css";
 
@@ -153,8 +232,10 @@ const model = ref({
   facilitiesId: [],
 });
 
-store.dispatch("homestays/fetchFacilities").then(() => {
-  facilitiesList.value = store.getters["homestays/getFacilitiesList"];
+onMounted(() => {
+  axios.get("/v2/facilities/all").then((response) => {
+    facilitiesList.value = response.data.facilities;
+  });
 });
 
 /**
@@ -172,7 +253,6 @@ const selectFacility = (event, id) => {
     }
   }
 };
-
 
 const isStatusChecked = computed({
   get() {
@@ -211,22 +291,22 @@ const createNewHomestay = async () => {
 
   isLoading.value = true;
   store
-      .dispatch("homestays/createNewHomestay", formData)
-      .then((response) => {
-        successMessage.value = response.data.message;
-        $(".toast").toast("show");
-        isLoading.value = false;
-        setTimeout(() => {
-          router.push({name: "admin.homestays"});
-        }, 2000);
-      })
-      .catch((e) => {
-        isLoading.value = false;
-        if (e.response.status === 422) {
-          console.log(e.response);
-          errors.value = e.response.data.errors;
-        }
-      });
+    .dispatch("homestays/createNewHomestay", formData)
+    .then((response) => {
+      successMessage.value = response.data.message;
+      $(".toast").toast("show");
+      isLoading.value = false;
+      setTimeout(() => {
+        router.push({ name: "admin.homestays" });
+      }, 2000);
+    })
+    .catch((e) => {
+      isLoading.value = false;
+      if (e.response.status === 422) {
+        console.log(e.response);
+        errors.value = e.response.data.errors;
+      }
+    });
 };
 </script>
 
@@ -244,18 +324,21 @@ const createNewHomestay = async () => {
   cursor: pointer;
   margin-right: 8px;
   margin-bottom: 10px;
+
+  span {
+    margin-left: 10px;
+  }
 }
 
-.facilities-list .facility-item:hover{
+.facilities-list .facility-item:hover {
   background-color: #37ecaa49;
   transition: 0.3s all ease-in-out;
   box-shadow: #1cc8898e 0px 0px 15px 0px;
 }
 
-.facility-chose{
+.facility-chose {
   background-color: #1cc889d2 !important;
   font-weight: bold;
   color: white !important;
 }
-
 </style>
