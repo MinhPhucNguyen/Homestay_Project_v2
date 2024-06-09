@@ -34,6 +34,21 @@
               </li>
               <li class="nav-item" role="presentation">
                 <button
+                    class="nav-link text-success fw-bold"
+                    id="profile-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#rooms-tab-pane"
+                    type="button"
+                    role="tab"
+                    aria-controls="rooms-tab-pane"
+                    aria-selected="false"
+                >
+                  <i class="fa-solid fa-list"></i>
+                  Phòng
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button
                   class="nav-link text-success fw-bold"
                   id="profile-tab"
                   data-bs-toggle="tab"

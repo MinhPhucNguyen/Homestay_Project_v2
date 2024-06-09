@@ -39,6 +39,16 @@ class Homestay extends Model
         return $this->belongsToMany(Facility::class, 'highlight_facilities', 'homestay_id', 'facility_id');
     }
 
+    public function roomPrices()
+    {
+        return $this->hasMany(RoomPrice::class, 'homestay_id', 'homestay_id');
+    }
+
+    public function roomTypes()
+    {
+        return $this->hasManyThrough(RoomType::class, RoomPrice::class, 'homestay_id', 'room_type_id', 'homestay_id', 'room_type_id');
+    }
+
     public function scopeSearch($query, $search) //scopeName là local scope trong laravel giúp định nghĩa các truy vấn
     {
         $search = "%$search%";

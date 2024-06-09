@@ -27,21 +27,22 @@
         <table class="table table-bordered table-striped">
           <thead>
           <tr class="text-dark">
-            <th class="text-center">ID</th>
+            <th class="text-center">Mã loại phòng</th>
             <th class="text-center">Tên loại phòng</th>
             <th class="text-center">Mô tả</th>
-            <th class="text-center">Sức chứa (người)</th>
-            <th class="text-center">Diện tích</th>
+            <th class="text-center">Số giường</th>
             <th class="text-center">Action</th>
           </tr>
           </thead>
           <tbody>
-          <tr v-for="roomType in roomTypes" :key="roomType.roomTypeId">
-            <td class="text-center">{{ roomType.roomTypeId }}</td>
+          <tr v-for="roomType in roomTypes" :key="roomType.room_type_id">
+            <td class="text-center">{{ roomType.room_type_id }}</td>
             <td class="text-center">{{ roomType.name }}</td>
-            <td class="text-center rt-description">{{ roomType.description }}</td>
-            <td class="text-center">{{ roomType.occupancy }}</td>
-            <td class="text-center">{{ roomType.area }}</td>
+            <td class="text-center rt-description">
+              <div v-html="roomType.description" v-if="roomType.description"></div>
+              <div v-else>Chưa có mô tả</div>
+            </td>
+            <td class="text-center">{{ roomType.number_of_beds }}</td>
             <td class="text-center">
               <div class="dropdown">
                 <button class="btn btn-success dropdown-toggle" type="button" data-bs-toggle="dropdown"
@@ -51,14 +52,14 @@
                 <ul class="dropdown-menu">
                   <li>
                     <button type="button" class="dropdown-item mb-3 fs-6 text-success bg-white"
-                            @click="editBrand(brand)">
+                            @click="editRoomType(roomType)">
                       <i class="fa-solid fa-pen-to-square"></i>
                       <span class="ml-2">Edit</span>
                     </button>
                   </li>
                   <li>
                     <button type="button" class="dropdown-item fs-6 text-danger bg-white"
-                            @click="deleteBrand(brand)">
+                            @click="deleteRoomType(roomType)">
                       <i class="fa-solid fa-trash"></i>
                       <span class="ml-2">Delete</span>
                     </button>
@@ -80,69 +81,89 @@
       </div>
     </div>
 
-    <!--      <div class="modal fade" id="brandFormModal" tabindex="-1" aria-labelledby="BrandFormModalLabel" aria-hidden="true">-->
-    <!--         <div class="modal-dialog">-->
-    <!--            <div class="modal-content">-->
-    <!--               <div class="modal-header">-->
-    <!--                  <h1 class="modal-title fs-5" id="BrandFormModalLabel" v-if="isEditing">-->
-    <!--                     Edit Brand-->
-    <!--                  </h1>-->
-    <!--                  <h1 class="modal-title fs-5" id="BrandFormModalLabel" v-else>Add Brand</h1>-->
-    <!--                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
-    <!--               </div>-->
-    <!--               <div class="modal-body">-->
-    <!--                  <form @submit.prevent="brandSubmit">-->
-    <!--                     <div class="form-group">-->
-    <!--                        <label for="" class="text-dark fw-bold">Logo</label>-->
-    <!--                        <input type="file" class="form-control" name="brand_logo" @change="uploadLogo" />-->
-    <!--                        &lt;!&ndash; <small class="text-danger" v-if="errors && errors.brand_name[0]">{{-->
-    <!--                           errors.brand_name[0]-->
-    <!--                        }}</small> &ndash;&gt;-->
-    <!--                        <div class="mt-3">-->
-    <!--                           <img :src="logoUrl" alt="logo" v-if="logoUrl" />-->
-    <!--                        </div>-->
-    <!--                     </div>-->
-    <!--                     <div class="form-group">-->
-    <!--                        <label for="" class="text-dark fw-bold">Brand Name</label>-->
-    <!--                        <input type="text" class="form-control" name="brand_name" v-model="model.brand_name" />-->
-    <!--                        <small class="text-danger" v-if="errors && errors.brand_name[0]">{{-->
-    <!--                           errors.brand_name[0]-->
-    <!--                        }}</small>-->
-    <!--                     </div>-->
-    <!--                     <div class="d-flex align-items-center mb-4">-->
-    <!--                        <label for="" class="text-dark mr-2 mb-0 fw-bold">Hidden</label>-->
-    <!--                        <input type="checkbox" name="status" v-model="isChecked" />-->
-    <!--                     </div>-->
-    <!--                     <div class="modal-footer">-->
-    <!--                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">-->
-    <!--                           Close-->
-    <!--                        </button>-->
-    <!--                        <button type="submit" class="btn btn-success pr-4 pl-4 d-flex align-items-center" v-if="isEditing"-->
-    <!--                           :disabled="isLoading">-->
-    <!--                           <div class="spinner-border" role="status" style="width: 20px; height: 20px; margin-right: 10px"-->
-    <!--                              v-if="isLoading && isEditing">-->
-    <!--                              <span class="visually-hidden">Loading...</span>-->
-    <!--                           </div>-->
-    <!--                           Save changes-->
-    <!--                        </button>-->
-    <!--                        <button type="submit" class="btn btn-success pr-4 pl-4 d-flex align-items-center" v-else-->
-    <!--                           :disabled="isLoading">-->
-    <!--                           <div class="spinner-border" role="status" style="width: 20px; height: 20px; margin-right: 10px"-->
-    <!--                              v-if="isLoading">-->
-    <!--                              <span class="visually-hidden">Loading...</span>-->
-    <!--                           </div>-->
-    <!--                           Add-->
-    <!--                        </button>-->
-    <!--                     </div>-->
-    <!--                  </form>-->
-    <!--               </div>-->
-    <!--            </div>-->
-    <!--         </div>-->
-    <!--      </div>-->
+    <div class="modal fade" id="roomTypeFormModal" tabindex="-1" aria-labelledby="roomTypeFormModalLabel"
+         aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="roomTypeFormModalLabel" v-if="isEditing">
+              Sửa loại phòng
+            </h1>
+            <h1 class="modal-title fs-5" id="roomTypeFormModalLabel" v-else>Thêm loại phòng</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form @submit.prevent="roomTypeSubmit">
+              <div class="form-group">
+                <label for="" class="text-dark fw-bold">Tên loại phòng</label>
+                <input type="text" class="form-control" name="name" v-model="model.name"/>
+                <small class="text-danger" v-if="errors && errors.name[0]">{{
+                    errors.name[0]
+                  }}</small>
+              </div>
+              <div class="form-group">
+                <label for="" class="text-dark fw-bold">Số giường</label>
+                <input type="text" class="form-control" name="number_of_beds" v-model="model.number_of_beds"/>
+                <small class="text-danger" v-if="errors && errors.number_of_beds[0]">{{
+                    errors.number_of_beds[0]
+                  }}</small>
+              </div>
+              <div class="form-group">
+                <label for="" class="text-dark fw-bold">Giá ngày (VND)</label>
+                <input type="text" class="form-control" name="price_per_day" v-model="model.price_per_day"/>
+                <small class="text-danger" v-if="errors && errors.price_per_day[0]">{{
+                    errors.price_per_day[0]
+                  }}</small>
+              </div>
+              <div class="form-group">
+                <label for="" class="text-dark fw-bold">Giá giờ (VND)</label>
+                <input type="text" class="form-control" name="price_per_hour" v-model="model.price_per_hour"/>
+                <small class="text-danger" v-if="errors && errors.price_per_hour[0]">{{
+                    errors.price_per_hour[0]
+                  }}</small>
+              </div>
+              <div class="form-group">
+                <label for="" class="text-dark fw-bold">Mô tả</label>
+                <div>
+                  <ckeditorComponent
+                      v-model="model.description"
+                  ></ckeditorComponent>
+                </div>
+                <small class="text-danger" v-if="errors && errors.description[0]">{{
+                    errors.description[0]
+                  }}</small>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                  Đóng
+                </button>
+                <button type="submit" class="btn btn-success pr-4 pl-4 d-flex align-items-center" v-if="isEditing"
+                        :disabled="isLoading">
+                  <div class="spinner-border" role="status" style="width: 20px; height: 20px; margin-right: 10px"
+                       v-if="isLoading && isEditing">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                  Lưu thay đổi
+                </button>
+                <button type="submit" class="btn btn-success pr-4 pl-4 d-flex align-items-center" v-else
+                        :disabled="isLoading">
+                  <div class="spinner-border" role="status" style="width: 20px; height: 20px; margin-right: 10px"
+                       v-if="isLoading">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                  Thêm
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup>
+import ckeditorComponent from "@/components/Editor/index.vue";
 import {computed, onBeforeMount, onMounted, ref} from "vue";
 import axios from "axios";
 import {useStore} from "vuex";
@@ -150,42 +171,34 @@ import MyModal from "@/components/Modal/Modal.vue";
 import ToastMessage from "@/components/Toast/index.vue";
 import stateLoading from "@/components/Loading/Loading.vue";
 import Pagination from "@/components/Pagination/index.vue";
+import {formatCurrency} from "@/utils/formatCurrency";
 
 const store = useStore();
 const roomTypes = ref([]);
 const model = ref({
-  logo: "",
-  brand_name: "",
-  status: 0,
+  name: "",
+  description: "",
+  number_of_beds: 0,
+  price_per_day: 0,
+  price_per_hour: 0,
 });
 const errors = ref(null);
 const isEditing = ref(false);
 const successMessage = ref(null);
 const isLoading = ref(false);
-const logoUrl = ref("");
 const pagination = ref({});
-//
-// /**
-//  * TODO: CHECKBOX STATUS
-//  */
-// const isChecked = computed({
-//    get() {
-//       return model.value.status === 1;
-//    },
-//    set(value) {
-//       model.value.status = value ? 1 : 0;
-//    },
-// });
-//
-// const resetForm = () => {
-//    model.value = {
-//       logo: "",
-//       brand_name: "",
-//       status: 0,
-//    };
-//    logoUrl.value = ""
-// };
-//
+
+
+const resetForm = () => {
+  model.value = {
+    name: "",
+    description: "",
+    number_of_beds: 0,
+    price_per_day: 0,
+    price_per_hour: 0,
+  };
+};
+
 const getRoomTypesList = (page = 1) => {
   store.dispatch("roomTypes/fetchRoomTypes", {
     page
@@ -195,137 +208,136 @@ const getRoomTypesList = (page = 1) => {
     isLoading.value = false;
   });
 };
-//
-// const uploadLogo = (event) => {
-//    const file = event.target.files[0];
-//    model.value.logo = file;
-//    logoUrl.value = URL.createObjectURL(file);
-// }
-//
-// /**
-//  * todo: ADD BRAND
-//  */
-// const addBrand = () => {
-//    isEditing.value = false;
-//    resetForm();
-//    $("#brandFormModal").modal("show");
-// };
-//
-// const addNewBrand = () => {
-//    const formData = new FormData();
-//    isLoading.value = true;
-//
-//    for (const key in model.value) {
-//       if (model.value.hasOwnProperty(key)) {
-//          const value = model.value[key];
-//          formData.append(key, value)
-//       }
-//    };
-//
-//    axios
-//       .post("v2/admin/brands/create", formData)
-//       .then((response) => {
-//          successMessage.value = response.data.message;
-//          getBrands().then(() => {
-//             isLoading.value = false;
-//             $("#brandFormModal").modal("hide");
-//             $(".toast").toast("show");
-//             resetForm();
-//          });
-//       })
-//       .catch((e) => {
-//          if (e.response) {
-//             isLoading.value = false;
-//             $("#brandFormModal").modal("show");
-//             errors.value = e.response.data.errors;
-//          }
-//       });
-// };
-//
-// /**
-//  * TODO: EDIT BRAND
-//  * @param {*} brand
-//  */
-// const editBrand = (brand) => {
-//    isEditing.value = true;
-//    resetForm();
-//    $("#brandFormModal").modal("show");
-//    model.value = { ...brand };
-// };
-//
-// const updateBrand = () => {
-//    const formData = new FormData();
-//    isLoading.value = true;
-//
-//    for (const key in model.value) {
-//       if (model.value.hasOwnProperty(key)) {
-//          const value = model.value[key];
-//          formData.append(key, value)
-//       }
-//    };
-//
-//    axios
-//       .post(`v2/admin/brands/${model.value.brand_id}/update`, formData)
-//       .then((response) => {
-//          successMessage.value = response.data.message;
-//          getBrands().then(() => {
-//             isLoading.value = false;
-//             $("#brandFormModal").modal("hide");
-//             $(".toast").toast("show");
-//             resetForm();
-//          });
-//       })
-//       .catch((e) => {
-//          if (e.response) {
-//             isLoading.value = false;
-//             $("#brandFormModal").modal("show");
-//             errors.value = e.response.data.errors;
-//          }
-//       });
-// };
-//
-// const brandSubmit = () => {
-//    if (isEditing.value) {
-//       updateBrand();
-//    } else {
-//       addNewBrand();
-//    }
-// };
-//
-// /**
-//  * TODO: DELETE BRAND
-//  * @param {*} brand
-//  */
-// const deleteBrand = (brand) => {
-//    model.value = { ...brand };
-//    $("#deleteConfirmModal").modal("show");
-// };
-//
-// const handleDeleteBrand = () => {
-//    isLoading.value = true;
-//    axios.delete(`v2/admin/brands/${model.value.brand_id}/delete`).then((response) => {
-//       getBrands().then(() => {
-//          isLoading.value = false;
-//          successMessage.value = response.data.message;
-//          $("#deleteConfirmModal").modal("hide");
-//          $(".toast").toast("show");
-//       });
-//    });
-// };
-//
+
+/**
+ * todo: ADD ROOM TYPE
+ */
+const addRoomType = () => {
+  isEditing.value = false;
+  resetForm();
+  $("#roomTypeFormModal").modal("show");
+};
+
+const addNewRoomType = () => {
+  const formData = new FormData();
+  isLoading.value = true;
+
+  for (const key in model.value) {
+    if (model.value.hasOwnProperty(key)) {
+      const value = model.value[key];
+      formData.append(key, value)
+    }
+  }
+
+  axios
+      .post("v2/room-types/create", formData)
+      .then((response) => {
+        successMessage.value = response.data.message;
+        getRoomTypesList();
+        isLoading.value = false;
+        $("#roomTypeFormModal").modal("hide");
+        $(".toast").toast("show");
+        resetForm();
+      })
+      .catch((e) => {
+        if (e.response) {
+          isLoading.value = false;
+          $("#roomTypeFormModal").modal("show");
+          errors.value = e.response.data.errors;
+        }
+      });
+};
+
+/**
+ * TODO: EDIT ROOM TYPE
+ * @param {*} roomType
+ */
+const editRoomType = (roomType) => {
+  isEditing.value = true;
+  resetForm();
+  $("#roomTypeFormModal").modal("show");
+  model.value = {...roomType};
+};
+
+const updateRoomType = () => {
+  const formData = new FormData();
+  isLoading.value = true;
+
+  for (const key in model.value) {
+    if (model.value.hasOwnProperty(key)) {
+      const value = model.value[key];
+      formData.append(key, value)
+    }
+  }
+
+  axios
+      .post(`v2/room-types/${model.value.room_type_id}/edit`, formData, {
+        params: {_method: "put"},
+      })
+      .then((response) => {
+        successMessage.value = response.data.message;
+        getRoomTypesList()
+        isLoading.value = false;
+        $("#roomTypeFormModal").modal("hide");
+        $(".toast").toast("show");
+        resetForm();
+      })
+      .catch((e) => {
+        if (e.response) {
+          isLoading.value = false;
+          $("#roomTypeFormModal").modal("show");
+          errors.value = e.response.data.errors;
+        }
+      });
+};
+
+const roomTypeSubmit = () => {
+  if (isEditing.value) {
+    updateRoomType();
+  } else {
+    addNewRoomType();
+  }
+};
+
+/**
+ * TODO: DELETE ROOM TYPE
+ * @param {*} roomType
+ */
+const deleteRoomType = (roomType) => {
+  model.value = {...roomType};
+  $("#deleteConfirmModal").modal("show");
+};
+
+const handleDeleteRoomType = () => {
+  isLoading.value = true;
+  axios.delete(`v2/room-types/${model.value.room_type_id}/delete`)
+      .then((response) => {
+        getRoomTypesList();
+        isLoading.value = false;
+        successMessage.value = response.data.message;
+        $("#deleteConfirmModal").modal("hide");
+        $(".toast").toast("show");
+      }).catch((e) => {
+    if (e.response) {
+      isLoading.value = false;
+      alert(e.response.data.errors);
+    }
+  });
+};
+
 onBeforeMount(() => {
   getRoomTypesList();
 });
-//
-// onMounted(() => {
-//    $("#brandFormModal").on("hide.bs.modal", () => {
-//       errors.value = null;
-//    });
-// });
+
+onMounted(() => {
+  $("#roomTypeFormModal").on("hide.bs.modal", () => {
+    errors.value = null;
+  });
+});
 </script>
 
 <style scoped>
-.rt-description{
+.rt-description {
   width: 40%;
 }
 </style>

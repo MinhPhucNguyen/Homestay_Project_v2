@@ -24,6 +24,8 @@ import HomestaysList from "../pages/Admin/Homestays/index.vue";
 import CreateHomestay from "../pages/Admin/Homestays/create.vue";
 import EditHomestay from "../pages/Admin/Homestays/edit.vue";
 
+import RoomsList from "../pages/Admin/Rooms/index.vue";
+
 // Features
 import FacilitiesList from "../pages/Admin/Facilities/index.vue";
 
@@ -127,6 +129,15 @@ const admin = [
             path: "room-types",
             component: RoomTypesList,
             name: "admin.room-types",
+         },
+
+         /**
+          * Router for  Rooms Management
+          */
+         {
+            path: "rooms",
+            component: RoomsList,
+            name: "admin.rooms",
          },
 
          /**

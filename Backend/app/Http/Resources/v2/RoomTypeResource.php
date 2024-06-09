@@ -15,13 +15,10 @@ class RoomTypeResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'roomTypeId' => $this->room_type_id,
+            'room_type_id' => $this->room_type_id,
             'name' => $this->name,
-            'description' => $this->description,
-            'pricePerNight' => $this->price_per_night,
-            'occupancy' => $this->occupancy,
-            'area' => $this->area,
-            'status' => $this->status,
+            'description' => $this->description ?? '',
+            'number_of_beds' => $this->number_of_beds,
         ];
     }
 }

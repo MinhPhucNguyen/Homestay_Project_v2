@@ -1,11 +1,11 @@
 <template>
   <div class="homestay_detail_container"
        v-if="Object.values(homestayDetail).length !== 0 && homestayDetail.constructor === Object">
-          <div class="homestay_image" v-if="homestayDetail.homestayImages[0]">
+          <div class="homestay_image" v-if="homestayDetail.homestay_images[0]">
              <div class="homestay_image_container">
                 <div class="main_image">
                    <div class="cover_homestay_image">
-                      <img :src="'/' + homestayDetail.homestayImages[0].imagePath" alt="${response.data.homestayCustomName}" />
+                      <img :src="'/' + homestayDetail.homestay_images[0].imagePath" alt="${response.data.homestayCustomName}" />
                    </div>
                 </div>
                 <div class="sub_image">
@@ -19,7 +19,7 @@
       <div class="homestay-detail-content">
         <div class="infor-homestay-basic">
           <div class="group-name">
-            <h3>{{ homestayDetail.homestayName }}</h3>
+            <h3>{{ homestayDetail.homestay_name }}</h3>
             <div class="group-action">
               <div class="wrap-ic">
                 <i class="fa-solid fa-share-nodes"></i>

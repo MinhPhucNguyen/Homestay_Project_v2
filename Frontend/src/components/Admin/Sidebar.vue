@@ -68,9 +68,32 @@
           <router-link :to="{ name: 'admin.homestays' }" class="collapse-item">
             <span class="ml-3">Danh sách</span>
           </router-link>
-          <!-- <router-link :to="{ name: 'admin.features' }" class="collapse-item">
-             <span class="ml-3">Features</span>
-          </router-link> -->
+        </div>
+      </div>
+    </li>
+
+    <li class="nav-item border-bottom">
+      <a
+          class="nav-link collapsed fw-bold text-dark"
+          href="#"
+          data-toggle="collapse"
+          data-target="#collapseSix"
+          aria-expanded="true"
+          aria-controls="collapseSix"
+      >
+        <i class="fa-solid fa-house"></i>
+        <span>Phòng</span>
+      </a>
+      <div
+          id="collapseSix"
+          class="collapse"
+          aria-labelledby="collapseSix"
+          data-parent="#accordionSidebar"
+      >
+        <div class="bg-white py-2 collapse-inner rounded">
+          <router-link :to="{ name: 'admin.rooms' }" class="collapse-item">
+            <span class="ml-3">Danh sách</span>
+          </router-link>
         </div>
       </div>
     </li>

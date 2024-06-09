@@ -1,8 +1,8 @@
 <template>
    <my-modal @clickTo="logout()" idModal="logoutModal" bgColor="danger">
-      <template v-slot:title>Logout</template>
-      <h6 class="text-dark text-center fs-5 mt-4">Are you sure, you want to logout?</h6>
-      <template v-slot:buttonName>Logout</template>
+      <template v-slot:title>Đăng xuất</template>
+      <h6 class="text-dark text-center fs-5 mt-4">Bạn có chắc chắn muốn đăng xuất?</h6>
+      <template v-slot:buttonName>Đăng xuất</template>
    </my-modal>
 
    <div id="wrapper" v-if="user">

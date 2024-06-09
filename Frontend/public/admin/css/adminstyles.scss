@@ -132,23 +132,6 @@
    align-items: center;
 }
 
-.car_image_input {
-   border-radius: 20px;
-   margin-right: 20px;
-   margin-top: 20px;
-   margin-left: 12px;
-   display: inline-block;
-   text-align: center;
-}
-
-.car_image_input > .image_input {
-   width: 120px;
-   height: 120px;
-   object-fit: cover;
-   border-radius: 20px;
-   display: block;
-}
-
 .remove_btn {
    font-size: 12px;
    font-weight: bold;
@@ -238,7 +221,7 @@ input[type="radio"]:checked {
 /* CKEditor */
 .cke_contents,
 .ck-editor__editable {
-   height: 500px !important;
+   height: 300px !important;
 }
 
 /* blog image */
@@ -267,12 +250,12 @@ input[type="radio"]:checked {
    border-radius: 20px;
 }
 
-/* FEATURE TAB */
-.features-list {
+/* FACILITIES TAB */
+.facilities-list {
    width: 100%;
 }
 
-.features-list .feature-item {
+.facilities-list .facilities-item {
    padding: 10px 20px;
    border-radius: 30px;
    background-color: #f1f1f1;
@@ -282,13 +265,13 @@ input[type="radio"]:checked {
    margin-bottom: 10px;
 }
 
-.features-list .feature-item:hover {
+.facilities-list .facilities-item:hover {
    background-color: #37ecaa49;
    transition: 0.3s all ease-in-out;
    box-shadow: #1cc8898e 0px 0px 15px 0px;
 }
 
-.feature-chose {
+.facilities-chose {
    background-color: #1cc889d2 !important;
    font-weight: bold;
    color: white !important;
