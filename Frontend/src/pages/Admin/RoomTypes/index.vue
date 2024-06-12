@@ -29,8 +29,11 @@
           <tr class="text-dark">
             <th class="text-center">Mã loại phòng</th>
             <th class="text-center">Tên loại phòng</th>
+            <th class="text-center">Tên homestay</th>
             <th class="text-center">Mô tả</th>
             <th class="text-center">Số giường</th>
+            <th class="text-center">Giá ngày</th>
+            <th class="text-center">Giá giờ</th>
             <th class="text-center">Action</th>
           </tr>
           </thead>
@@ -38,11 +41,14 @@
           <tr v-for="roomType in roomTypes" :key="roomType.room_type_id">
             <td class="text-center">{{ roomType.room_type_id }}</td>
             <td class="text-center">{{ roomType.name }}</td>
+            <td class="text-center">homestay</td>
             <td class="text-center rt-description">
               <div v-html="roomType.description" v-if="roomType.description"></div>
               <div v-else>Chưa có mô tả</div>
             </td>
             <td class="text-center">{{ roomType.number_of_beds }}</td>
+            <td class="text-center">0.00</td>
+            <td class="text-center">0.00</td>
             <td class="text-center">
               <div class="dropdown">
                 <button class="btn btn-success dropdown-toggle" type="button" data-bs-toggle="dropdown"
@@ -69,7 +75,7 @@
             </td>
           </tr>
           <tr v-if="roomTypes.length === 0">
-            <td colspan="5" class="text-center">
+            <td colspan="8" class="text-center">
               <stateLoading/>
             </td>
           </tr>
