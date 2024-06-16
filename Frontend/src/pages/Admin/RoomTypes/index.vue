@@ -398,7 +398,7 @@ const addNewRoomType = () => {
   for (const key in model.value) {
     if (model.value.hasOwnProperty(key)) {
       const value = model.value[key];
-        formData.append(key, value);
+      formData.append(key, value);
     }
   }
 
@@ -431,9 +431,6 @@ const editRoomType = (roomType) => {
   resetForm();
   $("#roomTypeFormModal").modal("show");
   model.value = {...roomType};
-  console.log(
-      roomType
-  )
   if (roomType.room_prices && roomType.room_prices.length > 0) {
     const firstPrice = roomType.room_prices[0];
     model.value.homestay_id = firstPrice.homestay_id;

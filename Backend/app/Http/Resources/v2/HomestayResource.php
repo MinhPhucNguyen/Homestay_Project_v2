@@ -16,7 +16,7 @@ class HomestayResource extends JsonResource
     {
         return [
             'homestay_id' => $this->homestay_id ?? null,
-            'rooms' =>  RoomResource::collection($this->rooms),
+            'rooms' =>  RoomResource::collection($this->rooms) ?? [],
             'slug' => $this->slug,
             'homestay_name' => $this->homestay_name,
             'description' => $this->description,

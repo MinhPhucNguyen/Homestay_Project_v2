@@ -72,7 +72,7 @@
                 </button>
                 <ul class="dropdown-menu">
                   <button type="button" class="dropdown-item mb-3 fs-6 text-warning bg-white"
-                          @click="openAddNewRoomModal">
+                          @click="openAddNewRoomModal(homestay.homestay_id)">
                     <i class="fa-solid fa-plus"></i>
                     <span class="ml-2">Thêm phòng</span>
                   </button>
@@ -92,6 +92,7 @@
               </div>
             </td>
 
+            <AddRoomModal v-if="selectedHomestayId" :homestayId="selectedHomestayId"/>
             <my-modal @clickTo="handleDeleteHomestay(homestay.homestay_id)"
                       :idModal="`deleteConfirmModal${homestay.homestay_id}`"
                       bgColor="danger">
@@ -125,11 +126,10 @@
     </div>
   </div>
 
-  <AddRoomModal/>
 </template>
 
 <script setup>
-import {computed, onBeforeMount, ref, watch} from "vue";
+import {computed, onBeforeMount, onMounted, ref, watch} from "vue";
 import {useStore} from "vuex";
 import stateLoading from "@/components/Loading/Loading.vue";
 import MyModal from "@/components/Modal/Modal.vue";
@@ -146,7 +146,7 @@ const pagination = ref({});
 const sort_direction = ref("desc");
 const sort_field = ref("homestay_id");
 const searchInput = ref("");
-const showModal = ref(false);
+const selectedHomestayId = ref(null);
 
 const getHomestaysList = (page = 1) => {
   isLoading.value = true;
@@ -209,13 +209,18 @@ const changeSort = (field) => {
   getHomestaysList();
 };
 
-const openAddNewRoomModal = () => {
-  $("#addRoomModal").modal("show");
+const openAddNewRoomModal = (homestayId) => {
+  selectedHomestayId.value = homestayId;
+  if(selectedHomestayId.value){
+    $("#addRoomModal").modal("show");
+  }
 };
 
-const closeModal = () => {
-  showModal.value = false;
-};
+onMounted(() => {
+  $("#addRoomModal").on("hide.bs.modal", () => {
+
+  });
+});
 
 </script>
 

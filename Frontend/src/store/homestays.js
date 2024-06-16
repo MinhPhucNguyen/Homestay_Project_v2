@@ -46,10 +46,22 @@ const homestays = {
         })
         .catch((e) => {
           if (e.response) {
-            alert("Something went wrong. Please try again later.");
+            alert("Có lỗi xảy ra. Vui lòng thử lại sau.");
           }
         });
     },
+
+    // async fetchHomestayById({ commit }, id) {
+    //   try {
+    //     const response = await axios.get(`v2/homestays/${id}`);
+    //     const data = response.data.data;
+    //     return data;
+    //   } catch (e) {
+    //     if (e.response) {
+    //       alert("Có lỗi xảy ra. Vui lòng thử lại sau.");
+    //     }
+    //   }
+    // },
 
     async fetchHomestays({ commit }, payload) {
       try {
@@ -73,7 +85,7 @@ const homestays = {
         return { pagination };
       } catch (e) {
         if (e.response) {
-          alert("Something went wrong. Please try again later.");
+          alert("Có lỗi xảy ra. Vui lòng thử lại sau.");
         }
       }
     },
