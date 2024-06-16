@@ -9,6 +9,12 @@
           <h4 class="text-black fw-bold">Đăng ký</h4>
         </div>
         <div class="card-body mx-auto">
+          <p v-if="errorToast.length">
+    <b>Please correct the following error(s):</b>
+    <ul>
+      <li v-for="error in errorToast">{{ error }}</li>
+    </ul>
+  </p>
           <form @submit.prevent="registerSubmit()" id="register-form">
             <div class="form-group row">
               <div class="col-md-6">
@@ -121,13 +127,14 @@
 </template>
 
 <script setup>
-import { ref, defineProps, defineEmits } from "vue";
+import { ref, defineProps, defineEmits, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 
 const isLoading = ref(false);
 const router = useRouter();
 const store = useStore();
+const errorToast = ref([]);
 const registerData = ref({
   firstname: "",
   lastname: "",
@@ -157,7 +164,17 @@ const registerSubmit = () => {
       emit("close");
     })
     .catch((e) => {
-      console.log(e);
+      if(errorToast.value){
+        errorToast.value = [];
+      }
+      if(e.response.data.errors) {
+       const values =  Object.values(e.response.data.errors);
+       if(values.length > 0) {
+         values.forEach((value)=> {
+          errorToast.value.push(value[0]);
+         });
+       }
+      }
       isLoading.value = false;
     });
 };

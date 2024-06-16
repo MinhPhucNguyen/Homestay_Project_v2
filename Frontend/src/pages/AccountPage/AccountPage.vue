@@ -83,7 +83,7 @@ const setActiveItem = (item) => {
 const logout = () => {
    store.dispatch("auth/logout").then(() => {
       $("#logoutModal").modal("hide");
-      router.push({ name: "login" });
+      router.push({ name: "home" });
    });
 };
 </script>
