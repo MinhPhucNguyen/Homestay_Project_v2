@@ -13,7 +13,7 @@ class RoomTypeController extends Controller
     {
         $paginate = 10;
 
-        $roomTypes = RoomType::paginate($paginate);
+        $roomTypes = RoomType::with('roomPrices.homestay')->paginate($paginate);
 
         return new RoomTypeCollection($roomTypes);
     }

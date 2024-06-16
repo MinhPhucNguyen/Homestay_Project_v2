@@ -37,6 +37,14 @@ class HomestayController extends Controller
         return new HomestayCollection($homestays);
     }
 
+    public function getAllHomestayToSelect()
+    {
+        $homestays = Homestay::select('homestay_id', 'homestay_name')->get();
+        return response()->json([
+            'homestays' => $homestays,
+        ], 200);
+    }
+
     public function getHomestayBySlug($slug)
     {
         $homestay = Homestay::where('slug', 'like', $slug)->first();
