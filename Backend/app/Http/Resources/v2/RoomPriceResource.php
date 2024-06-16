@@ -15,7 +15,8 @@ class RoomPriceResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-          'id' => $this->room_price_id,
+            'id' => $this->room_price_id,
+            'homestay_id' => $this->homestay->homestay_id,
             'homestay_name' => $this->homestay->homestay_name,
             'price_per_day' => $this->price_per_day,
             'price_per_hour' => $this->price_per_hour,

@@ -1,10 +1,10 @@
 <template>
-  <ToastMessage :message="successMessage" />
+  <ToastMessage :message="successMessage"/>
 
   <my-modal
-    @clickTo="handleDeleteRoomType"
-    idModal="deleteConfirmModal"
-    bgColor="danger"
+      @clickTo="handleDeleteRoomType"
+      idModal="deleteConfirmModal"
+      bgColor="danger"
   >
     <template v-slot:title>Xóa loại phòng</template>
     <h6 class="text-dark text-center fs-5 mt-4">
@@ -12,10 +12,10 @@
     </h6>
     <template v-slot:buttonName>
       <div
-        class="spinner-border"
-        role="status"
-        style="width: 24px; height: 24px; margin-right: 10px"
-        v-if="isLoading"
+          class="spinner-border"
+          role="status"
+          style="width: 24px; height: 24px; margin-right: 10px"
+          v-if="isLoading"
       >
         <span class="visually-hidden">Loading...</span>
       </div>
@@ -31,8 +31,8 @@
         </div>
         <div>
           <button
-            class="btn btn-success fw-bold float-right ml-3"
-            @click="addRoomType"
+              class="btn btn-success fw-bold float-right ml-3"
+              @click="addRoomType"
           >
             <i class="fa-solid fa-plus"></i>
             Thêm loại phòng
@@ -42,127 +42,127 @@
       <div class="card-body m-0">
         <table class="table table-bordered table-striped">
           <thead>
-            <tr class="text-dark">
-              <th class="text-center">Mã loại phòng</th>
-              <th class="text-center">Tên loại phòng</th>
-              <th class="text-center">Tên homestay</th>
-              <th class="text-center">Mô tả</th>
-              <th class="text-center">Số giường</th>
-              <th class="text-center">Giá ngày</th>
-              <th class="text-center">Giá giờ</th>
-              <th class="text-center">Action</th>
-            </tr>
+          <tr class="text-dark">
+            <th class="text-center">Mã loại phòng</th>
+            <th class="text-center">Tên loại phòng</th>
+            <th class="text-center">Tên homestay</th>
+            <th class="text-center">Mô tả</th>
+            <th class="text-center">Số giường</th>
+            <th class="text-center">Giá ngày</th>
+            <th class="text-center">Giá giờ</th>
+            <th class="text-center">Action</th>
+          </tr>
           </thead>
           <tbody>
-            <tr v-for="roomType in roomTypes" :key="roomType.room_type_id">
-              <td class="text-center">{{ roomType.room_type_id }}</td>
-              <td class="text-center">{{ roomType.name }}</td>
-              <td class="text-center">
-                <div v-if="roomType.room_prices.length">
-                  <div
+          <tr v-for="roomType in roomTypes" :key="roomType.room_type_id">
+            <td class="text-center">{{ roomType.room_type_id }}</td>
+            <td class="text-center">{{ roomType.name }}</td>
+            <td class="text-center">
+              <div v-if="roomType.room_prices.length">
+                <div
                     v-for="roomPrice in roomType.room_prices"
                     :key="roomPrice.id"
-                  >
-                    {{ roomPrice.homestay_name }}
-                  </div>
+                >
+                  {{ roomPrice.homestay_name }}
                 </div>
-                <div v-else>Chưa có homestay</div>
-              </td>
-              <td class="text-center rt-description">
-                <div
+              </div>
+              <div v-else>Chưa có homestay</div>
+            </td>
+            <td class="text-center rt-description">
+              <div
                   v-html="roomType.description"
                   v-if="roomType.description"
-                ></div>
-                <div v-else>Chưa có mô tả</div>
-              </td>
-              <td class="text-center">{{ roomType.number_of_beds }}</td>
-              <td class="text-center">
-                <div v-if="roomType.room_prices.length">
-                  <div
+              ></div>
+              <div v-else>Chưa có mô tả</div>
+            </td>
+            <td class="text-center">{{ roomType.number_of_beds }}</td>
+            <td class="text-center">
+              <div v-if="roomType.room_prices.length">
+                <div
                     v-for="roomPrice in roomType.room_prices"
                     :key="roomPrice.id"
-                  >
-                    {{ formatCurrency(roomPrice.price_per_day) }}
-                  </div>
+                >
+                  {{ formatCurrency(roomPrice.price_per_day) }}
                 </div>
-                <div v-else>{{ formatCurrency(0) }}</div>
-              </td>
-              <td class="text-center">
-                <div v-if="roomType.room_prices.length">
-                  <div
+              </div>
+              <div v-else>{{ formatCurrency(0) }}</div>
+            </td>
+            <td class="text-center">
+              <div v-if="roomType.room_prices.length">
+                <div
                     v-for="roomPrice in roomType.room_prices"
                     :key="roomPrice.id"
-                  >
-                    {{ formatCurrency(roomPrice.price_per_hour) }}
-                  </div>
+                >
+                  {{ formatCurrency(roomPrice.price_per_hour) }}
                 </div>
-                <div v-else>{{ formatCurrency(0) }}</div>
-              </td>
-              <td class="text-center">
-                <div class="dropdown">
-                  <button
+              </div>
+              <div v-else>{{ formatCurrency(0) }}</div>
+            </td>
+            <td class="text-center">
+              <div class="dropdown">
+                <button
                     class="btn btn-success dropdown-toggle"
                     type="button"
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
-                  >
-                    Action
-                  </button>
-                  <ul class="dropdown-menu">
-                    <li>
-                      <button
+                >
+                  Action
+                </button>
+                <ul class="dropdown-menu">
+                  <li>
+                    <button
                         type="button"
                         class="dropdown-item mb-3 fs-6 text-success bg-white"
                         @click="editRoomType(roomType)"
-                      >
-                        <i class="fa-solid fa-pen-to-square"></i>
-                        <span class="ml-2">Edit</span>
-                      </button>
-                    </li>
-                    <li>
-                      <button
+                    >
+                      <i class="fa-solid fa-pen-to-square"></i>
+                      <span class="ml-2">Sửa</span>
+                    </button>
+                  </li>
+                  <li>
+                    <button
                         type="button"
                         class="dropdown-item fs-6 text-danger bg-white"
                         @click="deleteRoomType(roomType)"
-                      >
-                        <i class="fa-solid fa-trash"></i>
-                        <span class="ml-2">Delete</span>
-                      </button>
-                    </li>
-                  </ul>
-                </div>
-              </td>
-            </tr>
-            <tr v-if="roomTypes.length === 0">
-              <td colspan="8" class="text-center">
-                <stateLoading />
-              </td>
-            </tr>
+                    >
+                      <i class="fa-solid fa-trash"></i>
+                      <span class="ml-2">Xóa</span>
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </td>
+          </tr>
+          <tr v-if="roomTypes.length === 0">
+            <td colspan="8" class="text-center">
+              <stateLoading/>
+            </td>
+          </tr>
           </tbody>
         </table>
         <div class="pagination">
           <Pagination
-            :pagination="pagination"
-            @pagination-page="getRoomTypesList"
+              :pagination="pagination"
+              @pagination-page="getRoomTypesList"
           />
         </div>
       </div>
     </div>
 
     <div
-      class="modal fade"
-      id="roomTypeFormModal"
-      tabindex="-1"
-      aria-labelledby="roomTypeFormModalLabel"
-      aria-hidden="true"
+        class="modal fade"
+        id="roomTypeFormModal"
+        tabindex="-1"
+        aria-labelledby="roomTypeFormModalLabel"
+        aria-hidden="true"
     >
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
             <h1
-              class="modal-title fs-5"
-              id="roomTypeFormModalLabel"
-              v-if="isEditing"
+                class="modal-title fs-5"
+                id="roomTypeFormModalLabel"
+                v-if="isEditing"
             >
               Sửa loại phòng
             </h1>
@@ -170,10 +170,10 @@
               Thêm loại phòng
             </h1>
             <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
             ></button>
           </div>
           <div class="modal-body">
@@ -181,124 +181,124 @@
               <div class="form-group">
                 <label for="" class="text-dark fw-bold">Tên loại phòng</label>
                 <input
-                  type="text"
-                  class="form-control"
-                  name="name"
-                  v-model="model.name"
+                    type="text"
+                    class="form-control"
+                    name="name"
+                    v-model="model.name"
                 />
                 <small class="text-danger" v-if="errors && errors.name[0]">{{
-                  errors.name[0]
-                }}</small>
+                    errors.name[0]
+                  }}</small>
               </div>
               <div class="form-group">
                 <label for="" class="text-dark fw-bold">Số giường</label>
                 <input
-                  type="text"
-                  class="form-control"
-                  name="number_of_beds"
-                  v-model="model.number_of_beds"
+                    type="text"
+                    class="form-control"
+                    name="number_of_beds"
+                    v-model="model.number_of_beds"
                 />
                 <small
-                  class="text-danger"
-                  v-if="errors && errors.number_of_beds[0]"
-                  >{{ errors.number_of_beds[0] }}</small
+                    class="text-danger"
+                    v-if="errors && errors.number_of_beds[0]"
+                >{{ errors.number_of_beds[0] }}</small
                 >
               </div>
               <div class="form-group">
                 <label for="" class="text-dark fw-bold">Giá ngày (VND)</label>
                 <input
-                  type="text"
-                  class="form-control"
-                  name="price_per_day"
-                  v-model="model.price_per_day"
+                    type="text"
+                    class="form-control"
+                    name="price_per_day"
+                    v-model="model.price_per_day"
                 />
                 <small
-                  class="text-danger"
-                  v-if="errors && errors.price_per_day[0]"
-                  >{{ errors.price_per_day[0] }}</small
+                    class="text-danger"
+                    v-if="errors && errors.price_per_day[0]"
+                >{{ errors.price_per_day[0] }}</small
                 >
               </div>
               <div class="form-group">
                 <label for="" class="text-dark fw-bold">Giá giờ (VND)</label>
                 <input
-                  type="text"
-                  class="form-control"
-                  name="price_per_hour"
-                  v-model="model.price_per_hour"
+                    type="text"
+                    class="form-control"
+                    name="price_per_hour"
+                    v-model="model.price_per_hour"
                 />
                 <small
-                  class="text-danger"
-                  v-if="errors && errors.price_per_hour[0]"
-                  >{{ errors.price_per_hour[0] }}</small
+                    class="text-danger"
+                    v-if="errors && errors.price_per_hour[0]"
+                >{{ errors.price_per_hour[0] }}</small
                 >
               </div>
               <div class="form-group">
                 <label for="" class="text-dark fw-bold">Homestay</label>
                 <multiselect
-                  v-model="model.homestay"
-                  :options="selectedOptions"
-                  placeholder="Vui lòng chọn"
-                  label="homestay_name"
-                  track-by="homestay_id"
+                    v-model="selectedValue"
+                    :options="selectOptions"
+                    placeholder="Vui lòng chọn"
+                    label="homestay_name"
+                    track-by="homestay_id"
                 >
                   <template #noResult>
                     <span
-                      >Không tìm thấy homestay nào, vui lòng nhập lại.</span
+                    >Không tìm thấy homestay nào, vui lòng nhập lại.</span
                     >
                   </template>
                 </multiselect>
-                <small class="text-danger" v-if="errors && errors.homestay">{{
-                  errors.homestay[0]
-                }}</small>
+                <small class="text-danger" v-if="errors && errors.homestay_id">{{
+                    errors.homestay_id[0]
+                  }}</small>
               </div>
               <div class="form-group">
                 <label for="" class="text-dark fw-bold">Mô tả</label>
                 <div>
                   <ckeditorComponent
-                    v-model="model.description"
+                      v-model="model.description"
                   ></ckeditorComponent>
                 </div>
                 <small
-                  class="text-danger"
-                  v-if="errors && errors.description[0]"
-                  >{{ errors.description[0] }}</small
+                    class="text-danger"
+                    v-if="errors && errors.description[0]"
+                >{{ errors.description[0] }}</small
                 >
               </div>
               <div class="modal-footer">
                 <button
-                  type="button"
-                  class="btn btn-secondary"
-                  data-bs-dismiss="modal"
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
                 >
                   Đóng
                 </button>
                 <button
-                  type="submit"
-                  class="btn btn-success pr-4 pl-4 d-flex align-items-center"
-                  v-if="isEditing"
-                  :disabled="isLoading"
+                    type="submit"
+                    class="btn btn-success pr-4 pl-4 d-flex align-items-center"
+                    v-if="isEditing"
+                    :disabled="isLoading"
                 >
                   <div
-                    class="spinner-border"
-                    role="status"
-                    style="width: 20px; height: 20px; margin-right: 10px"
-                    v-if="isLoading && isEditing"
+                      class="spinner-border"
+                      role="status"
+                      style="width: 20px; height: 20px; margin-right: 10px"
+                      v-if="isLoading && isEditing"
                   >
                     <span class="visually-hidden">Loading...</span>
                   </div>
                   Lưu thay đổi
                 </button>
                 <button
-                  type="submit"
-                  class="btn btn-success pr-4 pl-4 d-flex align-items-center"
-                  v-else
-                  :disabled="isLoading"
+                    type="submit"
+                    class="btn btn-success pr-4 pl-4 d-flex align-items-center"
+                    v-else
+                    :disabled="isLoading"
                 >
                   <div
-                    class="spinner-border"
-                    role="status"
-                    style="width: 20px; height: 20px; margin-right: 10px"
-                    v-if="isLoading"
+                      class="spinner-border"
+                      role="status"
+                      style="width: 20px; height: 20px; margin-right: 10px"
+                      v-if="isLoading"
                   >
                     <span class="visually-hidden">Loading...</span>
                   </div>
@@ -315,15 +315,15 @@
 
 <script setup>
 import ckeditorComponent from "@/components/Editor/index.vue";
-import { onBeforeMount, onMounted, ref } from "vue";
+import {onBeforeMount, onMounted, ref, watch} from "vue";
 import Multiselect from "vue-multiselect";
 import axios from "axios";
-import { useStore } from "vuex";
+import {useStore} from "vuex";
 import MyModal from "@/components/Modal/Modal.vue";
 import ToastMessage from "@/components/Toast/index.vue";
 import stateLoading from "@/components/Loading/Loading.vue";
 import Pagination from "@/components/Pagination/index.vue";
-import { formatCurrency } from "@/utils/formatCurrency";
+import {formatCurrency} from "@/utils/formatCurrency";
 
 const store = useStore();
 const roomTypes = ref([]);
@@ -331,9 +331,9 @@ const model = ref({
   name: "",
   description: "",
   number_of_beds: 0,
+  homestay_id: 0,
   price_per_day: 0,
   price_per_hour: 0,
-  homestay: null,
 });
 const errors = ref(null);
 const isEditing = ref(false);
@@ -341,35 +341,45 @@ const successMessage = ref(null);
 const isLoading = ref(false);
 const pagination = ref({});
 
-const selectedOptions = ref([]);
+const selectedValue = ref(null);
+const selectOptions = ref([]);
+
+watch(selectedValue, (value) => {
+  console.log(value)
+  if (value) {
+    model.value.homestay_id = value.homestay_id;
+  }
+});
 
 const resetForm = () => {
   model.value = {
     name: "",
     description: "",
     number_of_beds: 0,
+    homestay_id: 0,
     price_per_day: 0,
     price_per_hour: 0,
   };
+  selectedValue.value = null;
 };
 
 const getHomestaysToSelect = () => {
   axios.get("v2/homestays/all").then((response) => {
-    selectedOptions.value = response.data.homestays;
+    selectOptions.value = response.data.homestays;
   });
 };
 
 
 const getRoomTypesList = (page = 1) => {
   store
-    .dispatch("roomTypes/fetchRoomTypes", {
-      page,
-    })
-    .then((response) => {
-      roomTypes.value = store.getters["roomTypes/getRoomTypesList"];
-      pagination.value = response.pagination;
-      isLoading.value = false;
-    });
+      .dispatch("roomTypes/fetchRoomTypes", {
+        page,
+      })
+      .then((response) => {
+        roomTypes.value = store.getters["roomTypes/getRoomTypesList"];
+        pagination.value = response.pagination;
+        isLoading.value = false;
+      });
 };
 
 /**
@@ -388,27 +398,28 @@ const addNewRoomType = () => {
   for (const key in model.value) {
     if (model.value.hasOwnProperty(key)) {
       const value = model.value[key];
-      formData.append(key, value);
+        formData.append(key, value);
     }
   }
 
   axios
-    .post("v2/room-types/create", formData)
-    .then((response) => {
-      successMessage.value = response.data.message;
-      getRoomTypesList();
-      isLoading.value = false;
-      $("#roomTypeFormModal").modal("hide");
-      $(".toast").toast("show");
-      resetForm();
-    })
-    .catch((e) => {
-      if (e.response) {
+      .post("v2/room-types/create", formData)
+      .then((response) => {
+        successMessage.value = response.data.message;
+        getRoomTypesList();
         isLoading.value = false;
-        $("#roomTypeFormModal").modal("show");
-        errors.value = e.response.data.errors;
-      }
-    });
+        $("#roomTypeFormModal").modal("hide");
+        $(".toast").toast("show");
+        resetForm();
+      })
+      .catch((e) => {
+        if (e.response) {
+          isLoading.value = false;
+          $("#roomTypeFormModal").modal("show");
+          errors.value = e.response.data.errors;
+          console.log(errors.value)
+        }
+      });
 };
 
 /**
@@ -419,7 +430,20 @@ const editRoomType = (roomType) => {
   isEditing.value = true;
   resetForm();
   $("#roomTypeFormModal").modal("show");
-  model.value = { ...roomType };
+  model.value = {...roomType};
+  console.log(
+      roomType
+  )
+  if (roomType.room_prices && roomType.room_prices.length > 0) {
+    const firstPrice = roomType.room_prices[0];
+    model.value.homestay_id = firstPrice.homestay_id;
+    model.value.price_per_day = firstPrice.price_per_day;
+    model.value.price_per_hour = firstPrice.price_per_hour;
+    selectedValue.value = {
+      homestay_id: firstPrice.homestay_id,
+      homestay_name: firstPrice.homestay_name,
+    };
+  }
 };
 
 const updateRoomType = () => {
@@ -434,24 +458,24 @@ const updateRoomType = () => {
   }
 
   axios
-    .post(`v2/room-types/${model.value.room_type_id}/edit`, formData, {
-      params: { _method: "put" },
-    })
-    .then((response) => {
-      successMessage.value = response.data.message;
-      getRoomTypesList();
-      isLoading.value = false;
-      $("#roomTypeFormModal").modal("hide");
-      $(".toast").toast("show");
-      resetForm();
-    })
-    .catch((e) => {
-      if (e.response) {
+      .post(`v2/room-types/${model.value.room_type_id}/edit`, formData, {
+        params: {_method: "put"},
+      })
+      .then((response) => {
+        successMessage.value = response.data.message;
+        getRoomTypesList();
         isLoading.value = false;
-        $("#roomTypeFormModal").modal("show");
-        errors.value = e.response.data.errors;
-      }
-    });
+        $("#roomTypeFormModal").modal("hide");
+        $(".toast").toast("show");
+        resetForm();
+      })
+      .catch((e) => {
+        if (e.response) {
+          isLoading.value = false;
+          $("#roomTypeFormModal").modal("show");
+          errors.value = e.response.data.errors;
+        }
+      });
 };
 
 const roomTypeSubmit = () => {
@@ -467,27 +491,37 @@ const roomTypeSubmit = () => {
  * @param {*} roomType
  */
 const deleteRoomType = (roomType) => {
-  model.value = { ...roomType };
+  model.value = {...roomType};
+  if (roomType.room_prices && roomType.room_prices.length > 0) {
+    const firstPrice = roomType.room_prices[0];
+    model.value.homestay_id = firstPrice.homestay_id;
+    model.value.price_per_day = firstPrice.price_per_day;
+    model.value.price_per_hour = firstPrice.price_per_hour;
+    selectedValue.value = {
+      homestay_id: firstPrice.homestay_id,
+      homestay_name: firstPrice.homestay_name,
+    };
+  }
   $("#deleteConfirmModal").modal("show");
 };
 
 const handleDeleteRoomType = () => {
   isLoading.value = true;
   axios
-    .delete(`v2/room-types/${model.value.room_type_id}/delete`)
-    .then((response) => {
-      getRoomTypesList();
-      isLoading.value = false;
-      successMessage.value = response.data.message;
-      $("#deleteConfirmModal").modal("hide");
-      $(".toast").toast("show");
-    })
-    .catch((e) => {
-      if (e.response) {
+      .delete(`v2/room-types/${model.value.room_type_id}/delete`)
+      .then((response) => {
+        getRoomTypesList();
         isLoading.value = false;
-        alert(e.response.data.errors);
-      }
-    });
+        successMessage.value = response.data.message;
+        $("#deleteConfirmModal").modal("hide");
+        $(".toast").toast("show");
+      })
+      .catch((e) => {
+        if (e.response) {
+          isLoading.value = false;
+          alert(e.response.data.errors);
+        }
+      });
 };
 
 onBeforeMount(() => {

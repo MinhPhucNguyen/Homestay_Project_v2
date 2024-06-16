@@ -24,13 +24,27 @@ class RoomTypeController extends Controller
             'name' => 'required|string',
             'description' => 'nullable|string',
             'number_of_beds' => 'required|integer',
+            'price_per_day' => 'required|numeric',
+            'price_per_hour' => 'required|numeric',
+            'homestay_id' => 'required|exists:homestays,homestay_id'
         ]);
 
-        $roomType = RoomType::create($validatedData);
+        $roomType = RoomType::create([
+            'name' => $validatedData['name'],
+            'description' => $validatedData['description'],
+            'number_of_beds' => $validatedData['number_of_beds']
+        ]);
+
+        $roomPrice = $roomType->roomPrices()->create([
+            'homestay_id' => $validatedData['homestay_id'],
+            'price_per_day' => $validatedData['price_per_day'],
+            'price_per_hour' => $validatedData['price_per_hour']
+        ]);
 
         return response()->json([
             'message' => 'Thêm mới thành công!',
             'roomType' => $roomType,
+            'roomPrice' => $roomPrice
         ], 201);
     }
 
@@ -63,13 +77,23 @@ class RoomTypeController extends Controller
             'name' => 'required|string',
             'description' => 'nullable|string',
             'number_of_beds' => 'required|integer',
+            'price_per_day' => 'required|numeric',
+            'price_per_hour' => 'required|numeric',
+            'homestay_id' => 'required|exists:homestays,homestay_id'
         ]);
 
         $roomType->update($validatedData);
 
+        $roomPrice = $roomType->roomPrices()->update([
+            'homestay_id' => $validatedData['homestay_id'],
+            'price_per_day' => $validatedData['price_per_day'],
+            'price_per_hour' => $validatedData['price_per_hour']
+        ]);
+
         return response()->json([
             'message' => 'Cập nhật thành công!',
             'roomType' => $roomType,
+            'roomPrice' => $roomPrice
         ], 200);
     }
 

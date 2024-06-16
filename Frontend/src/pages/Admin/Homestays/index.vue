@@ -71,6 +71,11 @@
                   Action
                 </button>
                 <ul class="dropdown-menu">
+                  <button type="button" class="dropdown-item mb-3 fs-6 text-warning bg-white"
+                          @click="openAddNewRoomModal">
+                    <i class="fa-solid fa-plus"></i>
+                    <span class="ml-2">Thêm phòng</span>
+                  </button>
                   <li>
                     <router-link :to="{ name: 'homestays.edit', params: { id: homestay.homestay_id } }"
                                  class="dropdown-item mb-3 fs-6 text-primary bg-white">
@@ -119,6 +124,8 @@
       </div>
     </div>
   </div>
+
+  <AddRoomModal/>
 </template>
 
 <script setup>
@@ -129,6 +136,7 @@ import MyModal from "@/components/Modal/Modal.vue";
 import ToastMessage from "@/components/Toast/index.vue";
 import Pagination from "@/components/Pagination/index.vue";
 import {debounce} from "@/utils/debounce.js";
+import AddRoomModal from "@/components/Modal/AddRoomModal.vue";
 
 const store = useStore();
 const homestaysList = ref([]);
@@ -138,6 +146,7 @@ const pagination = ref({});
 const sort_direction = ref("desc");
 const sort_field = ref("homestay_id");
 const searchInput = ref("");
+const showModal = ref(false);
 
 const getHomestaysList = (page = 1) => {
   isLoading.value = true;
@@ -199,6 +208,15 @@ const changeSort = (field) => {
   }
   getHomestaysList();
 };
+
+const openAddNewRoomModal = () => {
+  $("#addRoomModal").modal("show");
+};
+
+const closeModal = () => {
+  showModal.value = false;
+};
+
 </script>
 
 <style></style>
