@@ -59,7 +59,7 @@
             <td class="text-center">
               <a href="" class="text-success text-decoration-none">{{ homestay.homestay_name }}</a>
             </td>
-            <td class="text-center">{{ homestay.phone }}</td>
+            <td class="text-center">{{ homestay.phone_number }}</td>
             <td class="text-center">{{ homestay.email }}</td>
             <td class="text-center">{{ homestay.address }}</td>
             <td class="text-center">{{ homestay.city }}</td>
@@ -146,7 +146,7 @@ const pagination = ref({});
 const sort_direction = ref("desc");
 const sort_field = ref("homestay_id");
 const searchInput = ref("");
-const selectedHomestayId = ref(null);
+const selectedHomestayId = ref(0);
 
 const getHomestaysList = (page = 1) => {
   isLoading.value = true;

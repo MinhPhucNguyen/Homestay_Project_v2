@@ -47,7 +47,24 @@ class HomestayController extends Controller
 
     public function getHomestayBySlug($slug)
     {
-        $homestay = Homestay::where('slug', 'like', $slug)->first();
+        $homestay = Homestay::where('slug', 'like', $slug)->get();
+        var_dump($homestay);
+        die();
+        return response()->json([
+            'homestay' => new HomestayResource($homestay),
+        ], 200);
+    }
+
+    public function show($id)
+    {
+        $homestay = Homestay::find($id);
+
+        if (!$homestay) {
+            return response()->json([
+                'message' => 'Không tìm thấy homestay!',
+            ], 404);
+        }
+
         return response()->json([
             'homestay' => new HomestayResource($homestay),
         ], 200);

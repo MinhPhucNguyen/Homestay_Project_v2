@@ -251,14 +251,13 @@ const props = defineProps({
   }
 });
 
-// const getHomestayById = async () => {
-//   const homestay = await store.dispatch("homestays/fetchHomestayById", props.homestayId);
-//   console.log(homestay);
-// };
-//
-// onMounted(() => {
-//   getHomestayById();
-// });
+const getHomestayById = async () => {
+  const response = await store.dispatch("homestays/fetchHomestayById", props.homestayId);
+};
+
+onMounted(() => {
+  getHomestayById();
+});
 
 </script>
 

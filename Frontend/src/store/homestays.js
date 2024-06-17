@@ -51,17 +51,18 @@ const homestays = {
         });
     },
 
-    // async fetchHomestayById({ commit }, id) {
-    //   try {
-    //     const response = await axios.get(`v2/homestays/${id}`);
-    //     const data = response.data.data;
-    //     return data;
-    //   } catch (e) {
-    //     if (e.response) {
-    //       alert("Có lỗi xảy ra. Vui lòng thử lại sau.");
-    //     }
-    //   }
-    // },
+    async fetchHomestayById({ commit }, id) {
+      // console.log(id)
+      try {
+        const response = await axios.get(`v2/homestays/${id}`);
+        const data = response.data.data;
+        return data;
+      } catch (e) {
+        if (e.response) {
+          console.log(e.response.data.message);
+        }
+      }
+    },
 
     async fetchHomestays({ commit }, payload) {
       try {
