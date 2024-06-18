@@ -47,11 +47,10 @@ class HomestayController extends Controller
 
     public function getHomestayBySlug($slug)
     {
-        $homestay = Homestay::where('slug', 'like', $slug)->get();
-        var_dump($homestay);
-        die();
-        return response()->json([
-            'homestay' => new HomestayResource($homestay),
+        $homestay = Homestay::where('slug', 'like', '%'.$slug.'%')->get();
+        $dataResponse = count($homestay->toArray()) > 0 ? new HomestayResource($homestay): [];
+         return response()->json([
+            'homestay' => $dataResponse,
         ], 200);
     }
 

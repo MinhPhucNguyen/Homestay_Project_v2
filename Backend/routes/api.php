@@ -65,7 +65,7 @@ Route::prefix('v2')->group(function () {
     Route::controller(HomestayController::class)->group(function () {
         Route::get('homestays', 'index');
         Route::get('homestays/all', 'getAllHomestayToSelect');
-        Route::get('homestays/{slug}', 'getHomestayBySlug');
+        Route::get('getbySlug/{slug}', 'getHomestayBySlug');
         Route::get('homestays/{id}', 'show');
         Route::post('homestays/create', 'store');
         Route::get('homestays/{id}/edit', 'edit');
