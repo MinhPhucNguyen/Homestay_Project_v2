@@ -50,6 +50,9 @@ class UserController extends Controller
     public function getUserById($id)
     {
         $user = User::findOrFail($id);
+        if(str_contains($user->phone,'+84')) {
+           $user->phone = str_replace('+84', '0', $user->phone);
+        }
         return response()->json(
             [
                 'user' => $user
@@ -92,7 +95,7 @@ class UserController extends Controller
             $user->lastname = $validatedData['lastname'];
             $user->username = $validatedData['username'];
             $user->email = $validatedData['email'];
-            $user->phone = '+84' . substr($validatedData['phone'], 1);
+            $user->phone = $validatedData['phone'];
             $user->role_as = $validatedData['role_as'];
 
             if (empty($validatedData['password']) && empty($validatedData['confirm_password'])) {

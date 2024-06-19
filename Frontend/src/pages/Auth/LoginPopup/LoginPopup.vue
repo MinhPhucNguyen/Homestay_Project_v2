@@ -150,7 +150,7 @@ const loginSubmit = () => {
     })
     .catch((e) => {
       errors.value = e.response.data.errors;
-      if (!errors.value.email && !errors.value.password) {
+      if (!errors.value?.email && !errors.value?.password) {
         errors.value = { global: e.response.data.errors };
       }
       isLoading.value = false;
