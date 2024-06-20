@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Api\v2\UserController;
+use App\Http\Controllers\Api\v2\UserController as UserControllerApi;
 use App\Http\Controllers\Api\v2\HomestayController;
 use App\Http\Controllers\Api\v2\RoomTypeController;
 use App\Http\Controllers\Api\v2\FacilityController;
@@ -46,9 +46,11 @@ Route::get('/authorize/{provider}/callback', [SocialAuthController::class, 'hand
 
 Route::prefix('v2')->group(function () {
 
+    Route::post('users/{id}/change-password', [UserControllerApi::class, 'changePassword']);
+
     Route::prefix('admin')->group(function () {
 
-        Route::controller(UserController::class)->group(function () {
+        Route::controller(UserControllerApi::class)->group(function () {
             Route::get('users', 'index');
             Route::get('users/all', 'selectAllUser');
             Route::get('users/{id}', 'getUserById');
