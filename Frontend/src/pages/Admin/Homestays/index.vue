@@ -92,7 +92,9 @@
               </div>
             </td>
 
-            <AddRoomModal v-if="selectedHomestayId" :homestayId="selectedHomestayId"/>
+            <AddRoomModal v-if="selectedHomestay"
+                          :facilitiesList="facilitiesList"
+                          :homestay="selectedHomestay"/>
             <my-modal @clickTo="handleDeleteHomestay(homestay.homestay_id)"
                       :idModal="`deleteConfirmModal${homestay.homestay_id}`"
                       bgColor="danger">
@@ -137,6 +139,7 @@ import ToastMessage from "@/components/Toast/index.vue";
 import Pagination from "@/components/Pagination/index.vue";
 import {debounce} from "@/utils/debounce.js";
 import AddRoomModal from "@/components/Modal/AddRoomModal.vue";
+import axios from "axios";
 
 const store = useStore();
 const homestaysList = ref([]);
@@ -146,7 +149,14 @@ const pagination = ref({});
 const sort_direction = ref("desc");
 const sort_field = ref("homestay_id");
 const searchInput = ref("");
-const selectedHomestayId = ref(0);
+const selectedHomestay = ref(null);
+const facilitiesList = ref([]);
+
+onMounted(() => {
+  axios.get("/v2/facilities/all").then((response) => {
+    facilitiesList.value = response.data.facilities;
+  });
+});
 
 const getHomestaysList = (page = 1) => {
   isLoading.value = true;
@@ -209,10 +219,16 @@ const changeSort = (field) => {
   getHomestaysList();
 };
 
-const openAddNewRoomModal = (homestayId) => {
-  selectedHomestayId.value = homestayId;
-  if(selectedHomestayId.value){
-    $("#addRoomModal").modal("show");
+const openAddNewRoomModal = async (homestayId) => {
+  try {
+    const response = await store.dispatch("homestays/fetchHomestayById", homestayId);
+    if(response){
+      selectedHomestay.value = response;
+
+      $("#addRoomModal").modal("show");
+    }
+  } catch (e) {
+    console.log(e);
   }
 };
 

@@ -10,7 +10,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h1 class="modal-title fs-5" id="roomTypeFormModalLabel">
-            Thêm phòng cho <strong> </strong>
+            Thêm phòng cho <strong>{{ homestay ? homestay.homestay_name : '' }}</strong>
           </h1>
           <button
               type="button"
@@ -68,131 +68,148 @@
                 </button>
               </li>
             </ul>
-            <!--            <div class="tab-content" id="myTabContent">-->
-            <!--              <div-->
-            <!--                  class="tab-pane fade show mt-3 active"-->
-            <!--                  id="homestay-tab-pane"-->
-            <!--                  role="tabpanel"-->
-            <!--                  aria-labelledby="homestay-tab"-->
-            <!--                  tabindex="0"-->
-            <!--              >-->
-            <!--                <div class="row">-->
-            <!--                  <div class="col-md-4 mb-3">-->
-            <!--                    <label for="homestay_name">Tên Homestay</label>-->
-            <!--                    <input-->
-            <!--                        type="text"-->
-            <!--                        name="homestay_name"-->
-            <!--                        class="form-control"-->
-            <!--                        v-model="model.homestay_name"-->
-            <!--                    />-->
-            <!--                    <small class="text-danger" v-if="errors.homestay_name">{{-->
-            <!--                        errors.homestay_name[0]-->
-            <!--                      }}</small>-->
-            <!--                  </div>-->
-            <!--                  <div class="col-md-4 mb-3">-->
-            <!--                    <label for="email">Email</label>-->
-            <!--                    <input-->
-            <!--                        type="text"-->
-            <!--                        name="email"-->
-            <!--                        class="form-control"-->
-            <!--                        v-model="model.email"-->
-            <!--                    />-->
-            <!--                    <small class="text-danger" v-if="errors.email">{{-->
-            <!--                        errors.email[0]-->
-            <!--                      }}</small>-->
-            <!--                  </div>-->
-            <!--                  <div class="col-md-4 mb-3">-->
-            <!--                    <label for="phone">Số điện thoại</label>-->
-            <!--                    <input-->
-            <!--                        type="text"-->
-            <!--                        name="phone"-->
-            <!--                        class="form-control"-->
-            <!--                        v-model="model.phone"-->
-            <!--                    />-->
-            <!--                    <small class="text-danger" v-if="errors.phone">{{-->
-            <!--                        errors.phone[0]-->
-            <!--                      }}</small>-->
-            <!--                  </div>-->
-            <!--                  <div class="col-md-4 mb-3">-->
-            <!--                    <label for="address">Địa chỉ</label>-->
-            <!--                    <input-->
-            <!--                        type="text"-->
-            <!--                        name="address"-->
-            <!--                        class="form-control"-->
-            <!--                        v-model="model.address"-->
-            <!--                    />-->
-            <!--                    <small class="text-danger" v-if="errors.address">{{-->
-            <!--                        errors.address[0]-->
-            <!--                      }}</small>-->
-            <!--                  </div>-->
-            <!--                  <div class="col-md-4 mb-3">-->
-            <!--                    <label for="city">Thành phố</label>-->
-            <!--                    <input-->
-            <!--                        type="text"-->
-            <!--                        name="city"-->
-            <!--                        class="form-control"-->
-            <!--                        v-model="model.city"-->
-            <!--                    />-->
-            <!--                    <small class="text-danger" v-if="errors.city">{{-->
-            <!--                        errors.city[0]-->
-            <!--                      }}</small>-->
-            <!--                  </div>-->
-            <!--                  <div class="col-md-4 mb-3">-->
-            <!--                    <label for="status">Trạng thái</label>-->
-            <!--                    <div class="d-flex align-items-center">-->
-            <!--                      <input-->
-            <!--                          type="checkbox"-->
-            <!--                          name="status"-->
-            <!--                          value="1"-->
-            <!--                          v-model="isStatusChecked"-->
-            <!--                      />-->
-            <!--                      <label for="status" class="ml-2 mb-0">Hiển thị</label>-->
-            <!--                    </div>-->
-            <!--                  </div>-->
-            <!--                  <div class="col-md-12 mb-3">-->
-            <!--                    <label for="description">Description</label>-->
-            <!--                    <ckeditorComponent-->
-            <!--                        v-model="model.description"-->
-            <!--                    ></ckeditorComponent>-->
-            <!--                    <small class="text-danger" v-if="errors.description">{{-->
-            <!--                        errors.description[0]-->
-            <!--                      }}</small>-->
-            <!--                  </div>-->
-            <!--                </div>-->
-            <!--              </div>-->
-            <!--              <div-->
-            <!--                  class="tab-pane fade mt-3"-->
-            <!--                  id="facilities-tab-pane"-->
-            <!--                  role="tabpanel"-->
-            <!--                  aria-labelledby="image-tab"-->
-            <!--                  tabindex="0"-->
-            <!--              >-->
-            <!--                <div class="row">-->
-            <!--                  <div class="mb-3">-->
-            <!--                    <h5 class="mb-4">Chọn tiện nghi</h5>-->
-            <!--                    <div class="facilities-list">-->
-            <!--                      <div-->
-            <!--                          name="facilities"-->
-            <!--                          class="facility-item"-->
-            <!--                          v-for="facility in facilitiesList"-->
-            <!--                          :key="facility.facility_id"-->
-            <!--                          @click="selectFacility($event, facility.facility_id)"-->
-            <!--                      >-->
-            <!--                        <img-->
-            <!--                            v-if="facility.facility_icon"-->
-            <!--                            :src="-->
-            <!--                          'data:image/svg+xml;utf8,' + facility.facility_icon-->
-            <!--                        "-->
-            <!--                            width="20"-->
-            <!--                            height="20"-->
-            <!--                        />-->
-            <!--                        <span>{{ facility.facility_name }}</span>-->
-            <!--                      </div>-->
-            <!--                    </div>-->
-            <!--                  </div>-->
-            <!--                </div>-->
-            <!--              </div>-->
-            <!--            </div>-->
+            <div class="tab-content" id="myTabContent">
+              <!--              <div-->
+              <!--                  class="tab-pane fade show mt-3 active"-->
+              <!--                  id="homestay-tab-pane"-->
+              <!--                  role="tabpanel"-->
+              <!--                  aria-labelledby="homestay-tab"-->
+              <!--                  tabindex="0"-->
+              <!--              >-->
+              <!--                <div class="row">-->
+              <!--                  <div class="col-md-4 mb-3">-->
+              <!--                    <label for="homestay_name">Tên Homestay</label>-->
+              <!--                    <input-->
+              <!--                        type="text"-->
+              <!--                        name="homestay_name"-->
+              <!--                        class="form-control"-->
+              <!--                        v-model="model.homestay_name"-->
+              <!--                    />-->
+              <!--                    <small class="text-danger" v-if="errors.homestay_name">{{-->
+              <!--                        errors.homestay_name[0]-->
+              <!--                      }}</small>-->
+              <!--                  </div>-->
+              <!--                  <div class="col-md-4 mb-3">-->
+              <!--                    <label for="email">Email</label>-->
+              <!--                    <input-->
+              <!--                        type="text"-->
+              <!--                        name="email"-->
+              <!--                        class="form-control"-->
+              <!--                        v-model="model.email"-->
+              <!--                    />-->
+              <!--                    <small class="text-danger" v-if="errors.email">{{-->
+              <!--                        errors.email[0]-->
+              <!--                      }}</small>-->
+              <!--                  </div>-->
+              <!--                  <div class="col-md-4 mb-3">-->
+              <!--                    <label for="phone">Số điện thoại</label>-->
+              <!--                    <input-->
+              <!--                        type="text"-->
+              <!--                        name="phone"-->
+              <!--                        class="form-control"-->
+              <!--                        v-model="model.phone"-->
+              <!--                    />-->
+              <!--                    <small class="text-danger" v-if="errors.phone">{{-->
+              <!--                        errors.phone[0]-->
+              <!--                      }}</small>-->
+              <!--                  </div>-->
+              <!--                  <div class="col-md-4 mb-3">-->
+              <!--                    <label for="address">Địa chỉ</label>-->
+              <!--                    <input-->
+              <!--                        type="text"-->
+              <!--                        name="address"-->
+              <!--                        class="form-control"-->
+              <!--                        v-model="model.address"-->
+              <!--                    />-->
+              <!--                    <small class="text-danger" v-if="errors.address">{{-->
+              <!--                        errors.address[0]-->
+              <!--                      }}</small>-->
+              <!--                  </div>-->
+              <!--                  <div class="col-md-4 mb-3">-->
+              <!--                    <label for="city">Thành phố</label>-->
+              <!--                    <input-->
+              <!--                        type="text"-->
+              <!--                        name="city"-->
+              <!--                        class="form-control"-->
+              <!--                        v-model="model.city"-->
+              <!--                    />-->
+              <!--                    <small class="text-danger" v-if="errors.city">{{-->
+              <!--                        errors.city[0]-->
+              <!--                      }}</small>-->
+              <!--                  </div>-->
+              <!--                  <div class="col-md-4 mb-3">-->
+              <!--                    <label for="status">Trạng thái</label>-->
+              <!--                    <div class="d-flex align-items-center">-->
+              <!--                      <input-->
+              <!--                          type="checkbox"-->
+              <!--                          name="status"-->
+              <!--                          value="1"-->
+              <!--                          v-model="isStatusChecked"-->
+              <!--                      />-->
+              <!--                      <label for="status" class="ml-2 mb-0">Hiển thị</label>-->
+              <!--                    </div>-->
+              <!--                  </div>-->
+              <!--                  <div class="col-md-12 mb-3">-->
+              <!--                    <label for="description">Description</label>-->
+              <!--                    <ckeditorComponent-->
+              <!--                        v-model="model.description"-->
+              <!--                    ></ckeditorComponent>-->
+              <!--                    <small class="text-danger" v-if="errors.description">{{-->
+              <!--                        errors.description[0]-->
+              <!--                      }}</small>-->
+              <!--                  </div>-->
+              <!--                </div>-->
+              <!--              </div>-->
+              <div class="tab-pane fade mt-3" id="images-tab-pane" role="tabpanel" aria-labelledby="images-tab"
+                   tabindex="0">
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <h5 class="mb-4">Upload Room Images</h5>
+                    <input ref="filesInput" type="file" multiple name="image[]" class="form-control file-input"
+                           @change=""/>
+                    <div class="display_image mb-4">
+                      <!--                    <div class="car_image_input" v-for="(src, index) in imagesUrl" :key="index">-->
+                      <img :src="src" alt="" class="image_input"/>
+                      <button class="btn btn-danger remove_btn">
+                        Remove
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                  class="tab-pane fade mt-3"
+                  id="facilities-tab-pane"
+                  role="tabpanel"
+                  aria-labelledby="facilities-tab"
+                  tabindex="0"
+              >
+                <div class="row">
+                  <div class="mb-3">
+                    <h5 class="mb-4">Chọn tiện nghi</h5>
+                    <div class="facilities-list">
+                      <div
+                          name="facilities"
+                          class="facility-item"
+                          v-for="facility in facilitiesList"
+                          :key="facility.facility_id"
+                          @click="selectFacility($event, facility.facility_id)"
+                      >
+                        <img
+                            v-if="facility.facility_icon"
+                            :src="
+                                      'data:image/svg+xml;utf8,' + facility.facility_icon
+                                    "
+                            width="20"
+                            height="20"
+                        />
+                        <span>{{ facility.facility_name }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
             <button
                 class="btn btn-success p-3 fw-bold float-end"
                 type="submit"
@@ -236,28 +253,46 @@ const model = ref({
   homestay_id: 0,
   price_per_day: 0,
   price_per_hour: 0,
+  facilitiesId: [],
 });
 const errors = ref(null);
 const successMessage = ref(null);
 const isLoading = ref(false);
 const pagination = ref({});
 
-const homestay = ref(null);
-
 const props = defineProps({
-  homestayId: {
-    type: Number,
+  homestay: {
+    type: Object,
     required: true,
-  }
+  },
+  facilitiesList: {
+    type: Array,
+    required: true,
+  },
 });
 
-const getHomestayById = async () => {
-  const response = await store.dispatch("homestays/fetchHomestayById", props.homestayId);
+/**
+ * TODO: Select facility
+ */
+const selectFacility = (event, id) => {
+  const item = event.target;
+  if (item) {
+    item.classList.toggle("facility-chose");
+    if (item.classList.contains("facility-chose")) {
+      model.value.facilitiesId.push(id);
+    } else {
+      const indexItemExist = model.value.facilitiesId.indexOf(id);
+      model.value.facilitiesId.splice(indexItemExist, 1);
+    }
+  }
 };
 
-onMounted(() => {
-  getHomestayById();
-});
+/**
+ * TODO: display image
+ */
+const filesInput = ref(null);
+const imagesUrl = ref([]);
+
 
 </script>
 

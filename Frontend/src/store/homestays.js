@@ -52,10 +52,9 @@ const homestays = {
     },
 
     async fetchHomestayById({ commit }, id) {
-      // console.log(id)
       try {
         const response = await axios.get(`v2/homestays/${id}`);
-        const data = response.data.data;
+        const data = response.data.homestay;
         return data;
       } catch (e) {
         if (e.response) {

@@ -245,6 +245,7 @@ const model = ref({
   status: 0,
   stars: 5,
   facilitiesId: [],
+  homestay_images: []
 });
 
 onMounted(() => {

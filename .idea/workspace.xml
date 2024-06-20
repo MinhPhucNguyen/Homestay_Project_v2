@@ -4,11 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8933e10-cfd3-4d52-ba3b-6ef472a03cb1" name="Changes" comment="create room types collection">
-      <change beforePath="$PROJECT_DIR$/Frontend/src/components/Admin/Sidebar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/components/Admin/Sidebar.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/src/pages/Admin/Features/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/pages/Admin/Facilities/index.vue" afterDir="false" />
+    <list default="true" id="c8933e10-cfd3-4d52-ba3b-6ef472a03cb1" name="Changes" comment="fix api error">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/components/Modal/AddRoomModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/components/Modal/AddRoomModal.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Frontend/src/pages/Admin/Homestays/create.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/pages/Admin/Homestays/create.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/src/router/admin.js" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/router/admin.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/pages/Admin/Homestays/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/pages/Admin/Homestays/index.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Frontend/src/store/homestays.js" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/store/homestays.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -208,8 +208,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-PS-241.17011.119" />
-        <option value="bundled-php-predefined-ba97393d7c68-48a1a656d44e-com.jetbrains.php.sharedIndexes-PS-241.17011.119" />
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-PS-241.17890.8" />
+        <option value="bundled-php-predefined-ba97393d7c68-48a1a656d44e-com.jetbrains.php.sharedIndexes-PS-241.17890.8" />
       </set>
     </attachedChunks>
   </component>
@@ -251,6 +251,10 @@
       <workItem from="1717472289427" duration="175000" />
       <workItem from="1717679888433" duration="11446000" />
       <workItem from="1717816817141" duration="3818000" />
+      <workItem from="1718630785792" duration="7290000" />
+      <workItem from="1718727047585" duration="1174000" />
+      <workItem from="1718810587609" duration="747000" />
+      <workItem from="1718891607718" duration="3761000" />
     </task>
     <task id="LOCAL-00001" summary="edit homestay resource and frontend">
       <option name="closed" value="true" />
@@ -348,7 +352,15 @@
       <option name="project" value="LOCAL" />
       <updated>1717299965961</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="fix api error">
+      <option name="closed" value="true" />
+      <created>1718641608762</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1718641608762</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -378,7 +390,8 @@
     <MESSAGE value="edit table database" />
     <MESSAGE value="edit frontend for create homestays form and create controller for room types" />
     <MESSAGE value="create room types collection" />
-    <option name="LAST_COMMIT_MESSAGE" value="create room types collection" />
+    <MESSAGE value="fix api error" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix api error" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
