@@ -16,6 +16,8 @@ class Room extends Model
     protected $fillable = [
         'homestay_id',
         'room_type_id',
+        'room_number',
+        'description',
         'status',
     ];
 
@@ -36,7 +38,7 @@ class Room extends Model
 
     public function roomImages()
     {
-        return $this->hasMany(HomestaysImage::class, 'room_id', 'room_id');
+        return $this->hasMany(RoomsImage::class, 'room_id', 'room_id');
     }
 
     public function facilities()

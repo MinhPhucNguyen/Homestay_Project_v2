@@ -5,14 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class HomestaysImage extends Model
+class RoomsImage extends Model
 {
     use HasFactory;
 
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'homestay_id',
         'room_id',
         'path',
     ];

@@ -29,9 +29,9 @@ class Homestay extends Model
         return $this->hasMany(Room::class, 'homestay_id', 'homestay_id');
     }
 
-    public function homestayImages()
+    public function roomImages()
     {
-        return $this->hasMany(HomestaysImage::class, 'homestay_id', 'homestay_id');
+        return $this->hasMany(RoomsImage::class, 'homestay_id', 'homestay_id');
     }
 
     public function facilities()

@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('homestays_images', function (Blueprint $table) {
+        Schema::create('rooms_images', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('homestay_id')->nullable();
             $table->unsignedInteger('room_id')->nullable();
             $table->string('path');
             $table->timestamps();
 
-            $table->foreign('homestay_id')->references('homestay_id')->on('homestays')->onDelete('cascade');
             $table->foreign('room_id')->references('room_id')->on('rooms')->onDelete('cascade');
         });
     }

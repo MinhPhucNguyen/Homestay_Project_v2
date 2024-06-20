@@ -10,7 +10,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h1 class="modal-title fs-5" id="roomTypeFormModalLabel">
-            Thêm phòng cho <strong>{{ homestay ? homestay.homestay_name : '' }}</strong>
+            Thêm phòng cho homestay<strong>{{ homestay ? homestay.homestay_name : '' }}</strong>
           </h1>
           <button
               type="button"
@@ -69,97 +69,44 @@
               </li>
             </ul>
             <div class="tab-content" id="myTabContent">
-              <!--              <div-->
-              <!--                  class="tab-pane fade show mt-3 active"-->
-              <!--                  id="homestay-tab-pane"-->
-              <!--                  role="tabpanel"-->
-              <!--                  aria-labelledby="homestay-tab"-->
-              <!--                  tabindex="0"-->
-              <!--              >-->
-              <!--                <div class="row">-->
-              <!--                  <div class="col-md-4 mb-3">-->
-              <!--                    <label for="homestay_name">Tên Homestay</label>-->
-              <!--                    <input-->
-              <!--                        type="text"-->
-              <!--                        name="homestay_name"-->
-              <!--                        class="form-control"-->
-              <!--                        v-model="model.homestay_name"-->
-              <!--                    />-->
-              <!--                    <small class="text-danger" v-if="errors.homestay_name">{{-->
-              <!--                        errors.homestay_name[0]-->
-              <!--                      }}</small>-->
-              <!--                  </div>-->
-              <!--                  <div class="col-md-4 mb-3">-->
-              <!--                    <label for="email">Email</label>-->
-              <!--                    <input-->
-              <!--                        type="text"-->
-              <!--                        name="email"-->
-              <!--                        class="form-control"-->
-              <!--                        v-model="model.email"-->
-              <!--                    />-->
-              <!--                    <small class="text-danger" v-if="errors.email">{{-->
-              <!--                        errors.email[0]-->
-              <!--                      }}</small>-->
-              <!--                  </div>-->
-              <!--                  <div class="col-md-4 mb-3">-->
-              <!--                    <label for="phone">Số điện thoại</label>-->
-              <!--                    <input-->
-              <!--                        type="text"-->
-              <!--                        name="phone"-->
-              <!--                        class="form-control"-->
-              <!--                        v-model="model.phone"-->
-              <!--                    />-->
-              <!--                    <small class="text-danger" v-if="errors.phone">{{-->
-              <!--                        errors.phone[0]-->
-              <!--                      }}</small>-->
-              <!--                  </div>-->
-              <!--                  <div class="col-md-4 mb-3">-->
-              <!--                    <label for="address">Địa chỉ</label>-->
-              <!--                    <input-->
-              <!--                        type="text"-->
-              <!--                        name="address"-->
-              <!--                        class="form-control"-->
-              <!--                        v-model="model.address"-->
-              <!--                    />-->
-              <!--                    <small class="text-danger" v-if="errors.address">{{-->
-              <!--                        errors.address[0]-->
-              <!--                      }}</small>-->
-              <!--                  </div>-->
-              <!--                  <div class="col-md-4 mb-3">-->
-              <!--                    <label for="city">Thành phố</label>-->
-              <!--                    <input-->
-              <!--                        type="text"-->
-              <!--                        name="city"-->
-              <!--                        class="form-control"-->
-              <!--                        v-model="model.city"-->
-              <!--                    />-->
-              <!--                    <small class="text-danger" v-if="errors.city">{{-->
-              <!--                        errors.city[0]-->
-              <!--                      }}</small>-->
-              <!--                  </div>-->
-              <!--                  <div class="col-md-4 mb-3">-->
-              <!--                    <label for="status">Trạng thái</label>-->
-              <!--                    <div class="d-flex align-items-center">-->
-              <!--                      <input-->
-              <!--                          type="checkbox"-->
-              <!--                          name="status"-->
-              <!--                          value="1"-->
-              <!--                          v-model="isStatusChecked"-->
-              <!--                      />-->
-              <!--                      <label for="status" class="ml-2 mb-0">Hiển thị</label>-->
-              <!--                    </div>-->
-              <!--                  </div>-->
-              <!--                  <div class="col-md-12 mb-3">-->
-              <!--                    <label for="description">Description</label>-->
-              <!--                    <ckeditorComponent-->
-              <!--                        v-model="model.description"-->
-              <!--                    ></ckeditorComponent>-->
-              <!--                    <small class="text-danger" v-if="errors.description">{{-->
-              <!--                        errors.description[0]-->
-              <!--                      }}</small>-->
-              <!--                  </div>-->
-              <!--                </div>-->
-              <!--              </div>-->
+                            <div
+                                class="tab-pane fade show mt-3 active"
+                                id="homestay-tab-pane"
+                                role="tabpanel"
+                                aria-labelledby="homestay-tab"
+                                tabindex="0"
+                            >
+                              <div class="row">
+                                <div class="col-md-4 mb-3">
+                                  <label for="homestay_name">Số phòng</label>
+                                  <input
+                                      type="text"
+                                      name="homestay_name"
+                                      class="form-control"
+                                      v-model="model"
+                                  />
+<!--                                  <small class="text-danger" v-if="errors.homestay_name">{{-->
+<!--                                      errors.homestay_name[0]-->
+<!--                                    }}</small>-->
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                  <label for="status">Trạng thái</label>
+                                  <div class="d-flex align-items-center">
+
+                                    <label for="status" class="ml-2 mb-0">Hiển thị</label>
+                                  </div>
+                                </div>
+                                <div class="col-md-12 mb-3">
+                                  <label for="description">Description</label>
+<!--                                  <ckeditorComponent-->
+<!--                                      v-model="model.description"-->
+<!--                                  ></ckeditorComponent>-->
+<!--                                  <small class="text-danger" v-if="errors.description">{{-->
+<!--                                      errors.description[0]-->
+<!--                                    }}</small>-->
+                                </div>
+                              </div>
+                            </div>
               <div class="tab-pane fade mt-3" id="images-tab-pane" role="tabpanel" aria-labelledby="images-tab"
                    tabindex="0">
                 <div class="row">
@@ -247,12 +194,11 @@ import {formatCurrency} from "@/utils/formatCurrency";
 const store = useStore();
 const roomTypes = ref([]);
 const model = ref({
-  name: "",
+  room_number: "",
+  homestay_id: props.homestay.homestay_id,
+  room_type_id: 0,
   description: "",
-  number_of_beds: 0,
-  homestay_id: 0,
-  price_per_day: 0,
-  price_per_hour: 0,
+  status: "",
   facilitiesId: [],
 });
 const errors = ref(null);
@@ -287,12 +233,7 @@ const selectFacility = (event, id) => {
   }
 };
 
-/**
- * TODO: display image
- */
-const filesInput = ref(null);
-const imagesUrl = ref([]);
-
+console.log(model.value);
 
 </script>
 

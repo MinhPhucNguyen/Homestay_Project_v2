@@ -45,12 +45,6 @@ class HomestayResource extends JsonResource
                     'facility_name' => $facility->facility_name,
                     'facility_icon' => $facility->facility_icon,
                 ]),
-                'homestay_images' => $source->homestayImages->map(fn ($images) =>  [
-                    'id' => $images->id,
-                    'homestay_id' => $images->homestay_id,
-                    'room_id' => $images->room_id,
-                    'image_path' => $images->path,
-                ]),
                 'stars' => $source->stars,
                 'status' => $source->status,
             ];

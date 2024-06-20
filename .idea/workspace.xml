@@ -4,12 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8933e10-cfd3-4d52-ba3b-6ef472a03cb1" name="Changes" comment="fix api error">
+    <list default="true" id="c8933e10-cfd3-4d52-ba3b-6ef472a03cb1" name="Changes" comment="rename homestays_images to rooms_images, edit form create new room">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/app/Http/Resources/v2/HomestayResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/app/Http/Resources/v2/HomestayResource.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/app/Http/Resources/v2/RoomResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/app/Http/Resources/v2/RoomResource.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/app/Models/Homestay.php" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/app/Models/Homestay.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/app/Models/HomestaysImage.php" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/app/Models/RoomsImage.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/app/Models/Room.php" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/app/Models/Room.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/database/migrations/2024_05_11_204205_create_homestays_images_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/database/migrations/2024_05_11_204205_create_rooms_images_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/database/migrations/2024_06_19_235335_add_time_to_room_and_remove_homestay.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Frontend/src/components/Modal/AddRoomModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/components/Modal/AddRoomModal.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/src/pages/Admin/Homestays/create.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/pages/Admin/Homestays/create.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Frontend/src/pages/Admin/Homestays/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/pages/Admin/Homestays/index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/src/store/homestays.js" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/store/homestays.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -254,7 +259,7 @@
       <workItem from="1718630785792" duration="7290000" />
       <workItem from="1718727047585" duration="1174000" />
       <workItem from="1718810587609" duration="747000" />
-      <workItem from="1718891607718" duration="3761000" />
+      <workItem from="1718891607718" duration="11244000" />
     </task>
     <task id="LOCAL-00001" summary="edit homestay resource and frontend">
       <option name="closed" value="true" />
@@ -360,7 +365,15 @@
       <option name="project" value="LOCAL" />
       <updated>1718641608762</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="rename homestays_images to rooms_images, edit form create new room">
+      <option name="closed" value="true" />
+      <created>1718895423720</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1718895423720</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -391,7 +404,8 @@
     <MESSAGE value="edit frontend for create homestays form and create controller for room types" />
     <MESSAGE value="create room types collection" />
     <MESSAGE value="fix api error" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix api error" />
+    <MESSAGE value="rename homestays_images to rooms_images, edit form create new room" />
+    <option name="LAST_COMMIT_MESSAGE" value="rename homestays_images to rooms_images, edit form create new room" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

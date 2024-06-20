@@ -59,7 +59,7 @@
             <td class="text-center">
               <a href="" class="text-success text-decoration-none">{{ homestay.homestay_name }}</a>
             </td>
-            <td class="text-center">{{ homestay.phone_number }}</td>
+            <td class="text-center">{{ homestay.phone }}</td>
             <td class="text-center">{{ homestay.email }}</td>
             <td class="text-center">{{ homestay.address }}</td>
             <td class="text-center">{{ homestay.city }}</td>
