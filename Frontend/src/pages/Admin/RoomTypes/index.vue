@@ -186,8 +186,8 @@
                     name="name"
                     v-model="model.name"
                 />
-                <small class="text-danger" v-if="errors && errors.name[0]">{{
-                    errors.name[0]
+                <small class="text-danger" v-if="errors">{{
+                      errors.name[0]
                   }}</small>
               </div>
               <div class="form-group">
@@ -200,7 +200,7 @@
                 />
                 <small
                     class="text-danger"
-                    v-if="errors && errors.number_of_beds[0]"
+                    v-if="errors && errors.number_of_beds"
                 >{{ errors.number_of_beds[0] }}</small
                 >
               </div>
@@ -214,7 +214,7 @@
                 />
                 <small
                     class="text-danger"
-                    v-if="errors && errors.price_per_day[0]"
+                    v-if="errors && errors.price_per_day"
                 >{{ errors.price_per_day[0] }}</small
                 >
               </div>
@@ -228,7 +228,7 @@
                 />
                 <small
                     class="text-danger"
-                    v-if="errors && errors.price_per_hour[0]"
+                    v-if="errors && errors.price_per_hour"
                 >{{ errors.price_per_hour[0] }}</small
                 >
               </div>
@@ -258,11 +258,6 @@
                       v-model="model.description"
                   ></ckeditorComponent>
                 </div>
-                <small
-                    class="text-danger"
-                    v-if="errors && errors.description[0]"
-                >{{ errors.description[0] }}</small
-                >
               </div>
               <div class="modal-footer">
                 <button
@@ -276,7 +271,6 @@
                     type="submit"
                     class="btn btn-success pr-4 pl-4 d-flex align-items-center"
                     v-if="isEditing"
-                    :disabled="isLoading"
                 >
                   <div
                       class="spinner-border"
@@ -292,7 +286,6 @@
                     type="submit"
                     class="btn btn-success pr-4 pl-4 d-flex align-items-center"
                     v-else
-                    :disabled="isLoading"
                 >
                   <div
                       class="spinner-border"
@@ -345,7 +338,6 @@ const selectedValue = ref(null);
 const selectOptions = ref([]);
 
 watch(selectedValue, (value) => {
-  console.log(value)
   if (value) {
     model.value.homestay_id = value.homestay_id;
   }
@@ -361,6 +353,7 @@ const resetForm = () => {
     price_per_hour: 0,
   };
   selectedValue.value = null;
+  errors.value = null;
 };
 
 const getHomestaysToSelect = () => {
@@ -417,7 +410,6 @@ const addNewRoomType = () => {
           isLoading.value = false;
           $("#roomTypeFormModal").modal("show");
           errors.value = e.response.data.errors;
-          console.log(errors.value)
         }
       });
 };
@@ -529,6 +521,7 @@ onBeforeMount(() => {
 onMounted(() => {
   $("#roomTypeFormModal").on("hide.bs.modal", () => {
     errors.value = null;
+    resetForm();
   });
 });
 </script>

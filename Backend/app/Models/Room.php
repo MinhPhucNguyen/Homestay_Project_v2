@@ -19,6 +19,8 @@ class Room extends Model
         'room_number',
         'description',
         'status',
+        'start_date',
+        'end_date',
     ];
 
     public function homestay()

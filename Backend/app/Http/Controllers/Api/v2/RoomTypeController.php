@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\v2;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\RoomTypeRequest;
 use App\Http\Resources\v2\RoomTypeCollection;
 use App\Models\Homestay;
 use App\Models\RoomType;
@@ -19,16 +20,9 @@ class RoomTypeController extends Controller
         return new RoomTypeCollection($roomTypes);
     }
 
-    public function store(Request $request)
+    public function store(RoomTypeRequest $request)
     {
-        $validatedData = $request->validate([
-            'name' => 'required|string',
-            'description' => 'nullable|string',
-            'number_of_beds' => 'required|integer',
-            'price_per_day' => 'required|numeric',
-            'price_per_hour' => 'required|numeric',
-            'homestay_id' => 'required|exists:homestays,homestay_id'
-        ]);
+        $validatedData = $request->validated();
 
         $roomType = RoomType::create([
             'name' => $validatedData['name'],
@@ -75,7 +69,7 @@ class RoomTypeController extends Controller
         ], 200);
     }
 
-    public function update(Request $request, $id)
+    public function update(RoomTypeRequest $request, $id)
     {
         $roomType = RoomType::find($id);
 
@@ -85,14 +79,7 @@ class RoomTypeController extends Controller
             ], 404);
         }
 
-        $validatedData = $request->validate([
-            'name' => 'required|string',
-            'description' => 'nullable|string',
-            'number_of_beds' => 'required|integer',
-            'price_per_day' => 'required|numeric',
-            'price_per_hour' => 'required|numeric',
-            'homestay_id' => 'required|exists:homestays,homestay_id'
-        ]);
+        $validatedData = $request->validated();
 
         $roomType->update($validatedData);
 

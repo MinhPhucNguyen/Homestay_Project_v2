@@ -113,7 +113,7 @@
                       </select>
                     </div>
                   </div>
-                  <div class="col-md-6 mb-3">
+                  <div class="col-md-12 mb-3">
                     <div class="priod-input">
                       <div class="priod-item">
                         <div class="start-date">
@@ -396,6 +396,11 @@ onMounted(() => {
   width: 120px;
   height: 120px;
   object-fit: cover;
+}
+
+.priod-input {
+  display: flex;
+  justify-content: center;
 }
 
 .priod-item {

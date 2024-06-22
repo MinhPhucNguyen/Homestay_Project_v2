@@ -58,8 +58,11 @@ class FacilityController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'facility_name' => 'required|string|max:255',
+            'facility_name' => 'required|string',
             'facility_icon' => 'nullable|string',
+        ], [
+            'facility_name.required' => 'Vui lòng nhập tên tiện nghi',
+            'facility_name.string' => 'Tên tiện nghi không hợp lệ',
         ]);
 
         if ($request->hasFile('facility_icon')) {
@@ -90,8 +93,11 @@ class FacilityController extends Controller
         }
 
         $validatedData = $request->validate([
-            'facility_name' => 'required|string|max:255',
+            'facility_name' => 'required|string',
             'facility_icon' => 'nullable|string',
+        ], [
+            'facility_name.required' => 'Vui lòng nhập tên tiện nghi',
+            'facility_name.string' => 'Tên tiện nghi không hợp lệ',
         ]);
 
         if ($request->hasFile('facility_icon')) {

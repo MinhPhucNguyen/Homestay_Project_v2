@@ -227,7 +227,7 @@
 </template>
 
 <script setup>
-import { onBeforeMount, ref, watch } from "vue";
+import {onBeforeMount, onMounted, ref, watch} from "vue";
 import { useStore } from "vuex";
 import ToastMessage from "@/components/Toast/index.vue";
 import axios from "axios";
@@ -283,6 +283,8 @@ const resetForm = () => {
     facility_name: "",
     facility_icon: "",
   };
+  iconType.value = "svg";
+  errors.value = {};
 };
 
 const facilitySubmit = () => {
@@ -385,6 +387,14 @@ const handleDeleteFacility = () => {
       }
     });
 };
+
+onMounted(() => {
+  $("#facilityFormModal").on("hide.bs.modal", () => {
+    errors.value = {};
+    resetForm();
+  });
+});
+
 </script>
 
 <style></style>
