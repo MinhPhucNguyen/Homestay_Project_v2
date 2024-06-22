@@ -10,7 +10,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h1 class="modal-title fs-5" id="roomTypeFormModalLabel">
-            Thêm phòng cho homestay<strong>{{ homestay ? homestay.homestay_name : '' }}</strong>
+            Thêm phòng cho homestay <strong>{{ homestay ? homestay.homestay_name : '' }}</strong>
           </h1>
           <button
               type="button"
@@ -69,57 +69,75 @@
               </li>
             </ul>
             <div class="tab-content" id="myTabContent">
-                            <div
-                                class="tab-pane fade show mt-3 active"
-                                id="homestay-tab-pane"
-                                role="tabpanel"
-                                aria-labelledby="homestay-tab"
-                                tabindex="0"
-                            >
-                              <div class="row">
-                                <div class="col-md-4 mb-3">
-                                  <label for="homestay_name">Số phòng</label>
-                                  <input
-                                      type="text"
-                                      name="homestay_name"
-                                      class="form-control"
-                                      v-model="model"
-                                  />
-<!--                                  <small class="text-danger" v-if="errors.homestay_name">{{-->
-<!--                                      errors.homestay_name[0]-->
-<!--                                    }}</small>-->
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                  <label for="status">Trạng thái</label>
-                                  <div class="d-flex align-items-center">
-
-                                    <label for="status" class="ml-2 mb-0">Hiển thị</label>
-                                  </div>
-                                </div>
-                                <div class="col-md-12 mb-3">
-                                  <label for="description">Description</label>
-<!--                                  <ckeditorComponent-->
-<!--                                      v-model="model.description"-->
-<!--                                  ></ckeditorComponent>-->
-<!--                                  <small class="text-danger" v-if="errors.description">{{-->
-<!--                                      errors.description[0]-->
-<!--                                    }}</small>-->
-                                </div>
-                              </div>
-                            </div>
+              <div
+                  class="tab-pane fade show mt-3 active"
+                  id="room-tab-pane"
+                  role="tabpanel"
+                  aria-labelledby="room-tab"
+                  tabindex="0"
+              >
+                <div class="row">
+                  <div class="col-md-4 mb-3">
+                    <label for="room_number">Số phòng</label>
+                    <input
+                        type="text"
+                        name="room_number"
+                        class="form-control"
+                        v-model="model.room_number"
+                    />
+                    <!--                                  <small class="text-danger" v-if="errors.room_number">{{-->
+                    <!--                                      errors.room_number[0]-->
+                    <!--                                    }}</small>-->
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <label for="status">Loại phòng</label>
+                    <div class="d-flex align-items-center">
+                      <select class="form-select">
+                        <option selected disabled>Chọn loại phòng</option>
+                        <option v-for="type in roomTypes" :key="type.room_type_id" :value="type.room_type_id">
+                          {{ type.name }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <label for="status">Trạng thái</label>
+                    <div class="d-flex align-items-center">
+                      <select class="form-select">
+                        <option selected disabled>Chọn trạng thái</option>
+                        <option value="available">Phòng trống</option>
+                        <option value="booked">Phòng đã đặt</option>
+                        <option value="cleaned">Đã dọn dẹp</option>
+                        <option value="not_cleand">Chưa dọn dẹp</option>
+                        <option value="under_repair">Sửa chữa</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-12 mb-3">
+                    <label for="description">Description</label>
+                    <ckeditorComponent
+                        v-model="model.description"
+                    ></ckeditorComponent>
+                    <!--                                  <small class="text-danger" v-if="errors.description">{{-->
+                    <!--                                      errors.description[0]-->
+                    <!--                                    }}</small>-->
+                  </div>
+                </div>
+              </div>
               <div class="tab-pane fade mt-3" id="images-tab-pane" role="tabpanel" aria-labelledby="images-tab"
                    tabindex="0">
                 <div class="row">
                   <div class="col-md-6 mb-3">
                     <h5 class="mb-4">Upload Room Images</h5>
                     <input ref="filesInput" type="file" multiple name="image[]" class="form-control file-input"
-                           @change=""/>
-                    <div class="display_image mb-4">
-                      <!--                    <div class="car_image_input" v-for="(src, index) in imagesUrl" :key="index">-->
-                      <img :src="src" alt="" class="image_input"/>
-                      <button class="btn btn-danger remove_btn">
-                        Remove
-                      </button>
+                           @change="uploadRoomImage"/>
+                    <div class="display_image mb-4 mt-4" v-if="imagesUrl.length > 0">
+                      <div class="room_image_input" v-for="(src, index) in imagesUrl" :key="index">
+                        <img :src="src" alt="" class="image_input"/>
+                        <button class="btn btn-danger remove_btn" @click.prevent="removeImage(index)">
+                          Remove
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -160,7 +178,7 @@
             <button
                 class="btn btn-success p-3 fw-bold float-end"
                 type="submit"
-                :disabled="isLoading"
+                :disabled="isInvalidForm"
             >
               <div
                   class="spinner-border"
@@ -200,11 +218,13 @@ const model = ref({
   description: "",
   status: "",
   facilitiesId: [],
+  room_images: [],
 });
 const errors = ref(null);
 const successMessage = ref(null);
 const isLoading = ref(false);
 const pagination = ref({});
+const isInvalidForm = ref(true);
 
 const props = defineProps({
   homestay: {
@@ -233,7 +253,61 @@ const selectFacility = (event, id) => {
   }
 };
 
-console.log(model.value);
+/**
+ * TODO: display image
+ */
+const filesInput = ref(null);
+const imagesUrl = ref([]);
+
+const uploadRoomImage = (event) => {
+  for (const file of event.target.files) {
+    const imageURL = URL.createObjectURL(file);
+    imagesUrl.value.push(imageURL);
+    model.value.room_images.push(file);
+  }
+};
+
+/**
+ * TODO: Remove room image before create room car
+ * @param {*} index
+ */
+const removeImage = (index) => {
+  imagesUrl.value.splice(index, 1);
+
+  const newFileList = new DataTransfer();
+
+  for (let i = 0; i < filesInput.value.files.length; i++) {
+    if (i !== index) {
+      newFileList.items.add(filesInput.value.files[i]);
+    }
+  }
+  filesInput.value.files = newFileList.files;
+};
+
+/**
+ * TODO: Get room types by homestay id
+ */
+
+const getRoomTypes = () => {
+  isLoading.value = true;
+  axios
+      .get(`/v2/room-types/getByHomestay/${props.homestay.homestay_id}`)
+      .then((response) => {
+        roomTypes.value = response.data.roomTypes;
+        isLoading.value = false;
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+}
+
+onMounted(() => {
+  getRoomTypes();
+});
+
+watch(model.value, () => {
+  isInvalidForm.value = false;
+});
 
 </script>
 
@@ -249,9 +323,20 @@ console.log(model.value);
   }
 }
 
-.modal-body-custome {
-  max-height: 750px;
-  overflow-y: scroll;
-  scrollbar-width: thin;
+.display_image {
+  gap: 20px;
+}
+
+.room_image_input {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  flex-direction: column;
+}
+
+.room_image_input > .image_input {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
 }
 </style>

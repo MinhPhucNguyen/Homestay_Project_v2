@@ -137,7 +137,7 @@
   align-items: center;
 }
 
-.car_image_input {
+.room_image_input {
   border-radius: 20px;
   margin-right: 20px;
   margin-top: 20px;
@@ -146,7 +146,7 @@
   text-align: center;
 }
 
-.car_image_input > .image_input {
+.room_image_input > .image_input {
   width: 120px;
   height: 120px;
   -o-object-fit: cover;

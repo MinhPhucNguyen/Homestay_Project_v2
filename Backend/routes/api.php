@@ -67,7 +67,7 @@ Route::prefix('v2')->group(function () {
     Route::controller(HomestayController::class)->group(function () {
         Route::get('homestays', 'index');
         Route::get('homestays/all', 'getAllHomestayToSelect');
-        Route::get('getbySlug/{slug}', 'getHomestayBySlug');
+        Route::get('homestays/getBySlug/{slug}', 'getHomestayBySlug');
         Route::get('homestays/{id}', 'show');
         Route::post('homestays/create', 'store');
         Route::get('homestays/{id}/edit', 'edit');
@@ -77,6 +77,7 @@ Route::prefix('v2')->group(function () {
 
     Route::controller(RoomTypeController::class)->group(function(){
         Route::get('room-types', 'index');
+        Route::get('room-types/getByHomestay/{homeStayId}', 'getRoomTypeByHomestayId');
         Route::post('room-types/create', 'store');
         Route::put('room-types/{id}/edit', 'update');
         Route::delete('room-types/{id}/delete', 'destroy');

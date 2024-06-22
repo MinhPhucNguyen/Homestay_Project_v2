@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\v2;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\v2\RoomTypeCollection;
+use App\Models\Homestay;
 use App\Models\RoomType;
 use Illuminate\Http\Request;
 
@@ -46,6 +47,17 @@ class RoomTypeController extends Controller
             'roomType' => $roomType,
             'roomPrice' => $roomPrice
         ], 201);
+    }
+
+    public function getRoomTypeByHomestayId($homeStayId)
+    {
+        $homestay = Homestay::find($homeStayId);
+        if ($homestay){
+            $roomTypes = $homestay->roomTypes()->with('roomPrices')->get();
+            return response()->json([
+                'roomTypes' => $roomTypes,
+            ], 200);
+        }
     }
 
     public function show($id)
