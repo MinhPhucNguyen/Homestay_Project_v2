@@ -224,20 +224,12 @@ const openAddNewRoomModal = async (homestayId) => {
     const response = await store.dispatch("homestays/fetchHomestayById", homestayId);
     if(response){
       selectedHomestay.value = response;
-
       $("#addRoomModal").modal("show");
     }
   } catch (e) {
     console.log(e);
   }
 };
-
-onMounted(() => {
-  $("#addRoomModal").on("hide.bs.modal", () => {
-
-  });
-});
-
 </script>
 
 <style></style>

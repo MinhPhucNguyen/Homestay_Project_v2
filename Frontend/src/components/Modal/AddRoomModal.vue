@@ -130,7 +130,7 @@
                     </div>
                   </div>
                   <div class="col-md-12 mb-3">
-                    <label for="description">Description</label>
+                    <label for="description">Mô tả</label>
                     <ckeditorComponent
                         v-model="model.description"
                     ></ckeditorComponent>
@@ -144,7 +144,7 @@
                    tabindex="0">
                 <div class="row">
                   <div class="col-md-6 mb-3">
-                    <h5 class="mb-4">Upload Room Images</h5>
+                    <h5 class="mb-4">Đăng ảnh phòng</h5>
                     <input ref="filesInput" type="file" multiple name="image[]" class="form-control file-input"
                            @change="uploadRoomImage"/>
                     <div class="display_image mb-4 mt-4" v-if="imagesUrl.length > 0">
