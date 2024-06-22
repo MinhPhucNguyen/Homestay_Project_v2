@@ -12,8 +12,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('rooms', function (Blueprint $table) {
-            $table->dropForeign('rooms_homestay_id_foreign');
-            $table->removeColumn('homestay_id');
+            $table->text('description')->nullable()->after('room_type_id');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::table('rooms', function (Blueprint $table) {
+            $table->dropColumn('description');
         });
     }
 };
