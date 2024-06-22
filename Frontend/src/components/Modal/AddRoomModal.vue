@@ -113,6 +113,22 @@
                       </select>
                     </div>
                   </div>
+                  <div class="col-md-6 mb-3">
+                    <div class="priod-input">
+                      <div class="priod-item">
+                        <div class="start-date">
+                          <label for="start-date">Bắt đầu</label>
+                          <input id="start-date" name="start-date" type="datetime-local"
+                                 class="form-control datetime-input fw-bold p-4 text-black"/>
+                        </div>
+                        <div class="end-date">
+                          <label for="end-date">Kết thúc</label>
+                          <input id="end-date" name="end-date" type="datetime-local"
+                                 class="form-control datetime-input fw-bold p-4 text-black"/>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                   <div class="col-md-12 mb-3">
                     <label for="description">Description</label>
                     <ckeditorComponent
@@ -199,15 +215,11 @@
 
 <script setup>
 import ckeditorComponent from "@/components/Editor/index.vue";
-import {onBeforeMount, onMounted, ref, watch, defineProps} from "vue";
-import Multiselect from "vue-multiselect";
+import {onMounted, ref, watch, defineProps} from "vue";
 import axios from "axios";
 import {useStore} from "vuex";
-import MyModal from "@/components/Modal/Modal.vue";
-import ToastMessage from "@/components/Toast/index.vue";
-import stateLoading from "@/components/Loading/Loading.vue";
-import Pagination from "@/components/Pagination/index.vue";
-import {formatCurrency} from "@/utils/formatCurrency";
+import flatpickr from "flatpickr";
+import "flatpickr/dist/themes/material_green.css";
 
 const store = useStore();
 const roomTypes = ref([]);
@@ -225,6 +237,19 @@ const successMessage = ref(null);
 const isLoading = ref(false);
 const pagination = ref({});
 const isInvalidForm = ref(true);
+
+const config = {
+  enableTime: true,
+  dateFormat: "d/m/Y H:i",
+  altInput: true,
+  altFormat: "d/m/Y H:i",
+  allowInput: true,
+  minDate: "today",
+  minTime: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+  defaultDate: new Date(),
+  defaultHour: new Date().getHours(),
+};
+
 
 const props = defineProps({
   homestay: {
@@ -309,6 +334,39 @@ watch(model.value, () => {
   isInvalidForm.value = false;
 });
 
+watch(() => props.homestay, () => {
+  getRoomTypes();
+  model.value.homestay_id = props.homestay.homestay_id;
+});
+
+onMounted(() => {
+  $("#addRoomModal").on("hide.bs.modal", () => {
+    errors.value = null;
+    model.value = {
+      room_number: "",
+      homestay_id: props.homestay.homestay_id,
+      room_type_id: 0,
+      description: "",
+      status: "",
+      facilitiesId: [],
+      room_images: [],
+    };
+    imagesUrl.value = [];
+  });
+});
+
+/**
+ * TODO: Add datetime picker to input
+ */
+const fromInput = ref(null);
+const toInput = ref(null);
+onMounted(() => {
+  fromInput.value = document.querySelector(`#start-date`);
+  toInput.value = document.querySelector(`#end-date`);
+  flatpickr(fromInput.value, config);
+  flatpickr(toInput.value, config);
+});
+
 </script>
 
 <style scoped>
@@ -338,5 +396,18 @@ watch(model.value, () => {
   width: 120px;
   height: 120px;
   object-fit: cover;
+}
+
+.priod-item {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+
+  .start-date,
+  .end-date {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
 }
 </style>
