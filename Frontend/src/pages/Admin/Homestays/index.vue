@@ -15,7 +15,7 @@
           <div class="w-25 mt-3 d-flex align-items-center">
             <i class="fa-solid fa-magnifying-glass fs-5 mr-2"></i>
             <input type="text" name="search" class="form-control small search-input border border-dark-subtletext-dark"
-                   placeholder="Search for..." v-model="searchInput"/>
+                   placeholder="Tìm kiếm ..." v-model="searchInput"/>
           </div>
         </div>
         <table class="table table-bordered table-striped text-dark fw-bold">
@@ -71,11 +71,20 @@
                   Action
                 </button>
                 <ul class="dropdown-menu">
-                  <button type="button" class="dropdown-item mb-3 fs-6 text-warning bg-white"
-                          @click="openAddNewRoomModal(homestay.homestay_id)">
-                    <i class="fa-solid fa-plus"></i>
-                    <span class="ml-2">Thêm phòng</span>
-                  </button>
+                  <li>
+                    <button type="button" class="dropdown-item mb-3 fs-6 text-warning bg-white"
+                            @click="openRoomsList(homestay.homestay_id)">
+                      <i class="fa-solid fa-list"></i>
+                      <span class="ml-2">QL Phòng</span>
+                    </button>
+                  </li>
+                  <li>
+                    <button type="button" class="dropdown-item mb-3 fs-6 text-warning bg-white"
+                            @click="openAddNewRoomModal(homestay.homestay_id)">
+                      <i class="fa-solid fa-plus"></i>
+                      <span class="ml-2">Thêm phòng</span>
+                    </button>
+                  </li>
                   <li>
                     <router-link :to="{ name: 'homestays.edit', params: { id: homestay.homestay_id } }"
                                  class="dropdown-item mb-3 fs-6 text-primary bg-white">
@@ -83,18 +92,17 @@
                       <span class="ml-2">Sửa</span>
                     </router-link>
                   </li>
-                  <button type="button" class="dropdown-item fs-6 text-danger bg-white"
-                          @click="deleteHomestay(homestay.homestay_id)">
-                    <i class="fa-solid fa-trash"></i>
-                    <span class="ml-2">Xóa</span>
-                  </button>
+                  <li>
+                    <button type="button" class="dropdown-item fs-6 text-danger bg-white"
+                            @click="deleteHomestay(homestay.homestay_id)">
+                      <i class="fa-solid fa-trash"></i>
+                      <span class="ml-2">Xóa</span>
+                    </button>
+                  </li>
                 </ul>
               </div>
             </td>
 
-            <AddRoomModal v-if="selectedHomestay"
-                          :facilitiesList="facilitiesList"
-                          :homestay="selectedHomestay"/>
             <my-modal @clickTo="handleDeleteHomestay(homestay.homestay_id)"
                       :idModal="`deleteConfirmModal${homestay.homestay_id}`"
                       bgColor="danger">
@@ -119,6 +127,10 @@
           <tr v-if="isNotFound && !isLoading">
             <td colspan="12" class="text-center">Không có homestay</td>
           </tr>
+
+          <RoomsListModal/>
+          <AddRoomModal v-if="selectedHomestay" :facilitiesList="facilitiesList" :homestay="selectedHomestay"/>
+
           </tbody>
         </table>
         <div class="pagination">
@@ -139,6 +151,7 @@ import ToastMessage from "@/components/Toast/index.vue";
 import Pagination from "@/components/Pagination/index.vue";
 import {debounce} from "@/utils/debounce.js";
 import AddRoomModal from "@/components/Modal/AddRoomModal.vue";
+import RoomsListModal from "@/components/Modal/RoomsListModal.vue";
 import axios from "axios";
 
 const store = useStore();
@@ -151,6 +164,7 @@ const sort_field = ref("homestay_id");
 const searchInput = ref("");
 const selectedHomestay = ref(null);
 const facilitiesList = ref([]);
+const selectedhomestayId = ref(null);
 
 onMounted(() => {
   axios.get("/v2/facilities/all").then((response) => {
@@ -222,13 +236,18 @@ const changeSort = (field) => {
 const openAddNewRoomModal = async (homestayId) => {
   try {
     const response = await store.dispatch("homestays/fetchHomestayById", homestayId);
-    if(response){
+    if (response) {
       selectedHomestay.value = response;
       $("#addRoomModal").modal("show");
     }
   } catch (e) {
     console.log(e);
   }
+};
+
+const openRoomsList = (homestayId) => {
+  selectedhomestayId.value = homestayId;
+  $("#roomsListModal").modal("show");
 };
 </script>
 

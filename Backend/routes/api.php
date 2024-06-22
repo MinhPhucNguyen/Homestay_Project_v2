@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\v2\RoomController;
 use App\Http\Controllers\Api\v2\UserController as UserControllerApi;
 use App\Http\Controllers\Api\v2\HomestayController;
 use App\Http\Controllers\Api\v2\RoomTypeController;
@@ -73,6 +74,15 @@ Route::prefix('v2')->group(function () {
         Route::get('homestays/{id}/edit', 'edit');
         Route::post('homestays/{id}/update', 'update');
         Route::delete('homestays/{id}/delete', 'destroy');
+    });
+
+    Route::controller(RoomController::class)->group(function () {
+        Route::get('rooms', 'index');
+//        Route::get('rooms/getByHomestay/{homeStayId}', 'getRoomByHomestayId');
+//        Route::post('rooms/create', 'store');
+//        Route::get('rooms/{id}/edit', 'edit');
+//        Route::post('rooms/{id}/update', 'update');
+//        Route::delete('rooms/{id}/delete', 'destroy');
     });
 
     Route::controller(RoomTypeController::class)->group(function(){

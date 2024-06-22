@@ -31,7 +31,7 @@
                         <input
                            type="text"
                            class="form-control bg-light border-0 small"
-                           placeholder="Search for..."
+                           placeholder="Tìm kiếm ..."
                            aria-label="Search"
                            aria-describedby="basic-addon2"
                         />

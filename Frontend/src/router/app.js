@@ -22,14 +22,6 @@ const app = [
             component: () => import("../pages/HomestayDetail/HomestayDetail.vue"),
          },
          {
-            path: "find/filter",
-            component: () => import("../pages/FindCar/index.vue"),
-            name: "findCar",
-            meta: {
-               hideFooter: true,
-            },
-         },
-         {
             path: "authorize/:provider/callback",
             component: () => import("../pages/Auth/LoginSocial.vue"),
             name: "socialLogin",

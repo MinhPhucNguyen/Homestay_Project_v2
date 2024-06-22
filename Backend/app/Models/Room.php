@@ -47,4 +47,13 @@ class Room extends Model
     {
         return $this->belongsToMany(Facility::class, 'room_facilities', 'room_id', 'facility_id');
     }
+
+    public function scopeSearch($query, $search) //scopeName là local scope trong laravel giúp định nghĩa các truy vấn
+    {
+        $search = "%$search%";
+
+        $query->where(function ($query) use ($search) {
+            $query->where('room_number', 'like', $search);
+        });
+    }
 }

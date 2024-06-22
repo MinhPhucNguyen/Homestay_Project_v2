@@ -49,7 +49,7 @@
               type="text"
               name="search"
               class="form-control small search-input border border-dark-subtletext-dark"
-              placeholder="Search for..."
+              placeholder="Tìm kiếm ..."
               v-model="searchInput"
             />
           </div>

@@ -15,7 +15,7 @@
           <div class="w-25 mt-3 d-flex align-items-center">
             <i class="fa-solid fa-magnifying-glass fs-5 mr-2"></i>
             <input type="text" name="search" class="form-control small search-input border border-dark-subtletext-dark"
-                   placeholder="Search for..." v-model="searchInput"/>
+                   placeholder="Tìm kiếm ..." v-model="searchInput"/>
           </div>
         </div>
         <table class="table table-bordered table-striped text-dark fw-bold">

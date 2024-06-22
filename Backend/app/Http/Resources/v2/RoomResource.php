@@ -16,23 +16,16 @@ class RoomResource extends JsonResource
     {
         // return parent::toArray($request);
         return [
-            'roomId' => $this->room_id,
-            'roomName' => $this->roomType->name,
-            'roomType' => $this->roomType->room_type,
-            'pricePerNight' => $this->roomType->price_per_night,
-            'capacity' => $this->roomType->capacity,
-            'facilities' => $this->facilities->map(fn ($facility) => [
-                'facilityId' => $facility->facility_id,
-                'facilityName' => $facility->facility_name,
-                'facilityIcon' => $facility->facility_icon,
-            ]),
-            'room_images' => $this->roomImages->map(fn ($images) =>  [
-                'id' => $images->id,
-                'homestayId' => $images->homestay_id,
-                'roomId' => $images->room_id,
-                'imagePath' => $images->path,
-            ]),
+            'room_id' => $this->room_id,
+            'room_number' => $this->room_number,
+            'homestay_id' => $this->homestay_id,
+            'room_type' => new RoomTypeResource($this->roomType),
             'status' => $this->status,
+            'start_date' => $this->start_date,
+            'end_date' => $this->end_date,
+            'room_images' => RoomImageResource::collection($this->roomImages),
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ];
     }
 }
