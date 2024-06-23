@@ -128,7 +128,7 @@
             <td colspan="12" class="text-center">Không có homestay</td>
           </tr>
 
-          <RoomsListModal/>
+          <RoomsListModal v-if="selectedhomestayId" :homestayId="selectedhomestayId"/>
           <AddRoomModal v-if="selectedHomestay" :facilitiesList="facilitiesList" :homestay="selectedHomestay"/>
 
           </tbody>
@@ -143,7 +143,7 @@
 </template>
 
 <script setup>
-import {computed, onBeforeMount, onMounted, ref, watch} from "vue";
+import {computed, onBeforeMount, onMounted, ref, watch, nextTick} from "vue";
 import {useStore} from "vuex";
 import stateLoading from "@/components/Loading/Loading.vue";
 import MyModal from "@/components/Modal/Modal.vue";
@@ -238,6 +238,7 @@ const openAddNewRoomModal = async (homestayId) => {
     const response = await store.dispatch("homestays/fetchHomestayById", homestayId);
     if (response) {
       selectedHomestay.value = response;
+      await nextTick();
       $("#addRoomModal").modal("show");
     }
   } catch (e) {
@@ -245,8 +246,9 @@ const openAddNewRoomModal = async (homestayId) => {
   }
 };
 
-const openRoomsList = (homestayId) => {
+const openRoomsList = async (homestayId) => {
   selectedhomestayId.value = homestayId;
+  await nextTick();
   $("#roomsListModal").modal("show");
 };
 </script>

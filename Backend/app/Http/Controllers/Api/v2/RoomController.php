@@ -25,9 +25,39 @@ class RoomController extends Controller
 
         $search = request('search', '');
 
-        $homestays = Room::search(trim($search))
+        $rooms = Room::search(trim($search))
             ->orderBy($sort_field, $sort_direction)
             ->paginate($paginate);
-        return new RoomCollection($homestays);
+        return new RoomCollection($rooms);
+    }
+
+    public function getRoomsListByHomestayId($homestayId)
+    {
+        if (!$homestayId){
+            return response()->json([
+                'message' => 'Homestay ID is required',
+            ], 400);
+        }
+
+        $paginate = 10;
+
+        $sort_direction = request('sort_direction', 'desc');
+        if (!in_array($sort_direction, ['asc', 'desc'])) {
+            $sort_direction = 'desc';
+        }
+
+        $sort_field = request('sort_field', 'room_id');
+        if (!in_array($sort_field, ['room_id', 'room_number'])) {
+            $sort_field = 'room_id';
+        }
+
+        $search = request('search', '');
+
+        $rooms = Room::where('homestay_id', $homestayId)
+            ->search(trim($search))
+            ->orderBy($sort_field, $sort_direction)
+            ->paginate($paginate);
+
+        return new RoomCollection($rooms);
     }
 }

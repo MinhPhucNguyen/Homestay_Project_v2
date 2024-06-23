@@ -93,12 +93,12 @@
             </td>
           </tr>
           <tr v-if="isNotFound && !isLoading">
-            <td colspan="12" class="text-center">Không có homestay</td>
+            <td colspan="12" class="text-center">Không có phòng</td>
           </tr>
           </tbody>
         </table>
         <div class="pagination">
-          <Pagination :pagination="pagination" @pagination-page="getHomestaysList"/>
+          <Pagination :pagination="pagination" @pagination-page="getRoomsList"/>
         </div>
       </div>
     </div>

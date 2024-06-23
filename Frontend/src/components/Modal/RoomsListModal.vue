@@ -50,21 +50,19 @@
                         </span>
                 </th>
                 <th class="text-center">Mô tả</th>
+                <th class="text-center">Loại phòng</th>
                 <th class="text-center">Trạng thái</th>
                 <th class="text-center">Action</th>
               </tr>
               </thead>
               <tbody id="body-table">
-              <tr v-for="homestay in homestaysList" :key="homestay.homestay_id">
-                <td class="text-center">{{ homestay.homestay_id }}</td>
+              <tr v-for="room in roomsList" :key="room.room_id">
+                <td class="text-center">{{ room.room_number }}</td>
                 <td class="text-center">
-                  <a href="" class="text-success text-decoration-none">{{ homestay.homestay_name }}</a>
+                  <a href="" class="text-success text-decoration-none">{{ room.description }}</a>
                 </td>
-                <td class="text-center">{{ homestay.phone }}</td>
-                <td class="text-center">{{ homestay.email }}</td>
-                <td class="text-center">{{ homestay.address }}</td>
-                <td class="text-center">{{ homestay.city }}</td>
-                <td class="text-center">{{ homestay.status }}</td>
+                <th class="text-center">{{ room.room_type.name }}</th>
+                <td class="text-center">{{ room.status }}</td>
                 <td class="text-center">
                   <div class="dropdown">
                     <button class="btn btn-success dropdown-toggle" type="button" data-bs-toggle="dropdown"
@@ -72,16 +70,16 @@
                       Action
                     </button>
                     <ul class="dropdown-menu">
-                      <li>
-                        <router-link :to="{ name: 'homestays.edit', params: { id: homestay.homestay_id } }"
-                                     class="dropdown-item mb-3 fs-6 text-primary bg-white">
-                          <i class="fa-solid fa-pen-to-square"></i>
-                          <span class="ml-2">Sửa</span>
-                        </router-link>
-                      </li>
+                      <!--                      <li>-->
+                      <!--                        <router-link :to="{ name: 'homestays.edit', params: { id: homestay.homestay_id } }"-->
+                      <!--                                     class="dropdown-item mb-3 fs-6 text-primary bg-white">-->
+                      <!--                          <i class="fa-solid fa-pen-to-square"></i>-->
+                      <!--                          <span class="ml-2">Sửa</span>-->
+                      <!--                        </router-link>-->
+                      <!--                      </li>-->
                       <li>
                         <button type="button" class="dropdown-item fs-6 text-danger bg-white"
-                                @click="deleteHomestay(homestay.homestay_id)">
+                                @click="">
                           <i class="fa-solid fa-trash"></i>
                           <span class="ml-2">Xóa</span>
                         </button>
@@ -90,35 +88,48 @@
                   </div>
                 </td>
               </tr>
-              <!--              <tr v-if="isLoading && !homestaysList.length">-->
-              <!--                <td colspan="12" class="text-center">-->
-              <!--                  <stateLoading/>-->
-              <!--                </td>-->
-              <!--              </tr>-->
-              <!--              <tr v-if="isNotFound && !isLoading">-->
-              <!--                <td colspan="12" class="text-center">Không có homestay</td>-->
-              <!--              </tr>-->
+              <tr v-if="isLoading && !roomsList.length">
+                <td colspan="5" class="text-center">
+                  <stateLoading/>
+                </td>
+              </tr>
+              <tr v-if="isNotFound && !isLoading">
+                <td colspan="5" class="text-center">Không có phòng</td>
+              </tr>
               </tbody>
             </table>
-            <!--            <div class="pagination">-->
-            <!--              <Pagination :pagination="pagination" @pagination-page="getHomestaysList"/>-->
-            <!--            </div>-->
+            <div class="pagination">
+              <Pagination :pagination="pagination" @pagination-page="getRoomsListByHomestayId"/>
+            </div>
           </div>
-          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
+import {ref, onMounted, defineProps, computed, watch} from "vue";
 import Pagination from "@/components/Pagination/index.vue";
 import MyModal from "@/components/Modal/Modal.vue";
-import {ref} from "vue";
+import {useStore} from "vuex";
+import stateLoading from "@/components/Loading/Loading.vue";
+import {debounce} from "@/utils/debounce";
 
+const isLoading = ref(false);
+const store = useStore();
+const roomsList = ref([]);
+const pagination = ref({});
 const sort_direction = ref("desc");
-const sort_field = ref("homestay_id");
+const sort_field = ref("room_id");
 const searchInput = ref("");
 
+const props = defineProps({
+  homestayId: {
+    type: Number,
+    required: true,
+  }
+});
 
 const changeSort = (field) => {
   if (sort_field.value == field) {
@@ -126,8 +137,41 @@ const changeSort = (field) => {
   } else {
     sort_field.value = field;
   }
+  getRoomsListByHomestayId();
 };
 
+const isNotFound = computed(() => (roomsList.value.length === 0 ? true : false));
+
+const getRoomsListByHomestayId = async (page = 1) => {
+  isLoading.value = true;
+  try {
+    const res = await store.dispatch("rooms/fetchRoomsByHomestayId", {
+      homestay_id: props.homestayId,
+      page,
+      sort_field,
+      sort_direction,
+      searchInput,
+    });
+    roomsList.value = store.getters["rooms/getRoomsListByHomestayId"];
+    pagination.value = res.pagination;
+    isLoading.value = false;
+  } catch (error) {
+    console.error(error);
+    isLoading.value = false;
+  }
+};
+
+onMounted(() => {
+  $('#roomsListModal').on("shown.bs.modal", () => {
+    getRoomsListByHomestayId();
+  });
+});
+
+const debouncedGetRoomsList = debounce(getRoomsListByHomestayId, 300);
+
+watch(searchInput, () => {
+  debouncedGetRoomsList();
+});
 
 </script>
 

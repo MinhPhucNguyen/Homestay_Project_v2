@@ -250,7 +250,6 @@ const config = {
   defaultHour: new Date().getHours(),
 };
 
-
 const props = defineProps({
   homestay: {
     type: Object,

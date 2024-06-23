@@ -78,7 +78,7 @@ Route::prefix('v2')->group(function () {
 
     Route::controller(RoomController::class)->group(function () {
         Route::get('rooms', 'index');
-//        Route::get('rooms/getByHomestay/{homeStayId}', 'getRoomByHomestayId');
+        Route::get('rooms/getByHomestay/{homestayId}', 'getRoomsListByHomestayId');
 //        Route::post('rooms/create', 'store');
 //        Route::get('rooms/{id}/edit', 'edit');
 //        Route::post('rooms/{id}/update', 'update');
