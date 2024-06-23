@@ -37,13 +37,12 @@ const rooms = {
                     payload.sort_field.value
                 );
                 const data = response.data.data;
-                commit("SET_ROOMS_LIST_BY_HOMESTAY_ID", data.rooms);
-
+                const dataRoom = data.rooms
                 const pagination = {
                     currentPage: response.data.meta.current_page,
                     lastPage: response.data.meta.last_page,
                 };
-                return {pagination, roomsListByHomestayId};
+                return {pagination, dataRoom};
             } catch (e) {
                 if (e.response) {
                     alert("Có lỗi xảy ra. Vui lòng thử lại sau.");

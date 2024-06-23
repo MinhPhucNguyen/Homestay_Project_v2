@@ -1,6 +1,6 @@
 <template>
    <li class="places-card">
-      <router-link :to="{ name: 'findCar' }">
+      <router-link :to="{ name: '' }">
          <img
             :src="require(`@/assets/images/places-image/${props.place.image}`)"
             :alt="props.place.alt"

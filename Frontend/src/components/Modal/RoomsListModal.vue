@@ -152,7 +152,7 @@ const getRoomsListByHomestayId = async (page = 1) => {
       sort_direction,
       searchInput,
     });
-    roomsList.value = store.getters["rooms/getRoomsListByHomestayId"];
+    roomsList.value = res.dataRoom;
     pagination.value = res.pagination;
     isLoading.value = false;
   } catch (error) {

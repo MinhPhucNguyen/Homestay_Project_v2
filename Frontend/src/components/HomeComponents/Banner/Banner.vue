@@ -68,7 +68,7 @@
                   </div>
                   <router-link
                      :to="{
-                        name: 'findCar',
+                        name: '',
                         query: {
                            startDate: startDate,
                            endDate: endDate,

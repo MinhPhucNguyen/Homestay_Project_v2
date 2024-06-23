@@ -54,7 +54,7 @@ const promotions = ref([
 
 onMounted(() => {
    carousel.value = document.querySelector(".promotion-carousel");
-   firstCardWidth.value = carousel.value.querySelector(".promotion-card").offsetWidth;
+   // firstCardWidth.value = carousel.value.querySelector(".promotion-card").offsetWidth;
 
    let isDragging = false,
       startX,
