@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\v2;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\v2\RoomCollection;
 use App\Models\Room;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 
 class RoomController extends Controller
@@ -59,5 +60,12 @@ class RoomController extends Controller
             ->paginate($paginate);
 
         return new RoomCollection($rooms);
+    }
+
+    public function createRoom(FormRequest $request)
+    {
+        $fileUpload = $request->input('room_images');
+
+         return $fileUpload;
     }
 }

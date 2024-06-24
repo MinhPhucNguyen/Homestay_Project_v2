@@ -20,7 +20,7 @@
           ></button>
         </div>
         <div class="modal-body">
-          <form>
+          <form enctype="multipart/form-data" @submit.prevent="submitFormRoom" method="post">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
               <li class="nav-item" role="presentation">
                 <button
@@ -146,11 +146,11 @@
                   <div class="col-md-6 mb-3">
                     <h5 class="mb-4">Đăng ảnh phòng</h5>
                     <input ref="filesInput" type="file" multiple name="image[]" class="form-control file-input"
-                           @change="uploadRoomImage"/>
+                           @change="uploadRoomImage" value="" />
                     <div class="display_image mb-4 mt-4" v-if="imagesUrl.length > 0">
                       <div class="room_image_input" v-for="(src, index) in imagesUrl" :key="index">
                         <img :src="src" alt="" class="image_input"/>
-                        <button class="btn btn-danger remove_btn" @click.prevent="removeImage(index)">
+                        <button class="btn btn-danger remove_btn" @click.prevent="removeImage(src,index)">
                           Remove
                         </button>
                       </div>
@@ -191,11 +191,13 @@
                 </div>
               </div>
             </div>
-            <button
+            <input
                 class="btn btn-success p-3 fw-bold float-end"
                 type="submit"
                 :disabled="isInvalidForm"
-            >
+                value=" Lưu phòng mới"
+                name="submitRoom"
+            />
               <div
                   class="spinner-border"
                   role="status"
@@ -204,8 +206,6 @@
               >
                 <span class="visually-hidden">Loading...</span>
               </div>
-              Lưu phòng mới
-            </button>
           </form>
         </div>
       </div>
@@ -249,6 +249,17 @@ const config = {
   defaultDate: new Date(),
   defaultHour: new Date().getHours(),
 };
+
+const submitFormRoom = async (e) => {
+
+  let formData = new FormData();
+  axios.post('/v2/rooms/create',model.value).then((response) => {
+          console.log(response);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+}
 
 const props = defineProps({
   homestay: {
@@ -295,11 +306,11 @@ const uploadRoomImage = (event) => {
  * TODO: Remove room image before create room car
  * @param {*} index
  */
-const removeImage = (index) => {
-  imagesUrl.value.splice(index, 1);
-
+const removeImage = (url,index) => {
+   if(imagesUrl._rawValue[0] === url) {
+    model.value.room_images.splice(0,1);
+   }
   const newFileList = new DataTransfer();
-
   for (let i = 0; i < filesInput.value.files.length; i++) {
     if (i !== index) {
       newFileList.items.add(filesInput.value.files[i]);
