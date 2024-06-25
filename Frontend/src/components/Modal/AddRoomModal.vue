@@ -84,16 +84,17 @@
                         name="room_number"
                         class="form-control"
                         v-model="model.room_number"
+                        required
                     />
                     <!--                                  <small class="text-danger" v-if="errors.room_number">{{-->
                     <!--                                      errors.room_number[0]-->
                     <!--                                    }}</small>-->
                   </div>
                   <div class="col-md-4 mb-3">
-                    <label for="status">Loại phòng</label>
+                    <label for="room_type">Loại phòng</label>
                     <div class="d-flex align-items-center">
-                      <select class="form-select">
-                        <option selected disabled>Chọn loại phòng</option>
+                      <select v-model="model.room_type_id" id="room_type" name="room_type_id" class="form-select" required>
+                        <option selected disabled value="">Chọn loại phòng</option>
                         <option v-for="type in roomTypes" :key="type.room_type_id" :value="type.room_type_id">
                           {{ type.name }}
                         </option>
@@ -103,8 +104,8 @@
                   <div class="col-md-4 mb-3">
                     <label for="status">Trạng thái</label>
                     <div class="d-flex align-items-center">
-                      <select class="form-select">
-                        <option selected disabled>Chọn trạng thái</option>
+                      <select v-model="model.status" id="status" name="status" class="form-select" required>
+                        <option selected disabled value="">Chọn trạng thái</option>
                         <option value="available">Phòng trống</option>
                         <option value="booked">Phòng đã đặt</option>
                         <option value="cleaned">Đã dọn dẹp</option>
@@ -146,7 +147,7 @@
                   <div class="col-md-6 mb-3">
                     <h5 class="mb-4">Đăng ảnh phòng</h5>
                     <input ref="filesInput" type="file" multiple name="image[]" class="form-control file-input"
-                           @change="uploadRoomImage" value="" />
+                           @change="uploadRoomImage" value=""/>
                     <div class="display_image mb-4 mt-4" v-if="imagesUrl.length > 0">
                       <div class="room_image_input" v-for="(src, index) in imagesUrl" :key="index">
                         <img :src="src" alt="" class="image_input"/>
@@ -198,14 +199,14 @@
                 value=" Lưu phòng mới"
                 name="submitRoom"
             />
-              <div
-                  class="spinner-border"
-                  role="status"
-                  style="width: 20px; height: 20px; margin-right: 10px"
-                  v-if="isLoading"
-              >
-                <span class="visually-hidden">Loading...</span>
-              </div>
+            <div
+                class="spinner-border"
+                role="status"
+                style="width: 20px; height: 20px; margin-right: 10px"
+                v-if="isLoading"
+            >
+              <span class="visually-hidden">Loading...</span>
+            </div>
           </form>
         </div>
       </div>
@@ -245,17 +246,20 @@ const config = {
   altFormat: "d/m/Y H:i",
   allowInput: true,
   minDate: "today",
-  minTime: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+  minTime: new Date().toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}),
   defaultDate: new Date(),
   defaultHour: new Date().getHours(),
 };
 
 const submitFormRoom = async (e) => {
 
-  let formData = new FormData();
-  axios.post('/v2/rooms/create',model.value).then((response) => {
-          console.log(response);
-      })
+  axios.post('/v2/rooms/create', model.value, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  }).then((response) => {
+    console.log(response);
+  })
       .catch((e) => {
         console.log(e);
       });
@@ -306,10 +310,10 @@ const uploadRoomImage = (event) => {
  * TODO: Remove room image before create room car
  * @param {*} index
  */
-const removeImage = (url,index) => {
-   if(imagesUrl._rawValue[0] === url) {
-    model.value.room_images.splice(0,1);
-   }
+const removeImage = (url, index) => {
+  if (imagesUrl._rawValue[0] === url) {
+    model.value.room_images.splice(0, 1);
+  }
   const newFileList = new DataTransfer();
   for (let i = 0; i < filesInput.value.files.length; i++) {
     if (i !== index) {
@@ -418,11 +422,12 @@ onMounted(() => {
   align-items: center;
   gap: 26px;
 
-  .start-date,
-  .end-date {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-  }
+.start-date,
+.end-date {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
 }
 </style>
