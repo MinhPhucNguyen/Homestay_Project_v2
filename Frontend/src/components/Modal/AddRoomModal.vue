@@ -93,7 +93,8 @@
                   <div class="col-md-4 mb-3">
                     <label for="room_type">Loại phòng</label>
                     <div class="d-flex align-items-center">
-                      <select v-model="model.room_type_id" id="room_type" name="room_type_id" class="form-select" required>
+                      <select v-model="model.room_type_id" id="room_type" name="room_type_id" class="form-select"
+                              required>
                         <option selected disabled value="">Chọn loại phòng</option>
                         <option v-for="type in roomTypes" :key="type.room_type_id" :value="type.room_type_id">
                           {{ type.name }}
@@ -135,9 +136,6 @@
                     <ckeditorComponent
                         v-model="model.description"
                     ></ckeditorComponent>
-                    <!--                                  <small class="text-danger" v-if="errors.description">{{-->
-                    <!--                                      errors.description[0]-->
-                    <!--                                    }}</small>-->
                   </div>
                 </div>
               </div>
@@ -422,12 +420,11 @@ onMounted(() => {
   align-items: center;
   gap: 26px;
 
-.start-date,
-.end-date {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-
+  .start-date,
+  .end-date {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
 }
 </style>
