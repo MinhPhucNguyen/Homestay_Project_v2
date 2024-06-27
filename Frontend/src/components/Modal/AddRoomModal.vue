@@ -20,6 +20,9 @@
           ></button>
         </div>
         <div class="modal-body">
+          <div v-if="errors">
+            <h3>{{ errors }}}</h3>
+          </div>
           <form enctype="multipart/form-data" @submit.prevent="submitFormRoom" method="post">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
               <li class="nav-item" role="presentation">
@@ -86,9 +89,6 @@
                         v-model="model.room_number"
                         required
                     />
-                    <!--                                  <small class="text-danger" v-if="errors.room_number">{{-->
-                    <!--                                      errors.room_number[0]-->
-                    <!--                                    }}</small>-->
                   </div>
                   <div class="col-md-4 mb-3">
                     <label for="room_type">Loại phòng</label>
@@ -236,7 +236,9 @@ const successMessage = ref(null);
 const isLoading = ref(false);
 const pagination = ref({});
 const isInvalidForm = ref(true);
-
+const cloudName = 'dfcdsmcc2';
+const urlCloudinary = `https://api.cloudinary.com/v1_1/${cloudName}/upload`;
+const uploadPresent = 'denztayv';
 const config = {
   enableTime: true,
   dateFormat: "d/m/Y H:i",
@@ -251,16 +253,36 @@ const config = {
 
 const submitFormRoom = async (e) => {
 
-  axios.post('/v2/rooms/create', model.value, {
-    headers: {
-      'Content-Type': 'multipart/form-data'
+  if (!model.value.status && !model.value.room_type_id && !model.value.room_number) {
+    errors.value = 'Room type,room name,status là required';
+    e.preventDefault();
+  }
+  axios.post('/v2/rooms/create', model.value).then((response) => {
+    if (response.data.status) {
+      $(`.btn-close`).trigger('click.dismiss.bs.modal');
+      $("#addRoomModal").hide();
     }
-  }).then((response) => {
-    console.log(response);
+  }).catch((e) => {
+    console.log(e);
+  });
+}
+
+const uploadToCloud = (file, index) => {
+  let formData = new FormData();
+  formData.append('upload_preset', uploadPresent);
+  formData.append('file', file);
+  fetch(urlCloudinary, {
+    method: 'post',
+    body: formData,
+  }).then((response) => response.json())
+      .then((data) => {
+        if (data.secure_url) {
+          model.value.room_images.push(data.secure_url);
+          imagesUrl.value.push(data.secure_url);
+        }
+      }).catch((e) => {
+    console.log(e);
   })
-      .catch((e) => {
-        console.log(e);
-      });
 }
 
 const props = defineProps({
@@ -297,19 +319,18 @@ const filesInput = ref(null);
 const imagesUrl = ref([]);
 
 const uploadRoomImage = (event) => {
-  for (const file of event.target.files) {
-    const imageURL = URL.createObjectURL(file);
-    imagesUrl.value.push(imageURL);
-    model.value.room_images.push(file);
+  for (let file of event.target.files) {
+    uploadToCloud(file);
   }
 };
 
 /**
  * TODO: Remove room image before create room car
+ * @param urlImage
  * @param {*} index
  */
-const removeImage = (url, index) => {
-  if (imagesUrl._rawValue[0] === url) {
+const removeImage = (urlImage, index) => {
+  if (imagesUrl._rawValue[0] === urlImage) {
     model.value.room_images.splice(0, 1);
   }
   const newFileList = new DataTransfer();
@@ -352,7 +373,7 @@ watch(() => props.homestay, () => {
 });
 
 onMounted(() => {
-  $("#addRoomModal").on("hide.bs.modal", () => {
+  $("#addRoomModal").on("hide.bs.modal hidden.bs.modal", () => {
     errors.value = null;
     model.value = {
       room_number: "",
@@ -419,12 +440,12 @@ onMounted(() => {
   display: flex;
   align-items: center;
   gap: 26px;
+}
 
-  .start-date,
-  .end-date {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-  }
+.start-date,
+.end-date {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 </style>

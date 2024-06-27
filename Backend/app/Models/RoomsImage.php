@@ -14,6 +14,7 @@ class RoomsImage extends Model
     protected $fillable = [
         'room_id',
         'path',
+        'homestay_id'
     ];
 
     public function homestay()

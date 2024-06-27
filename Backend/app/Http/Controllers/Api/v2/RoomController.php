@@ -8,9 +8,16 @@ use App\Models\Room;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Models\RoomsImage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class RoomController extends Controller
 {
+    protected bool $isError = false;
+
+    const ERROR = 'Có lỗi xẩy ra khi thêm room';
+
+    const SUCCESS = 'Thêm room thành công';
+
     public function index()
     {
         $paginate = 10;
@@ -65,55 +72,36 @@ class RoomController extends Controller
 
     public function createRoom(Request $request): \Illuminate\Http\JsonResponse
     {
-        $roomData = [];
-        $imageData = [];
-
+        $response = [];
+        $isImageSaved = false;
         $postData = $request->input();
         $modelRoom = new Room();
-        $fieldFetch = $modelRoom->getFillable();
-        $insertData = [];
-        if (!empty($fieldFetch) && !empty($postData)) {
-            foreach ($fieldFetch as $field) {
-                if (isset($postData[$field])) {
-                    $insertData[$field] = $postData[$field];
-                }
-            }
-            try {
-                $roomData = $modelRoom->create($insertData);
-            } catch (\Exception $e) {
-                return response()
-                    ->json(['message' => 'Có lỗi xẩy ra khi thêm room']);
-            }
-
-        }
-
-        $fileUploaded = $request->file('room_images');
-        if (count($fileUploaded)) {
-            foreach ($fileUploaded as $file) {
-                $nameFile = time() . '_' . str_replace(' ', '_', $file->getClientOriginalName());
-                try {
-                    $path = $file->storeAs('public/room', $nameFile);
-                    if (!empty($path)) {
-                        if (!file_exists($path)) {
-                            $imageData = $modelRoom->roomImages()->create([
-                                'homestay_id' => $insertData['homestay_id'],
-                                'path' => $path
-                            ]);
-                        }
+        $modelRoom->fill($postData);
+        try {
+            DB::beginTransaction();
+            $isSavedRoom = $modelRoom->save();
+            $fileUploaded = $request->input('room_images');
+            if (count($fileUploaded)) {
+                foreach ($fileUploaded as $pathFile) {
+                    if (!empty($pathFile)) {
+                        $modelImage = $modelRoom->roomImages()->create([
+                            'homestay_id' => $postData['homestay_id'],
+                            'path' => $pathFile]);
+                        $isImageSaved = $modelImage->wasRecentlyCreated;
                     }
-                } catch (\Exception $e) {
-                    return response()
-                        ->json(['message' => 'Có lỗi xẩy ra khi thêm room']);
                 }
             }
+            if ($isSavedRoom && $isImageSaved) {
+                $response['message'] = self::SUCCESS;
+                $response['status'] = true;
+            }
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            $response['message'] = self::ERROR;
+            $response['status'] = false;
         }
-
-        if ($roomData && $imageData) {
-            return response()
-                ->json(['message' => 'Thêm room thành công']);
-        }
-
         return response()
-            ->json(['message' => 'Có lỗi xẩy ra khi thêm room']);
+            ->json($response);
     }
 }

@@ -11,14 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('rooms_images', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedInteger('room_id')->nullable();
-            $table->string('path');
-            $table->timestamps();
 
-            $table->foreign('room_id')->references('room_id')->on('rooms')->onDelete('cascade');
-        });
+        if(!Schema::hasTable('rooms_images')){
+            Schema::create('rooms_images', function (Blueprint $table) {
+                $table->id();
+                $table->unsignedInteger('room_id')->nullable();
+                $table->string('path');
+                $table->timestamps();
+
+                $table->foreign('room_id')->references('room_id')->on('rooms')->onDelete('cascade');
+            });
+        }
+
     }
 
     /**
@@ -26,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('homestays_images');
+        Schema::dropIfExists('rooms_images');
     }
 };
