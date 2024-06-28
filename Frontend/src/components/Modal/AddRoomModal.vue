@@ -1,4 +1,5 @@
 <template>
+  <ToastMessage :toastType="typeToast" :message="messageToast" />
   <div
       class="modal fade"
       id="addRoomModal"
@@ -121,12 +122,12 @@
                         <div class="start-date">
                           <label for="start-date">Bắt đầu</label>
                           <input id="start-date" name="start-date" type="datetime-local"
-                                 class="form-control datetime-input fw-bold p-4 text-black"/>
+                                 class="form-control datetime-input fw-bold p-4 text-black" />
                         </div>
                         <div class="end-date">
                           <label for="end-date">Kết thúc</label>
                           <input id="end-date" name="end-date" type="datetime-local"
-                                 class="form-control datetime-input fw-bold p-4 text-black"/>
+                                 class="form-control datetime-input fw-bold p-4 text-black" />
                         </div>
                       </div>
                     </div>
@@ -145,10 +146,10 @@
                   <div class="col-md-6 mb-3">
                     <h5 class="mb-4">Đăng ảnh phòng</h5>
                     <input ref="filesInput" type="file" multiple name="image[]" class="form-control file-input"
-                           @change="uploadRoomImage" value=""/>
+                           @change="uploadRoomImage" value="" />
                     <div class="display_image mb-4 mt-4" v-if="imagesUrl.length > 0">
                       <div class="room_image_input" v-for="(src, index) in imagesUrl" :key="index">
-                        <img :src="src" alt="" class="image_input"/>
+                        <img :src="src" alt="" class="image_input" />
                         <button class="btn btn-danger remove_btn" @click.prevent="removeImage(src,index)">
                           Remove
                         </button>
@@ -213,42 +214,55 @@
 </template>
 
 <script setup>
-import ckeditorComponent from "@/components/Editor/index.vue";
-import {onMounted, ref, watch, defineProps} from "vue";
-import axios from "axios";
-import {useStore} from "vuex";
-import flatpickr from "flatpickr";
-import "flatpickr/dist/themes/material_green.css";
+import ckeditorComponent from '@/components/Editor/index.vue';
+import { onMounted, ref, watch, defineProps } from 'vue';
+import axios from 'axios';
+import { useStore } from 'vuex';
+import flatpickr from 'flatpickr';
+import 'flatpickr/dist/themes/material_green.css';
+import ToastMessage from '@/components/Toast/index.vue';
 
 const store = useStore();
 const roomTypes = ref([]);
 const model = ref({
-  room_number: "",
+  room_number: '',
   homestay_id: props.homestay.homestay_id,
   room_type_id: 0,
-  description: "",
-  status: "",
+  description: '',
+  status: '',
   facilitiesId: [],
-  room_images: [],
+  room_images: []
 });
 const errors = ref(null);
-const successMessage = ref(null);
+const messageToast = ref(null);
 const isLoading = ref(false);
 const pagination = ref({});
 const isInvalidForm = ref(true);
 const cloudName = 'dfcdsmcc2';
 const urlCloudinary = `https://api.cloudinary.com/v1_1/${cloudName}/upload`;
 const uploadPresent = 'denztayv';
+const typeToast = ref('success');
 const config = {
   enableTime: true,
-  dateFormat: "d/m/Y H:i",
+  dateFormat: 'd/m/Y H:i',
   altInput: true,
-  altFormat: "d/m/Y H:i",
+  altFormat: 'd/m/Y H:i',
   allowInput: true,
-  minDate: "today",
-  minTime: new Date().toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}),
+  minDate: 'today',
+  minTime: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
   defaultDate: new Date(),
-  defaultHour: new Date().getHours(),
+  defaultHour: new Date().getHours()
+};
+
+const showToastMessage = (message, type = 'success') => {
+  if (message) {
+    messageToast.value = message;
+  }
+  if (type === 'danger') {
+    typeToast.value = type;
+  }
+  $('#addRoomModal').modal('hide');
+  $('.toast').toast('show');
 };
 
 const submitFormRoom = async (e) => {
@@ -258,42 +272,42 @@ const submitFormRoom = async (e) => {
     e.preventDefault();
   }
   axios.post('/v2/rooms/create', model.value).then((response) => {
-    if (response.data.status) {
-      $(`.btn-close`).trigger('click.dismiss.bs.modal');
-      $("#addRoomModal").hide();
+    if (response.data.status === true) {
+      showToastMessage(response.data.message);
+    } else {
+      showToastMessage(response.data.message, 'danger');
     }
   }).catch((e) => {
     console.log(e);
   });
-}
+};
 
-const uploadToCloud = (file, index) => {
+const uploadToCloud = (file) => {
   let formData = new FormData();
   formData.append('upload_preset', uploadPresent);
   formData.append('file', file);
   fetch(urlCloudinary, {
     method: 'post',
-    body: formData,
-  }).then((response) => response.json())
-      .then((data) => {
-        if (data.secure_url) {
-          model.value.room_images.push(data.secure_url);
-          imagesUrl.value.push(data.secure_url);
-        }
-      }).catch((e) => {
+    body: formData
+  }).then((response) => response.json()).then((data) => {
+    if (data.secure_url) {
+      model.value.room_images.push(data.secure_url);
+      imagesUrl.value.push(data.secure_url);
+    }
+  }).catch((e) => {
     console.log(e);
-  })
-}
+  });
+};
 
 const props = defineProps({
   homestay: {
     type: Object,
-    required: true,
+    required: true
   },
   facilitiesList: {
     type: Array,
-    required: true,
-  },
+    required: true
+  }
 });
 
 /**
@@ -302,8 +316,8 @@ const props = defineProps({
 const selectFacility = (event, id) => {
   const item = event.target;
   if (item) {
-    item.classList.toggle("facility-chose");
-    if (item.classList.contains("facility-chose")) {
+    item.classList.toggle('facility-chose');
+    if (item.classList.contains('facility-chose')) {
       model.value.facilitiesId.push(id);
     } else {
       const indexItemExist = model.value.facilitiesId.indexOf(id);
@@ -348,16 +362,13 @@ const removeImage = (urlImage, index) => {
 
 const getRoomTypes = () => {
   isLoading.value = true;
-  axios
-      .get(`/v2/room-types/getByHomestay/${props.homestay.homestay_id}`)
-      .then((response) => {
-        roomTypes.value = response.data.roomTypes;
-        isLoading.value = false;
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-}
+  axios.get(`/v2/room-types/getByHomestay/${props.homestay.homestay_id}`).then((response) => {
+    roomTypes.value = response.data.roomTypes;
+    isLoading.value = false;
+  }).catch((e) => {
+    console.log(e);
+  });
+};
 
 onMounted(() => {
   getRoomTypes();
@@ -373,16 +384,16 @@ watch(() => props.homestay, () => {
 });
 
 onMounted(() => {
-  $("#addRoomModal").on("hide.bs.modal hidden.bs.modal", () => {
+  $('#addRoomModal').on('hide.bs.modal hidden.bs.modal', () => {
     errors.value = null;
     model.value = {
-      room_number: "",
+      room_number: '',
       homestay_id: props.homestay.homestay_id,
       room_type_id: 0,
-      description: "",
-      status: "",
+      description: '',
+      status: '',
       facilitiesId: [],
-      room_images: [],
+      room_images: []
     };
     imagesUrl.value = [];
   });

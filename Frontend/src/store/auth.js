@@ -103,7 +103,6 @@ const auth = {
             commit("SET_USER", response.data);
             // dispatch("users/fetchUserById", response.data.id, { root: true });
             commit("users/SET_USER", response.data, { root: true });
-            dispatch("favorite/fetchFavoriteCars", null, { root: true });
          } catch (e) {
             commit("SET_TOKEN", null);
             commit("SET_USER", null);
