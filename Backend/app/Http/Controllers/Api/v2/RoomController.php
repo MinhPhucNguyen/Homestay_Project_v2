@@ -5,18 +5,22 @@ namespace App\Http\Controllers\Api\v2;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\v2\RoomCollection;
 use App\Models\Room;
-use Illuminate\Foundation\Http\FormRequest;
-use App\Models\RoomsImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\Image\CloudinaryGateway;
 
 class RoomController extends Controller
 {
-    protected bool $isError = false;
-
     const ERROR = 'Có lỗi xẩy ra khi thêm room';
 
     const SUCCESS = 'Thêm room thành công';
+
+    private CloudinaryGateway $cloudinaryGateway;
+
+    public function __construct(CloudinaryGateway $cloudinaryGateway)
+    {
+        $this->cloudinaryGateway = $cloudinaryGateway;
+    }
 
     public function index()
     {
@@ -86,7 +90,8 @@ class RoomController extends Controller
                     if (!empty($pathFile)) {
                         $modelImage = $modelRoom->roomImages()->create([
                             'homestay_id' => $postData['homestay_id'],
-                            'path' => $pathFile]);
+                            'path' => $pathFile
+                        ]);
                         $isImageSaved = $modelImage->wasRecentlyCreated;
                     }
                 }
@@ -103,5 +108,10 @@ class RoomController extends Controller
         }
         return response()
             ->json($response);
+    }
+
+    public function deleteImageCloud($publicId)
+    {
+        $result = $this->cloudinaryGateway->destroyImage($publicId, []);
     }
 }

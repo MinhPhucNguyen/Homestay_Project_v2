@@ -148,9 +148,10 @@
                     <input ref="filesInput" type="file" multiple name="image[]" class="form-control file-input"
                            @change="uploadRoomImage" value="" />
                     <div class="display_image mb-4 mt-4" v-if="imagesUrl.length > 0">
-                      <div class="room_image_input" v-for="(src, index) in imagesUrl" :key="index">
-                        <img :src="src" alt="" class="image_input" />
-                        <button class="btn btn-danger remove_btn" @click.prevent="removeImage(src,index)">
+                      <div class="room_image_input" v-for="(dataImage, index) in imagesUrl" :key="index">
+                        <img :src="dataImage.path" alt="" class="image_input" />
+                        <button class="btn btn-danger remove_btn"
+                                @click.prevent="removeImage(dataImage,dataImage.public_id)">
                           Remove
                         </button>
                       </div>
@@ -214,8 +215,7 @@
 </template>
 
 <script setup>
-import ckeditorComponent from '@/components/Editor/index.vue';
-import { onMounted, ref, watch, defineProps } from 'vue';
+import { defineProps, onMounted, ref, watch } from 'vue';
 import axios from 'axios';
 import { useStore } from 'vuex';
 import flatpickr from 'flatpickr';
@@ -267,7 +267,7 @@ const showToastMessage = (message, type = 'success') => {
 
 const submitFormRoom = async (e) => {
 
-  if (!model.value.status && !model.value.room_type_id && !model.value.room_number) {
+  if (!model.value.status || !model.value.room_type_id || !model.value.room_number) {
     errors.value = 'Room type,room name,status là required';
     e.preventDefault();
   }
@@ -290,9 +290,13 @@ const uploadToCloud = (file) => {
     method: 'post',
     body: formData
   }).then((response) => response.json()).then((data) => {
-    if (data.secure_url) {
+    if (data.secure_url && data.public_id) {
+      let objData = {
+        public_id: data.public_id,
+        path: data.secure_url
+      };
       model.value.room_images.push(data.secure_url);
-      imagesUrl.value.push(data.secure_url);
+      imagesUrl.value.push(objData);
     }
   }).catch((e) => {
     console.log(e);

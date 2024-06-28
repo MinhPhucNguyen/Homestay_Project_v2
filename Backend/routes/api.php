@@ -61,7 +61,7 @@ Route::prefix('v2')->group(function () {
             Route::delete('users/delete-multi-user/{users}', 'deleteMultiUser');
         });
 
-         Route::delete('users/{id}/remove-avatar', [ProfileController::class, 'removeAvatar']);
+        Route::delete('users/{id}/remove-avatar', [ProfileController::class, 'removeAvatar']);
 
     });
 
@@ -79,13 +79,14 @@ Route::prefix('v2')->group(function () {
     Route::controller(RoomController::class)->group(function () {
         Route::get('rooms', 'index');
         Route::get('rooms/getByHomestay/{homestayId}', 'getRoomsListByHomestayId');
-       Route::post('rooms/create', 'createRoom');
-       Route::get('rooms/{id}/edit', 'edit');
-       Route::post('rooms/{id}/update', 'update');
-       Route::delete('rooms/{id}/delete', 'destroy');
+        Route::post('rooms/create', 'createRoom');
+        Route::get('rooms/{id}/edit', 'edit');
+        Route::post('rooms/{id}/update', 'update');
+        Route::delete('rooms/{id}/delete', 'destroy');
+        Route::post('rooms/image/delete/{publicId}', 'deleteImageCloud');
     });
 
-    Route::controller(RoomTypeController::class)->group(function(){
+    Route::controller(RoomTypeController::class)->group(function () {
         Route::get('room-types', 'index');
         Route::get('room-types/getByHomestay/{homeStayId}', 'getRoomTypeByHomestayId');
         Route::post('room-types/create', 'store');

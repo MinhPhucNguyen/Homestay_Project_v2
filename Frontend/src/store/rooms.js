@@ -1,10 +1,10 @@
-import axios from "axios";
+import axios from 'axios';
 
 const rooms = {
     namespaced: true,
     state: {
         roomsList: [],
-        roomsListByHomestayId: [],
+        roomsListByHomestayId: []
     },
     getters: {
         getRoomsList(state) {
@@ -20,63 +20,62 @@ const rooms = {
         },
         SET_ROOMS_LIST_BY_HOMESTAY_ID(state, rooms) {
             state.roomsListByHomestayId = rooms;
-        },
+        }
     },
     actions: {
-        async fetchRoomsByHomestayId({commit}, payload) {
+        async fetchRoomsByHomestayId({ commit }, payload) {
             try {
                 const response = await axios.get(
-                    "v2/rooms/getByHomestay/" + payload.homestay_id +
-                    "?page=" +
+                    'v2/rooms/getByHomestay/' + payload.homestay_id +
+                    '?page=' +
                     payload.page +
-                    "&search=" +
+                    '&search=' +
                     payload.searchInput.value +
-                    "&sort_direction=" +
+                    '&sort_direction=' +
                     payload.sort_direction.value +
-                    "&sort_field=" +
+                    '&sort_field=' +
                     payload.sort_field.value
                 );
                 const data = response.data.data;
-                const dataRoom = data.rooms
+                const dataRoom = data.rooms;
+                const pagination = {
+                    currentPage: response.data.meta.current_page,
+                    lastPage: response.data.meta.last_page
+                };
+                return { pagination, dataRoom };
+            } catch (e) {
+                if (e.response) {
+                    alert('Có lỗi xảy ra. Vui lòng thử lại sau.');
+                }
+            }
+        },
+
+        async fetchRooms({ commit }, payload) {
+            try {
+                const response = await axios.get(
+                    'v2/rooms?page=' +
+                    payload.page.value +
+                    '&search=' +
+                    payload.searchInput.value +
+                    '&sort_direction=' +
+                    payload.sort_direction.value +
+                    '&sort_field=' +
+                    payload.sort_field.value
+                );
+                const dataRooms = response.data.data;
                 const pagination = {
                     currentPage: response.data.meta.current_page,
                     lastPage: response.data.meta.last_page,
                 };
-                return {pagination, dataRoom};
+                commit('SET_ROOMS_LIST', dataRooms.rooms);
+                return { pagination };
             } catch (e) {
                 if (e.response) {
-                    alert("Có lỗi xảy ra. Vui lòng thử lại sau.");
+                    alert('Có lỗi xảy ra. Vui lòng thử lại sau.');
                 }
             }
-        },
-
-        async fetchRooms({commit}, payload) {
-            try {
-                const response = await axios.get(
-                    "v2/rooms?page=" +
-                    payload.page +
-                    "&search=" +
-                    payload.searchInput.value +
-                    "&sort_direction=" +
-                    payload.sort_direction.value +
-                    "&sort_field=" +
-                    payload.sort_field.value
-                );
-                const data = response.data.data;
-                commit("SET_ROOMS_LIST", data.rooms);
-
-                const paginationfetchRooms = {
-                    currentPage: response.data.meta.current_page,
-                    lastPage: response.data.meta.last_page,
-                };
-                return {pagination};
-            } catch (e) {
-                if (e.response) {
-                    alert("Có lỗi xảy ra. Vui lòng thử lại sau.");
-                }
-            }
-        },
-    },
+        }
+    }
 };
 
 export default rooms;
