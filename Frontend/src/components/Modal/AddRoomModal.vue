@@ -151,8 +151,8 @@
                       <div class="room_image_input" v-for="(dataImage, index) in imagesUrl" :key="index">
                         <img :src="dataImage.path" alt="" class="image_input"/>
                         <button class="btn btn-danger remove_btn"
-                                @click.prevent="removeImage(dataImage,dataImage.public_id)">
-                          Remove
+                                @click.prevent="removeImage(dataImage)">
+                          {{ isClick ? "Removing..." : "Remove" }}
                         </button>
                       </div>
                     </div>
@@ -366,7 +366,7 @@ const selectFacility = (event, id) => {
  */
 const filesInput = ref(null);
 const imagesUrl = ref([]);
-
+const isClick = ref(false);
 const uploadRoomImage = (event) => {
   for (let file of event.target.files) {
     uploadToCloud(file);
@@ -376,20 +376,41 @@ const uploadRoomImage = (event) => {
 /**
  * TODO: Remove room image before create room car
  * @param urlImage
- * @param {*} index
  */
-const removeImage = (urlImage, index) => {
-  if (imagesUrl._rawValue[0] === urlImage) {
-    model.value.room_images.splice(0, 1);
-  }
-  const newFileList = new DataTransfer();
-  for (let i = 0; i < filesInput.value.files.length; i++) {
-    if (i !== index) {
-      newFileList.items.add(filesInput.value.files[i]);
+const removeImage = (urlImage) => {
+
+  if (model.value.room_images) {
+    if (urlImage.path) {
+      if (urlImage.public_id) {
+        callRemoveImage(urlImage)
+      }
     }
   }
-  filesInput.value.files = newFileList.files;
 };
+
+const callRemoveImage = async (imageData, type = 'remove') => {
+  // axios.interceptors.request.use(function (config) {
+  //   // Do something before request is sent
+  //   console.log(config);
+  //   return config;
+  // }, function (error) {
+  //   // Do something with request error
+  //   return Promise.reject(error);
+  // });
+  isClick.value = true;
+  axios.delete(`v2/rooms/image/delete/${imageData.public_id}`).then((res) => {
+    if (res.data.result === 'ok') {
+      if (type === 'remove') {
+        let indexImage = model.value.room_images.indexOf(imageData.path);
+        if (indexImage > -1) {
+          model.value.room_images.splice(indexImage, 1);
+          imagesUrl.value.splice(indexImage, 1);
+        }
+      }
+      console.log('Remove image success');
+    }
+  })
+}
 
 /**
  * TODO: Get room types by homestay id
@@ -420,6 +441,11 @@ watch(() => props.homestay, () => {
 
 onMounted(() => {
   $('#addRoomModal').on('hide.bs.modal', () => {
+    if (imagesUrl.value.length) {
+      for (let imageData of imagesUrl.value) {
+        callRemoveImage(imageData, 'reset');
+      }
+    }
     errors.value = null;
     model.value = {
       room_number: '',
