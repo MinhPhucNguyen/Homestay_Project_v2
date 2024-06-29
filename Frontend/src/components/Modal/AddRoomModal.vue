@@ -1,5 +1,5 @@
 <template>
-  <ToastMessage :toastType="typeToast" :message="messageToast" />
+  <ToastMessage :toastType="typeToast" :message="messageToast"/>
   <div
       class="modal fade"
       id="addRoomModal"
@@ -122,12 +122,12 @@
                         <div class="start-date">
                           <label for="start-date">Bắt đầu</label>
                           <input id="start-date" name="start-date" type="datetime-local"
-                                 class="form-control datetime-input fw-bold p-4 text-black" />
+                                 class="form-control datetime-input fw-bold p-4 text-black"/>
                         </div>
                         <div class="end-date">
                           <label for="end-date">Kết thúc</label>
                           <input id="end-date" name="end-date" type="datetime-local"
-                                 class="form-control datetime-input fw-bold p-4 text-black" />
+                                 class="form-control datetime-input fw-bold p-4 text-black"/>
                         </div>
                       </div>
                     </div>
@@ -146,13 +146,13 @@
                   <div class="col-md-6 mb-3">
                     <h5 class="mb-4">Đăng ảnh phòng</h5>
                     <input ref="filesInput" type="file" multiple name="image[]" class="form-control file-input"
-                           @change="uploadRoomImage" value="" />
+                           @change="uploadRoomImage" value=""/>
                     <div class="display_image mb-4 mt-4" v-if="imagesUrl.length > 0">
                       <div class="room_image_input" v-for="(dataImage, index) in imagesUrl" :key="index">
-                        <img :src="dataImage.path" alt="" class="image_input" />
+                        <img :src="dataImage.path" alt="" class="image_input"/>
                         <button class="btn btn-danger remove_btn"
-                                @click.prevent="removeImage(dataImage,dataImage.public_id)">
-                          Remove
+                                @click.prevent="removeImage(dataImage)">
+                          {{ isClick ? "Removing..." : "Remove" }}
                         </button>
                       </div>
                     </div>
@@ -215,12 +215,13 @@
 </template>
 
 <script setup>
-import { defineProps, onMounted, ref, watch } from 'vue';
+import {defineProps, onMounted, ref, watch} from 'vue';
 import axios from 'axios';
-import { useStore } from 'vuex';
+import {useStore} from 'vuex';
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/themes/material_green.css';
 import ToastMessage from '@/components/Toast/index.vue';
+import ckeditorComponent from "@/components/Editor/index.vue";
 
 const store = useStore();
 const roomTypes = ref([]);
@@ -249,7 +250,7 @@ const config = {
   altFormat: 'd/m/Y H:i',
   allowInput: true,
   minDate: 'today',
-  minTime: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+  minTime: new Date().toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}),
   defaultDate: new Date(),
   defaultHour: new Date().getHours()
 };
@@ -335,7 +336,7 @@ const selectFacility = (event, id) => {
  */
 const filesInput = ref(null);
 const imagesUrl = ref([]);
-
+const isClick = ref(false);
 const uploadRoomImage = (event) => {
   for (let file of event.target.files) {
     uploadToCloud(file);
@@ -345,20 +346,41 @@ const uploadRoomImage = (event) => {
 /**
  * TODO: Remove room image before create room car
  * @param urlImage
- * @param {*} index
  */
-const removeImage = (urlImage, index) => {
-  if (imagesUrl._rawValue[0] === urlImage) {
-    model.value.room_images.splice(0, 1);
-  }
-  const newFileList = new DataTransfer();
-  for (let i = 0; i < filesInput.value.files.length; i++) {
-    if (i !== index) {
-      newFileList.items.add(filesInput.value.files[i]);
+const removeImage = (urlImage) => {
+
+  if (model.value.room_images) {
+    if (urlImage.path) {
+      if (urlImage.public_id) {
+        callRemoveImage(urlImage)
+      }
     }
   }
-  filesInput.value.files = newFileList.files;
 };
+
+const callRemoveImage = async (imageData, type = 'remove') => {
+  // axios.interceptors.request.use(function (config) {
+  //   // Do something before request is sent
+  //   console.log(config);
+  //   return config;
+  // }, function (error) {
+  //   // Do something with request error
+  //   return Promise.reject(error);
+  // });
+  isClick.value = true;
+  axios.delete(`v2/rooms/image/delete/${imageData.public_id}`).then((res) => {
+    if (res.data.result === 'ok') {
+      if (type === 'remove') {
+        let indexImage = model.value.room_images.indexOf(imageData.path);
+        if (indexImage > -1) {
+          model.value.room_images.splice(indexImage, 1);
+          imagesUrl.value.splice(indexImage, 1);
+        }
+      }
+      console.log('Remove image success');
+    }
+  })
+}
 
 /**
  * TODO: Get room types by homestay id
@@ -389,6 +411,12 @@ watch(() => props.homestay, () => {
 
 onMounted(() => {
   $('#addRoomModal').on('hide.bs.modal hidden.bs.modal', () => {
+    if (imagesUrl.value.length) {
+      for (let imageData of imagesUrl.value) {
+        callRemoveImage(imageData, 'reset');
+      }
+
+    }
     errors.value = null;
     model.value = {
       room_number: '',

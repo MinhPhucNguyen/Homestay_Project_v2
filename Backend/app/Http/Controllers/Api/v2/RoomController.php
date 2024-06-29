@@ -110,8 +110,9 @@ class RoomController extends Controller
             ->json($response);
     }
 
-    public function deleteImageCloud($publicId)
+    public function deleteImageCloud($publicId): \Illuminate\Http\JsonResponse
     {
         $result = $this->cloudinaryGateway->destroyImage($publicId, []);
+        return response()->json($result);
     }
 }

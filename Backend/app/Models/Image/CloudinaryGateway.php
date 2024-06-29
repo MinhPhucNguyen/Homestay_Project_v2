@@ -12,12 +12,15 @@ class CloudinaryGateway
 
     public function __construct()
     {
-        $config = Configuration::instance();
-        $config->cloud->cloudName = env('CLOUD_NAME') ?? '';
-        $config->cloud->apiKey = env('API_KEY_CLOUD') ?? '';
-        $config->cloud->apiSecret = env('API_SECRET') ?? '';
-        $config->url->secure = true;
-        $this->cloudinary = new Cloudinary($config);
+        if (env('CLOUD_NAME') && env('API_KEY_CLOUD') && env('API_SECRET')) {
+            $config = Configuration::instance();
+            $config->cloud->cloudName = env('CLOUD_NAME');
+            $config->cloud->apiKey = env('API_KEY_CLOUD');
+            $config->cloud->apiSecret = env('API_SECRET');
+            $config->url->secure = true;
+            $this->cloudinary = new Cloudinary($config);
+        }
+
     }
 
     public function destroyImage($publicId, $option): \Cloudinary\Api\ApiResponse

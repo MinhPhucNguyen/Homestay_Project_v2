@@ -83,7 +83,7 @@ Route::prefix('v2')->group(function () {
         Route::get('rooms/{id}/edit', 'edit');
         Route::post('rooms/{id}/update', 'update');
         Route::delete('rooms/{id}/delete', 'destroy');
-        Route::post('rooms/image/delete/{publicId}', 'deleteImageCloud');
+        Route::delete('rooms/image/delete/{publicId}', 'deleteImageCloud');
     });
 
     Route::controller(RoomTypeController::class)->group(function () {
