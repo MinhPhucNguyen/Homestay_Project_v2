@@ -215,6 +215,7 @@
 </template>
 
 <script setup>
+import ckeditorComponent from "@/components/Editor/index.vue";
 import { defineProps, onMounted, ref, watch } from 'vue';
 import axios from 'axios';
 import { useStore } from 'vuex';
@@ -238,9 +239,9 @@ const messageToast = ref(null);
 const isLoading = ref(false);
 const pagination = ref({});
 const isInvalidForm = ref(true);
-const cloudName = 'dfcdsmcc2';
+const cloudName = 'dmc1ylttu';
 const urlCloudinary = `https://api.cloudinary.com/v1_1/${cloudName}/upload`;
-const uploadPresent = 'denztayv';
+const uploadPreset = 'ml_default';
 const typeToast = ref('success');
 const config = {
   enableTime: true,
@@ -268,7 +269,7 @@ const showToastMessage = (message, type = 'success') => {
 const submitFormRoom = async (e) => {
 
   if (!model.value.status || !model.value.room_type_id || !model.value.room_number) {
-    errors.value = 'Room type,room name,status là required';
+    errors.value = 'Room type, room name, status là required';
     e.preventDefault();
   }
   axios.post('/v2/rooms/create', model.value).then((response) => {
@@ -284,7 +285,7 @@ const submitFormRoom = async (e) => {
 
 const uploadToCloud = (file) => {
   let formData = new FormData();
-  formData.append('upload_preset', uploadPresent);
+  formData.append('upload_preset', uploadPreset);
   formData.append('file', file);
   fetch(urlCloudinary, {
     method: 'post',
