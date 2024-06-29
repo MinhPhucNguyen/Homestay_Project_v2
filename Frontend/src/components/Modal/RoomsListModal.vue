@@ -20,10 +20,6 @@
           ></button>
         </div>
         <div class="modal-body">
-          <router-link :to="{ name: 'homestays.create' }" class="btn btn-success fw-bold float-right">
-            <i class="fa-solid fa-plus"></i>
-            Thêm phòng
-          </router-link>
           <div class="mt-4">
             <div class="mb-3 d-flex align-items-center justify-content-between">
               <div class="w-25 mt-3 d-flex align-items-center">
@@ -57,9 +53,15 @@
               </thead>
               <tbody id="body-table">
               <tr v-for="room in roomsList" :key="room.room_id">
-                <td class="text-center">{{ room.room_number }}</td>
                 <td class="text-center">
-                  <a href="" class="text-success text-decoration-none">{{ room.description }}</a>
+                  <a href="" class="text-success text-decoration-none">{{ room.room_number }}</a>
+                </td>
+                <td class="text-center">
+                  <div
+                      v-html="room.description"
+                      v-if="room.description"
+                  ></div>
+                  <div v-else>Chưa có mô tả</div>
                 </td>
                 <th class="text-center">{{ room.room_type.name }}</th>
                 <td class="text-center">{{ room.status }}</td>
@@ -111,7 +113,6 @@
 <script setup>
 import {ref, onMounted, defineProps, computed, watch} from "vue";
 import Pagination from "@/components/Pagination/index.vue";
-import MyModal from "@/components/Modal/Modal.vue";
 import {useStore} from "vuex";
 import stateLoading from "@/components/Loading/Loading.vue";
 import {debounce} from "@/utils/debounce";

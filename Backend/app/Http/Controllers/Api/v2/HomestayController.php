@@ -9,9 +9,7 @@ use App\Models\Room;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\v2\HomestayResource;
 use App\Models\RoomFacility;
-use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Log;
 
 class HomestayController extends Controller
 {

@@ -3,15 +3,16 @@
 namespace App\Http\Controllers\Api\v2;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\RoomRequest;
 use App\Http\Resources\v2\RoomCollection;
 use App\Models\Room;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Models\Image\CloudinaryGateway;
+use Illuminate\Support\Facades\DB;
 
 class RoomController extends Controller
 {
-    const ERROR = 'Có lỗi xẩy ra khi thêm room';
+    const ERROR = 'Có lỗi xẩy ra khi thêm phòng';
 
     const SUCCESS = 'Thêm room thành công';
 
@@ -74,25 +75,32 @@ class RoomController extends Controller
         return new RoomCollection($rooms);
     }
 
-    public function createRoom(Request $request): \Illuminate\Http\JsonResponse
+    public function store(RoomRequest $request)
     {
+
+        $validatedData = $request->validated();
+
         $response = [];
         $isImageSaved = false;
-        $postData = $request->input();
-        $modelRoom = new Room();
-        $modelRoom->fill($postData);
         try {
             DB::beginTransaction();
-            $isSavedRoom = $modelRoom->save();
+
+            $room = Room::create($validatedData);
+            $isSavedRoom = $room ? true : false;
+
             $fileUploaded = $request->input('room_images');
-            if (count($fileUploaded)) {
+
+            if (!empty($fileUploaded) && is_array($fileUploaded)) {
                 foreach ($fileUploaded as $pathFile) {
                     if (!empty($pathFile)) {
-                        $modelImage = $modelRoom->roomImages()->create([
-                            'homestay_id' => $postData['homestay_id'],
+                        $modelImage = $room->roomImages()->create([
+                            'homestay_id' => $validatedData['homestay_id'],
                             'path' => $pathFile
                         ]);
-                        $isImageSaved = $modelImage->wasRecentlyCreated;
+
+                        if ($modelImage) {
+                            $isImageSaved = true;
+                        }
                     }
                 }
             }

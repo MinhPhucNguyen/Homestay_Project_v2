@@ -1,5 +1,5 @@
 <template>
-  <ToastMessage :toastType="typeToast" :message="messageToast" />
+  <ToastMessage :toastType="typeToast" :message="messageToast"/>
   <div
       class="modal fade"
       id="addRoomModal"
@@ -122,12 +122,12 @@
                         <div class="start-date">
                           <label for="start-date">Bắt đầu</label>
                           <input id="start-date" name="start-date" type="datetime-local"
-                                 class="form-control datetime-input fw-bold p-4 text-black" />
+                                 class="form-control datetime-input fw-bold p-4 text-black" v-model="model.start_date"/>
                         </div>
                         <div class="end-date">
                           <label for="end-date">Kết thúc</label>
                           <input id="end-date" name="end-date" type="datetime-local"
-                                 class="form-control datetime-input fw-bold p-4 text-black" />
+                                 class="form-control datetime-input fw-bold p-4 text-black" v-model="model.end_date"/>
                         </div>
                       </div>
                     </div>
@@ -146,10 +146,10 @@
                   <div class="col-md-6 mb-3">
                     <h5 class="mb-4">Đăng ảnh phòng</h5>
                     <input ref="filesInput" type="file" multiple name="image[]" class="form-control file-input"
-                           @change="uploadRoomImage" value="" />
+                           @change="uploadRoomImage" value=""/>
                     <div class="display_image mb-4 mt-4" v-if="imagesUrl.length > 0">
                       <div class="room_image_input" v-for="(dataImage, index) in imagesUrl" :key="index">
-                        <img :src="dataImage.path" alt="" class="image_input" />
+                        <img :src="dataImage.path" alt="" class="image_input"/>
                         <button class="btn btn-danger remove_btn"
                                 @click.prevent="removeImage(dataImage,dataImage.public_id)">
                           Remove
@@ -216,21 +216,35 @@
 
 <script setup>
 import ckeditorComponent from "@/components/Editor/index.vue";
-import { defineProps, onMounted, ref, watch } from 'vue';
+import {defineProps, onMounted, ref, watch} from 'vue';
 import axios from 'axios';
-import { useStore } from 'vuex';
+import {useStore} from 'vuex';
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/themes/material_green.css';
 import ToastMessage from '@/components/Toast/index.vue';
 
 const store = useStore();
 const roomTypes = ref([]);
+
+const formatDate = (date) => {
+  return new Date(date).toLocaleString('en-GB', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false
+  });
+};
+
 const model = ref({
   room_number: '',
   homestay_id: props.homestay.homestay_id,
   room_type_id: 0,
   description: '',
   status: '',
+  start_date: formatDate(new Date()),
+  end_date: formatDate(new Date()),
   facilitiesId: [],
   room_images: []
 });
@@ -250,10 +264,18 @@ const config = {
   altFormat: 'd/m/Y H:i',
   allowInput: true,
   minDate: 'today',
-  minTime: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+  minTime: new Date().toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}),
   defaultDate: new Date(),
   defaultHour: new Date().getHours()
 };
+
+watch(() => model.value.start_date, (newValue) => {
+  model.value.start_date = formatDate(newValue);
+});
+
+watch(() => model.value.end_date, (newValue) => {
+  model.value.end_date = formatDate(newValue);
+});
 
 const showToastMessage = (message, type = 'success') => {
   if (message) {
@@ -266,18 +288,26 @@ const showToastMessage = (message, type = 'success') => {
   $('.toast').toast('show');
 };
 
-const submitFormRoom = async (e) => {
+const submitFormRoom = async () => {
+  const formData = new FormData();
 
-  if (!model.value.status || !model.value.room_type_id || !model.value.room_number) {
-    errors.value = 'Room type, room name, status là required';
-    e.preventDefault();
-  }
-  axios.post('/v2/rooms/create', model.value).then((response) => {
-    if (response.data.status === true) {
-      showToastMessage(response.data.message);
-    } else {
-      showToastMessage(response.data.message, 'danger');
+  for (const key in model.value) {
+    if (model.value.hasOwnProperty(key)) {
+      const value = model.value[key];
+      if (Array.isArray(value)) {
+        for (const item of value) {
+          formData.append(`${key}[]`, item);
+        }
+      } else {
+        formData.append(key, value);
+      }
     }
+  }
+
+  await axios.post('/v2/rooms/create', formData, {
+    "Content-Type": "multipart/form-data",
+  }).then((response) => {
+    console.log(response);
   }).catch((e) => {
     console.log(e);
   });
@@ -389,7 +419,7 @@ watch(() => props.homestay, () => {
 });
 
 onMounted(() => {
-  $('#addRoomModal').on('hide.bs.modal hidden.bs.modal', () => {
+  $('#addRoomModal').on('hide.bs.modal', () => {
     errors.value = null;
     model.value = {
       room_number: '',
@@ -407,13 +437,21 @@ onMounted(() => {
 /**
  * TODO: Add datetime picker to input
  */
-const fromInput = ref(null);
-const toInput = ref(null);
+const startInput = ref(null);
+const endInput = ref(null);
 onMounted(() => {
-  fromInput.value = document.querySelector(`#start-date`);
-  toInput.value = document.querySelector(`#end-date`);
-  flatpickr(fromInput.value, config);
-  flatpickr(toInput.value, config);
+  flatpickr('#start-date', {
+    ...config,
+    onChange: (selectedDates) => {
+      model.value.start_date = formatDate(selectedDates[0]);
+    }
+  });
+  flatpickr('#end-date', {
+    ...config,
+    onChange: (selectedDates) => {
+      model.value.end_date = formatDate(selectedDates[0]);
+    }
+  });
 });
 
 </script>
