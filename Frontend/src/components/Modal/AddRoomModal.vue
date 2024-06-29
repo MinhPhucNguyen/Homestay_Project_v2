@@ -1,5 +1,5 @@
 <template>
-  <ToastMessage :toastType="typeToast" :message="messageToast"/>
+  <ToastMessage :toastType="typeToast" :message="messageToast" />
   <div
       class="modal fade"
       id="addRoomModal"
@@ -122,12 +122,12 @@
                         <div class="start-date">
                           <label for="start-date">Bắt đầu</label>
                           <input id="start-date" name="start-date" type="datetime-local"
-                                 class="form-control datetime-input fw-bold p-4 text-black"/>
+                                 class="form-control datetime-input fw-bold p-4 text-black" />
                         </div>
                         <div class="end-date">
                           <label for="end-date">Kết thúc</label>
                           <input id="end-date" name="end-date" type="datetime-local"
-                                 class="form-control datetime-input fw-bold p-4 text-black"/>
+                                 class="form-control datetime-input fw-bold p-4 text-black" />
                         </div>
                       </div>
                     </div>
@@ -149,7 +149,7 @@
                            @change="uploadRoomImage" value=""/>
                     <div class="display_image mb-4 mt-4" v-if="imagesUrl.length > 0">
                       <div class="room_image_input" v-for="(dataImage, index) in imagesUrl" :key="index">
-                        <img :src="dataImage.path" alt="" class="image_input"/>
+                        <img :src="dataImage.path" alt="" class="image_input" />
                         <button class="btn btn-danger remove_btn"
                                 @click.prevent="removeImage(dataImage)">
                           {{ isClick ? "Removing..." : "Remove" }}
@@ -215,13 +215,13 @@
 </template>
 
 <script setup>
-import {defineProps, onMounted, ref, watch} from 'vue';
+import ckeditorComponent from "@/components/Editor/index.vue";
+import { defineProps, onMounted, ref, watch } from 'vue';
 import axios from 'axios';
-import {useStore} from 'vuex';
+import { useStore } from 'vuex';
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/themes/material_green.css';
 import ToastMessage from '@/components/Toast/index.vue';
-import ckeditorComponent from "@/components/Editor/index.vue";
 
 const store = useStore();
 const roomTypes = ref([]);
@@ -239,9 +239,9 @@ const messageToast = ref(null);
 const isLoading = ref(false);
 const pagination = ref({});
 const isInvalidForm = ref(true);
-const cloudName = 'dfcdsmcc2';
+const cloudName = 'dmc1ylttu';
 const urlCloudinary = `https://api.cloudinary.com/v1_1/${cloudName}/upload`;
-const uploadPresent = 'denztayv';
+const uploadPreset = 'ml_default';
 const typeToast = ref('success');
 const config = {
   enableTime: true,
@@ -250,7 +250,7 @@ const config = {
   altFormat: 'd/m/Y H:i',
   allowInput: true,
   minDate: 'today',
-  minTime: new Date().toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}),
+  minTime: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
   defaultDate: new Date(),
   defaultHour: new Date().getHours()
 };
@@ -269,7 +269,7 @@ const showToastMessage = (message, type = 'success') => {
 const submitFormRoom = async (e) => {
 
   if (!model.value.status || !model.value.room_type_id || !model.value.room_number) {
-    errors.value = 'Room type,room name,status là required';
+    errors.value = 'Room type, room name, status là required';
     e.preventDefault();
   }
   axios.post('/v2/rooms/create', model.value).then((response) => {
@@ -285,7 +285,7 @@ const submitFormRoom = async (e) => {
 
 const uploadToCloud = (file) => {
   let formData = new FormData();
-  formData.append('upload_preset', uploadPresent);
+  formData.append('upload_preset', uploadPreset);
   formData.append('file', file);
   fetch(urlCloudinary, {
     method: 'post',
@@ -415,7 +415,6 @@ onMounted(() => {
       for (let imageData of imagesUrl.value) {
         callRemoveImage(imageData, 'reset');
       }
-
     }
     errors.value = null;
     model.value = {

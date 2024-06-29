@@ -20,7 +20,6 @@ class CloudinaryGateway
             $config->url->secure = true;
             $this->cloudinary = new Cloudinary($config);
         }
-
     }
 
     public function destroyImage($publicId, $option): \Cloudinary\Api\ApiResponse
