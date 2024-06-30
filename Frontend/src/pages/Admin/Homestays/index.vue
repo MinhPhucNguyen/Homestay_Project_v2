@@ -63,7 +63,7 @@
             <td class="text-center">{{ homestay.email }}</td>
             <td class="text-center">{{ homestay.address }}</td>
             <td class="text-center">{{ homestay.city }}</td>
-            <td class="text-center">{{ homestay.status }}</td>
+            <td class="text-center">{{ homestay.status ? 'Hiện thị' : 'Ẩn' }}</td>
             <td class="text-center">
               <div class="dropdown">
                 <button class="btn btn-success dropdown-toggle" type="button" data-bs-toggle="dropdown"

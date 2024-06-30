@@ -39,6 +39,7 @@ class RoomRequest extends FormRequest
             'room_number.unique' => 'Số phòng đã tồn tại, vui lòng nhập số phòng khác.',
             'room_type_id.required' => 'Vui lòng chọn loại phòng.',
             'room_type_id.integer' => 'Loại phòng ID phải là số.',
+            'status.required' => 'Vui lòng chọn trạng thái phòng.',
             'start_date.required' => 'Vui lòng nhập ngày bắt đầu.',
             'end_date.required' => 'Vui lòng nhập ngày kết thúc.',
         ];

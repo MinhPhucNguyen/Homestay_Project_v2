@@ -64,7 +64,7 @@
                   <div v-else>Chưa có mô tả</div>
                 </td>
                 <th class="text-center">{{ room.room_type.name }}</th>
-                <td class="text-center">{{ room.status }}</td>
+                <td class="text-center">{{ getStatusLabel(room.status) }}</td>
                 <td class="text-center">
                   <div class="dropdown">
                     <button class="btn btn-success dropdown-toggle" type="button" data-bs-toggle="dropdown"
@@ -173,6 +173,19 @@ const debouncedGetRoomsList = debounce(getRoomsListByHomestayId, 300);
 watch(searchInput, () => {
   debouncedGetRoomsList();
 });
+
+const statusOptions = {
+  available: 'Phòng trống',
+  booked: 'Phòng đã đặt',
+  cleaned: 'Đã dọn dẹp',
+  not_cleand: 'Chưa dọn dẹp',
+  under_repair: 'Sửa chữa'
+};
+
+const getStatusLabel = (status) => {
+  return statusOptions[status] || 'Unknown Status';
+};
+
 
 </script>
 

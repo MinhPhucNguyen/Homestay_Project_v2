@@ -21,9 +21,6 @@
           ></button>
         </div>
         <div class="modal-body">
-          <div v-if="errors">
-            <h3>{{ errors }}}</h3>
-          </div>
           <form enctype="multipart/form-data" @submit.prevent="submitFormRoom" method="post">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
               <li class="nav-item" role="presentation">
@@ -89,21 +86,27 @@
                         class="form-control"
                         v-model="model.room_number"
                     />
+                    <small class="text-danger" v-if="errors">{{
+                        errors.room_number[0]
+                      }}</small>
                   </div>
                   <div class="col-md-4 mb-3">
                     <label for="room_type">Loại phòng</label>
-                    <div class="d-flex align-items-center">
+                    <div class="d-flex flex-column">
                       <select v-model="model.room_type_id" id="room_type" name="room_type_id" class="form-select">
                         <option selected disabled value="">Chọn loại phòng</option>
                         <option v-for="type in roomTypes" :key="type.room_type_id" :value="type.room_type_id">
                           {{ type.name }}
                         </option>
                       </select>
+                      <small class="text-danger" v-if="errors">{{
+                          errors.room_type_id[0]
+                        }}</small>
                     </div>
                   </div>
                   <div class="col-md-4 mb-3">
                     <label for="status">Trạng thái</label>
-                    <div class="d-flex align-items-center">
+                    <div class="d-flex flex-column">
                       <select v-model="model.status" id="status" name="status" class="form-select">
                         <option selected disabled value="">Chọn trạng thái</option>
                         <option value="available">Phòng trống</option>
@@ -112,6 +115,9 @@
                         <option value="not_cleand">Chưa dọn dẹp</option>
                         <option value="under_repair">Sửa chữa</option>
                       </select>
+                      <small class="text-danger" v-if="errors">{{
+                          errors.status[0]
+                        }}</small>
                     </div>
                   </div>
                   <div class="col-md-12 mb-3">
@@ -328,6 +334,8 @@ const submitFormRoom = async () => {
     }
   }).catch((e) => {
     console.log(e);
+    errors.value = e.response.data.errors;
+    $('#addRoomModal').modal('show');
   });
 };
 
