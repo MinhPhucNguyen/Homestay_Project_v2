@@ -22,15 +22,13 @@ class RoomRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'room_number' => 'required|string|max:255',
+            'room_number' => 'unique:rooms|required|string|max:255',
             'homestay_id' => 'required|integer',
             'description' => 'required',
             'room_type_id' => 'required|integer',
-            'status' => 'nullable',
+            'status' => 'required',
             'start_date' => 'required',
             'end_date' => 'required',
-            'room_images' => 'required|array',
-            'facilitiesId' => 'required|array',
         ];
     }
 
@@ -38,12 +36,11 @@ class RoomRequest extends FormRequest
     {
         return [
             'room_number.required' => 'Vui lòng nhập số phòng.',
+            'room_number.unique' => 'Số phòng đã tồn tại, vui lòng nhập số phòng khác.',
             'room_type_id.required' => 'Vui lòng chọn loại phòng.',
             'room_type_id.integer' => 'Loại phòng ID phải là số.',
             'start_date.required' => 'Vui lòng nhập ngày bắt đầu.',
             'end_date.required' => 'Vui lòng nhập ngày kết thúc.',
-            'room_images.required' => 'Vui lòng đăng ảnh phòng.',
-            'facilitiesId.required' => 'Vui lòng  tiện ích.',
         ];
     }
 }

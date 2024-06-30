@@ -245,12 +245,16 @@ onMounted(() => {
 const selectFacility = (event, id) => {
   const item = event.target;
   if (item) {
-    item.classList.toggle("facility-chose");
-    if (item.classList.contains("facility-chose")) {
-      model.value.facilitiesId.push(id);
+    item.classList.toggle('facility-chose');
+    const indexItemExist = model.value.facilitiesId.indexOf(id);
+    if (item.classList.contains('facility-chose')) {
+      if (indexItemExist === -1) {
+        model.value.facilitiesId.push(id);
+      }
     } else {
-      const indexItemExist = model.value.facilitiesId.indexOf(id);
-      model.value.facilitiesId.splice(indexItemExist, 1);
+      if (indexItemExist !== -1) {
+        model.value.facilitiesId.splice(indexItemExist, 1);
+      }
     }
   }
 };

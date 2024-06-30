@@ -88,14 +88,12 @@
                         name="room_number"
                         class="form-control"
                         v-model="model.room_number"
-                        required
                     />
                   </div>
                   <div class="col-md-4 mb-3">
                     <label for="room_type">Loại phòng</label>
                     <div class="d-flex align-items-center">
-                      <select v-model="model.room_type_id" id="room_type" name="room_type_id" class="form-select"
-                              required>
+                      <select v-model="model.room_type_id" id="room_type" name="room_type_id" class="form-select">
                         <option selected disabled value="">Chọn loại phòng</option>
                         <option v-for="type in roomTypes" :key="type.room_type_id" :value="type.room_type_id">
                           {{ type.name }}
@@ -106,7 +104,7 @@
                   <div class="col-md-4 mb-3">
                     <label for="status">Trạng thái</label>
                     <div class="d-flex align-items-center">
-                      <select v-model="model.status" id="status" name="status" class="form-select" required>
+                      <select v-model="model.status" id="status" name="status" class="form-select">
                         <option selected disabled value="">Chọn trạng thái</option>
                         <option value="available">Phòng trống</option>
                         <option value="booked">Phòng đã đặt</option>
@@ -226,6 +224,17 @@ import ToastMessage from '@/components/Toast/index.vue';
 const store = useStore();
 const roomTypes = ref([]);
 
+const props = defineProps({
+  homestay: {
+    type: Object,
+    required: true
+  },
+  facilitiesList: {
+    type: Array,
+    required: true
+  }
+});
+
 const formatDate = (date) => {
   return new Date(date).toLocaleString('en-GB', {
     day: '2-digit',
@@ -240,7 +249,7 @@ const formatDate = (date) => {
 const model = ref({
   room_number: '',
   homestay_id: props.homestay.homestay_id,
-  room_type_id: 0,
+  room_type_id: '',
   description: '',
   status: '',
   start_date: formatDate(new Date()),
@@ -288,6 +297,10 @@ const showToastMessage = (message, type = 'success') => {
   $('.toast').toast('show');
 };
 
+/**
+ * TODO: Submit form room
+ * @returns {Promise<void>}
+ */
 const submitFormRoom = async () => {
   const formData = new FormData();
 
@@ -307,7 +320,12 @@ const submitFormRoom = async () => {
   await axios.post('/v2/rooms/create', formData, {
     "Content-Type": "multipart/form-data",
   }).then((response) => {
-    console.log(response);
+    if (response.data.status === true) {
+      showToastMessage(response.data.message);
+      resetModel();
+    } else {
+      showToastMessage(response.data.message, 'danger');
+    }
   }).catch((e) => {
     console.log(e);
   });
@@ -334,17 +352,6 @@ const uploadToCloud = (file) => {
   });
 };
 
-const props = defineProps({
-  homestay: {
-    type: Object,
-    required: true
-  },
-  facilitiesList: {
-    type: Array,
-    required: true
-  }
-});
-
 /**
  * TODO: Select facility
  */
@@ -352,17 +359,21 @@ const selectFacility = (event, id) => {
   const item = event.target;
   if (item) {
     item.classList.toggle('facility-chose');
+    const indexItemExist = model.value.facilitiesId.indexOf(id);
     if (item.classList.contains('facility-chose')) {
-      model.value.facilitiesId.push(id);
+      if (indexItemExist === -1) {
+        model.value.facilitiesId.push(id);
+      }
     } else {
-      const indexItemExist = model.value.facilitiesId.indexOf(id);
-      model.value.facilitiesId.splice(indexItemExist, 1);
+      if (indexItemExist !== -1) {
+        model.value.facilitiesId.splice(indexItemExist, 1);
+      }
     }
   }
 };
 
 /**
- * TODO: display image
+ * TODO: Display image
  */
 const filesInput = ref(null);
 const imagesUrl = ref([]);
@@ -374,7 +385,7 @@ const uploadRoomImage = (event) => {
 };
 
 /**
- * TODO: Remove room image before create room car
+ * TODO: Remove room image before create room
  * @param urlImage
  */
 const removeImage = (urlImage) => {
@@ -389,14 +400,6 @@ const removeImage = (urlImage) => {
 };
 
 const callRemoveImage = async (imageData, type = 'remove') => {
-  // axios.interceptors.request.use(function (config) {
-  //   // Do something before request is sent
-  //   console.log(config);
-  //   return config;
-  // }, function (error) {
-  //   // Do something with request error
-  //   return Promise.reject(error);
-  // });
   isClick.value = true;
   axios.delete(`v2/rooms/image/delete/${imageData.public_id}`).then((res) => {
     if (res.data.result === 'ok') {
@@ -407,7 +410,6 @@ const callRemoveImage = async (imageData, type = 'remove') => {
           imagesUrl.value.splice(indexImage, 1);
         }
       }
-      console.log('Remove image success');
     }
   })
 }
@@ -415,7 +417,6 @@ const callRemoveImage = async (imageData, type = 'remove') => {
 /**
  * TODO: Get room types by homestay id
  */
-
 const getRoomTypes = () => {
   isLoading.value = true;
   axios.get(`/v2/room-types/getByHomestay/${props.homestay.homestay_id}`).then((response) => {
@@ -447,15 +448,7 @@ onMounted(() => {
       }
     }
     errors.value = null;
-    model.value = {
-      room_number: '',
-      homestay_id: props.homestay.homestay_id,
-      room_type_id: 0,
-      description: '',
-      status: '',
-      facilitiesId: [],
-      room_images: []
-    };
+    resetModel();
     imagesUrl.value = [];
   });
 });
@@ -463,8 +456,6 @@ onMounted(() => {
 /**
  * TODO: Add datetime picker to input
  */
-const startInput = ref(null);
-const endInput = ref(null);
 onMounted(() => {
   flatpickr('#start-date', {
     ...config,
@@ -479,6 +470,23 @@ onMounted(() => {
     }
   });
 });
+
+/**
+ * TODO: Reset model when close modal
+ */
+const resetModel = () => {
+  model.value = {
+    room_number: '',
+    homestay_id: props.homestay.homestay_id,
+    room_type_id: '',
+    description: '',
+    status: '',
+    start_date: formatDate(new Date()),
+    end_date: formatDate(new Date()),
+    facilitiesId: [],
+    room_images: []
+  };
+}
 
 </script>
 
