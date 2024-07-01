@@ -33,7 +33,7 @@
                      >
                         {{ blog.status === 1 ? "Publish" : "Unpublish" }}
                      </td>
-                     <td class="text-center">{{ formatDateTime(blog.created_at) }}</td>
+                     <td class="text-center">{{ formatDate(blog.created_at) }}</td>
                      <td class="text-center">
                         <div class="dropdown">
                            <button
@@ -109,7 +109,7 @@ import axios from "axios";
 import MyModal from "@/components/Modal/Modal.vue";
 import ToastMessage from "@/components/Toast/index.vue";
 import stateLoading from "@/components/Loading/Loading.vue";
-import { formatDateTime } from "@/utils/formatDateTime";
+import { formatDate } from "@/utils/formatDate";
 
 const blogsList = ref([]);
 const successMessage = ref(null);

@@ -160,7 +160,7 @@
                      }">
               {{ user.role_as === 0 ? "Khách hàng" : "Quản trị viên" }}
             </td>
-            <td class="text-center">{{ formatDateTime(user.created_at) }}</td>
+            <td class="text-center">{{ formatDate(user.created_at) }}</td>
             <td class="text-center">
               <div class="dropdown">
                 <button class="btn btn-success dropdown-toggle" type="button" data-bs-toggle="dropdown"
@@ -226,7 +226,7 @@ import {useStore} from "vuex";
 import MyModal from "@/components/Modal/Modal.vue";
 import stateLoading from "@/components/Loading/Loading.vue";
 import Pagination from "@/components/Pagination/index.vue";
-import {formatDateTime} from "@/utils/formatDateTime";
+import {formatDate} from "@/utils/formatDate";
 import ToastMessage from "@/components/Toast/index.vue";
 import axios from "axios";
 import {debounce} from "@/utils/debounce.js";

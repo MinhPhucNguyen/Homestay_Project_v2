@@ -43,8 +43,10 @@
                               'text-success':
                                  sort_direction == 'asc' && sort_field == 'room_number',
                            }"></i>
-                        </span>
+                  </span>
                 </th>
+                <th class="text-center">Ngày vào</th>
+                <th class="text-center">Ngày đến</th>
                 <th class="text-center">Mô tả</th>
                 <th class="text-center">Loại phòng</th>
                 <th class="text-center">Trạng thái</th>
@@ -56,6 +58,8 @@
                 <td class="text-center">
                   <a href="" class="text-success text-decoration-none">{{ room.room_number }}</a>
                 </td>
+                <td class="text-center">{{ formatDateTime(room.start_date) }}</td>
+                <td class="text-center">{{ formatDateTime(room.end_date) }}</td>
                 <td class="text-center">
                   <div
                       v-html="room.description"
@@ -64,7 +68,7 @@
                   <div v-else>Chưa có mô tả</div>
                 </td>
                 <th class="text-center">{{ room.room_type.name }}</th>
-                <td class="text-center">{{ getStatusLabel(room.status) }}</td>
+                <td class="text-center">{{ getRoomStatusLabel(room.status) }}</td>
                 <td class="text-center">
                   <div class="dropdown">
                     <button class="btn btn-success dropdown-toggle" type="button" data-bs-toggle="dropdown"
@@ -72,15 +76,15 @@
                       Action
                     </button>
                     <ul class="dropdown-menu">
-                      <!--                      <li>-->
-                      <!--                        <router-link :to="{ name: 'homestays.edit', params: { id: homestay.homestay_id } }"-->
-                      <!--                                     class="dropdown-item mb-3 fs-6 text-primary bg-white">-->
-                      <!--                          <i class="fa-solid fa-pen-to-square"></i>-->
-                      <!--                          <span class="ml-2">Sửa</span>-->
-                      <!--                        </router-link>-->
-                      <!--                      </li>-->
                       <li>
-                        <button type="button" class="dropdown-item fs-6 text-danger bg-white"
+                        <button type="button" class="dropdown-item mb-3 fs-6 text-primary bg-white"
+                                @click="">
+                          <i class="fa-solid fa-pen-to-square"></i>
+                          <span class="ml-2">Sửa</span>
+                        </button>
+                      </li>
+                      <li>
+                        <button type="button" class="dropdown-item mb-3 fs-6 text-danger bg-white"
                                 @click="">
                           <i class="fa-solid fa-trash"></i>
                           <span class="ml-2">Xóa</span>
@@ -91,12 +95,12 @@
                 </td>
               </tr>
               <tr v-if="isLoading && !roomsList.length">
-                <td colspan="5" class="text-center">
+                <td colspan="7" class="text-center">
                   <stateLoading/>
                 </td>
               </tr>
               <tr v-if="isNotFound && !isLoading">
-                <td colspan="5" class="text-center">Không có phòng</td>
+                <td colspan="7" class="text-center">Không có phòng</td>
               </tr>
               </tbody>
             </table>
@@ -116,6 +120,8 @@ import Pagination from "@/components/Pagination/index.vue";
 import {useStore} from "vuex";
 import stateLoading from "@/components/Loading/Loading.vue";
 import {debounce} from "@/utils/debounce";
+import {getRoomStatusLabel} from "@/utils/roomStatus";
+import {formatDateTime} from "@/utils/formatDateTime";
 
 const isLoading = ref(false);
 const store = useStore();
@@ -173,19 +179,6 @@ const debouncedGetRoomsList = debounce(getRoomsListByHomestayId, 300);
 watch(searchInput, () => {
   debouncedGetRoomsList();
 });
-
-const statusOptions = {
-  available: 'Phòng trống',
-  booked: 'Phòng đã đặt',
-  cleaned: 'Đã dọn dẹp',
-  not_cleand: 'Chưa dọn dẹp',
-  under_repair: 'Sửa chữa'
-};
-
-const getStatusLabel = (status) => {
-  return statusOptions[status] || 'Unknown Status';
-};
-
 
 </script>
 

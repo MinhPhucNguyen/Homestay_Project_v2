@@ -1,15 +1,13 @@
-import { computed } from "vue";
+export const formatDateTime = (createdAt) => {
+    const datetime = new Date(createdAt);
 
-export const formatDateTime = computed(() => {
-   return (createdAt) => {
-      const datetime = new Date(createdAt);
+    const day = datetime.getDate();
+    const month = datetime.getMonth() + 1; // Months are zero-based in JavaScript
+    const year = datetime.getFullYear();
 
-      const formatDate = datetime.toLocaleDateString("en-US", {
-         year: "numeric",
-         month: "numeric",
-         day: "numeric",
-      });
-      const created_at = new Date(formatDate);
-      return `${created_at.getDate()}/${created_at.getMonth() + 1}/${created_at.getFullYear()}`;
-   };
-});
+    const hours = datetime.getHours();
+    const minutes = datetime.getMinutes();
+    const seconds = datetime.getSeconds();
+
+    return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+};
