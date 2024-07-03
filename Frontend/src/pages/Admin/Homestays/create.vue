@@ -106,12 +106,11 @@
                 </div>
                 <div class="col-md-4 mb-3">
                   <label for="city">Thành phố</label>
-                  <input
-                    type="text"
-                    name="city"
-                    class="form-control"
-                    v-model="model.city"
-                  />
+                  <select class="form-select" id="city" name="city" v-model="model.city">
+                    <option v-for="provinces in listProvinces " :value="provinces.code">
+                      {{provinces.name}}
+                    </option>
+                  </select>
                   <small class="text-danger" v-if="errors.city">{{
                     errors.city[0]
                   }}</small>
@@ -202,6 +201,7 @@ import ToastMessage from "@/components/Toast/index.vue";
 import { useRouter } from "vue-router";
 import flatpickr from "flatpickr";
 import "flatpickr/dist/themes/material_green.css";
+import { getProvinces } from "vn-local-plus";
 
 const store = useStore();
 const successMessage = ref(null);
@@ -209,7 +209,7 @@ const errors = ref({});
 const isLoading = ref(false);
 const router = useRouter();
 const facilitiesList = ref([]);
-
+const listProvinces = getProvinces();
 const config = {
   enableTime: true,
   dateFormat: "d/m/Y H:i",

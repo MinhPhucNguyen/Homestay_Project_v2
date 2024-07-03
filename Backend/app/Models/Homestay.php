@@ -59,4 +59,13 @@ class Homestay extends Model
                 ->orWhere('city', 'like', $search);
         });
     }
+
+    public function searchHomestay($params)
+    {
+        $query = $this->where('city', 'like', "%{$params['location']}%");
+        $query->leftJoin('rooms', 'rooms.homestay_id', '=', $this->getTable() . '.homestay_id');
+        $query->where('rooms.start_date', '>=', $params['start_date']);
+        $query->where('rooms.end_date', '<=', $params['end_date']);
+        return $query->get();
+    }
 }

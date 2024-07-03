@@ -8,17 +8,17 @@
          <div class="search-option">
             <!-- Search Form -->
             <div class="search shadow d-flex">
-               <form action="">
+               <form action="" method="get">
                   <!-- Address Input -->
                   <div class="search-form-item address">
-                     <div class="search-form-choose">
+                     <div class="search-form-choose field-provinces">
                         <!-- <i class="fa-solid fa-location-dot"></i> -->
-                        <input
-                           type="text"
-                           class="address-input"
-                           placeholder="Bạn muốn đến đâu?"
-                           v-model="location"
-                        />
+                       <select v-model="location" id="provinces_type" style="cursor: pointer" name="provinces" class="form-select border-0 pe-auto">
+                         <option selected disabled value="">Bạn muốn đến đâu ?</option>
+                         <option v-for="provinces in listProvinces" :value="provinces.code">
+                           {{provinces.name}}
+                         </option>
+                       </select>
                      </div>
                   </div>
 
@@ -68,14 +68,14 @@
                   </div>
                   <router-link
                      :to="{
-                        name: '',
+                        name: 'result-page',
                         query: {
                            startDate: startDate,
                            endDate: endDate,
                            location: location,
                         },
                      }"
-                     class="find-car-btn"
+                     class="find-homestay-btn"
                      >Tìm</router-link
                   >
                </form>
@@ -89,6 +89,7 @@
 import { onMounted, ref } from "vue";
 import flatpickr from "flatpickr";
 import "flatpickr/dist/themes/material_green.css";
+import { getProvinces } from 'vn-local-plus';
 
 const selectedOption = ref("self-drive");
 
@@ -96,6 +97,7 @@ const startDate = ref();
 const endDate = ref();
 const location = ref("");
 
+const listProvinces = getProvinces();
 /**
  * TODO: Add datetime picker to input
  */
@@ -142,4 +144,7 @@ const changeSelectedOption = (option) => {
 
 <style scoped>
 @import "./Banner.scss";
+.field-provinces {
+  height: 100%;
+}
 </style>

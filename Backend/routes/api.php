@@ -15,6 +15,7 @@ use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\Auth\PhoneVerificationController;
 use App\Http\Controllers\Mail\MailController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\v2\SearchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,6 +50,7 @@ Route::prefix('v2')->group(function () {
 
     Route::post('users/{id}/change-password', [UserControllerApi::class, 'changePassword']);
 
+    Route::get('search-result', [SearchController::class, 'index']);
     Route::prefix('admin')->group(function () {
 
         Route::controller(UserControllerApi::class)->group(function () {

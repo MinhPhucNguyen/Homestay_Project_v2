@@ -18,6 +18,11 @@ const app = [
             component: () => import("../pages/AboutPage/AboutPage.vue"),
          },
          {
+            path: "/resultPage",
+            component: () => import("../pages/ResultPage/index.vue"),
+            name: "result-page"
+         },
+         {
             path: "homestays/:slug",
             component: () => import("../pages/HomestayDetail/HomestayDetail.vue"),
          },
